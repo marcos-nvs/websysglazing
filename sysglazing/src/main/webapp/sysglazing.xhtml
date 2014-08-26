@@ -11,14 +11,28 @@
 
         <h:head>
             <link type="text/css" rel="stylesheet" href="css/default.css" />
-            <title>Mille Vidros</title>
+            <title>Mille Vidros</title>         
         </h:head>
         <h:body id="Bodyid"
-                style="background-image: ">
+                style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;">
             <p:layout fullPage="true">
-
-                <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="true" collapsible="true" visible="false">
-                    <h:outputText value="North unit content." />    
+                <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true">
+                    <h:form id="idFormTop">
+                        <h:panelGrid columns="2">
+                            <h:graphicImage url="img/logoDASA.jpg" />
+                            <!--<h:graphicImage url="img/ln2.jpg" />-->
+                            <p:panel header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
+                                <h:panelGrid id="idGrid" columns="6"  >
+                                    <h:outputText value="Usuário"/>
+                                    <p:inputText id="inputUsuario"/>
+                                    <h:outputText value="Senha"/>
+                                    <p:password id="inputSenha"/>
+                                    <p:commandButton id="submitButton" value="Logar" icon="ui-icon-check" ajax="false"/>
+                                    <p:commandButton id="cancelButton" value="Apagar" icon="ui-icon-closethick"  />
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:form>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true" visible="false">
@@ -33,8 +47,14 @@
                     <h:outputText value="Right unit content." />
                 </p:layoutUnit>
 
-                <p:layoutUnit position="center">
-                    <h:outputText value="Sistema para vidraçaria" />
+                <p:layoutUnit position="center" id="idLayoutCenter">
+                    <h:form id="IdFormCenter">
+                        <h:panelGrid columns="1">
+                            <ui:insert id="idInsertCentral">
+                                <ui:include src="WEB-INF/templates/login.xhtml"/>
+                            </ui:insert>
+                        </h:panelGrid>
+                    </h:form>
                 </p:layoutUnit>
 
             </p:layout>        
