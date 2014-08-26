@@ -52,11 +52,11 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.11</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>br.com.crypto</groupId>
             <artifactId>crytoUtil</artifactId>
             <version>0.0.2</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
