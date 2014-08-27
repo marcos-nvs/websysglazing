@@ -42,7 +42,7 @@ public class SessionFactoryDbName implements Serializable{
         try{
 
             switch (strDbName) {
-                case "public":
+                case "Public":
                     System.out.println("Buscando Session no banco dados : " + strDbName);
                     sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
                     break;
