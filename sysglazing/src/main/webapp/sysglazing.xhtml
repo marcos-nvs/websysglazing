@@ -13,22 +13,24 @@
             <link type="text/css" rel="stylesheet" href="css/default.css" />
             <title>Mille Vidros</title>         
         </h:head>
-        <h:body id="Bodyid"
+        <h:body id="idBoby"
                 style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;">
             <p:layout fullPage="true">
+                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true">
                     <h:form id="idFormTop">
-                        <h:panelGrid columns="2">
-                            <!--<h:graphicImage url="img/logoDASA.jpg" />-->
-                            <h:graphicImage url="img/ln2.jpg" />
-                            <p:panel header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
-                                <h:panelGrid id="idGrid" columns="6"  >
-                                    <h:outputText value="Usuário"/>
-                                    <p:inputText id="inputUsuario"/>
-                                    <h:outputText value="Senha"/>
-                                    <p:password id="inputSenha"/>
-                                    <p:commandButton id="submitButton" value="Logar" icon="ui-icon-check" ajax="false"/>
-                                    <p:commandButton id="cancelButton" value="Apagar" icon="ui-icon-closethick"  />
+                        <h:panelGrid id="idGridTop" columns="2">
+                            <h:graphicImage url="img/logoDASA.jpg" />
+                            <!--<h:graphicImage url="img/ln2.jpg" />-->
+                            <p:panel id="idPanelTopLogin" header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
+                                <h:panelGrid id="idGridLogin" columns="5"  >
+                                    <h:outputText id="idTextUser" value="#{msgs['template.user']}"/>
+                                    <p:inputText id="inputUser" required="true" maxlength="40" value="#{glazingView.usuStCodigo}"/>
+                                    <h:outputText value="#{msgs['page.textFields.password']}"/>
+                                    <p:password id="inputPassword" required="true" value="#{glazingView.usuStSenha}"/>
+                                    <p:commandButton id="idButtonLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
+                                                     partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.realizaLogin}"
+                                                     update="@this, inputUser, inputPassword"/>
                                 </h:panelGrid>
                             </p:panel>
                         </h:panelGrid>

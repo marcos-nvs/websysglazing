@@ -28,7 +28,7 @@ public class Teste {
         
         List l = query.list();
         
-        if (l != null){
+        if (l != null && l.size() > 0){
             glaUsuarios = (Glausuario) l.get(0);
             
             System.out.println("usuario : " + glaUsuarios.toString());

@@ -23,7 +23,6 @@ public class SessionFactoryDbName implements Serializable{
     static Map<String, SessionFactory> mapSessionFactory = new HashMap<>(2);
     
     public static Session getCurrentSessionByName(String strDbName){
-        System.out.println("StrDbName : " + strDbName);
         return getSessionFactoryByName(strDbName).openSession();
     }
     
