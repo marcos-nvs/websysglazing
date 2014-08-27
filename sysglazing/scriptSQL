@@ -1,0 +1,113 @@
+-- Table: glamodulo
+
+-- DROP TABLE glamodulo;
+
+CREATE TABLE glamodulo
+(
+  mod_in_codigo integer NOT NULL,
+  mod_st_descricao character(50),
+  mod_ch_situacao character(1),
+  mod_st_nome character(50),
+  CONSTRAINT "pk_modInCodigo" PRIMARY KEY (mod_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE glamodulo
+  OWNER TO postgres;
+GRANT ALL ON TABLE glamodulo TO postgres;
+GRANT ALL ON TABLE glamodulo TO public;
+COMMENT ON TABLE glamodulo
+  IS 'Tabela de modulo';
+
+
+-- Table: glamodulofuncao
+
+-- DROP TABLE glamodulofuncao;
+
+CREATE TABLE glamodulofuncao
+(
+  mod_in_codigo integer NOT NULL,
+  mfu_in_codigo integer NOT NULL,
+  mfu_st_descricao character(50),
+  mfu_st_nome character(50),
+  CONSTRAINT pk_moditem PRIMARY KEY (mod_in_codigo, mfu_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE glamodulofuncao
+  OWNER TO postgres;
+COMMENT ON TABLE glamodulofuncao
+  IS 'Tabela de Modulo funcao';
+
+
+-- Table: glaperfil
+
+-- DROP TABLE glaperfil;
+
+CREATE TABLE glaperfil
+(
+  per_in_codigo integer NOT NULL,
+  per_st_descricao character(50),
+  per_ch_situacao character(1),
+  CONSTRAINT "pk_perInCodigo" PRIMARY KEY (per_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE glaperfil
+  OWNER TO postgres;
+GRANT ALL ON TABLE glaperfil TO postgres;
+GRANT ALL ON TABLE glaperfil TO public;
+COMMENT ON TABLE glaperfil
+  IS 'Tabela perfil';
+
+
+-- Table: glaperfilitem
+
+-- DROP TABLE glaperfilitem;
+
+CREATE TABLE glaperfilitem
+(
+  per_in_codigo integer NOT NULL,
+  pit_in_codigo integer NOT NULL,
+  mfu_in_codigo integer NOT NULL,
+  CONSTRAINT pk_perfil PRIMARY KEY (per_in_codigo, pit_in_codigo, mfu_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE glaperfilitem
+  OWNER TO postgres;
+GRANT ALL ON TABLE glaperfilitem TO postgres;
+GRANT ALL ON TABLE glaperfilitem TO public;
+COMMENT ON TABLE glaperfilitem
+  IS 'Tabela perfil Item';
+
+
+-- Table: glausuario
+
+-- DROP TABLE glausuario;
+
+CREATE TABLE glausuario
+(
+  usu_st_codigo character(20) NOT NULL,
+  usu_st_senha character(20),
+  usu_st_nome character(50),
+  usu_ch_situacao character(1),
+  per_in_codigo integer,
+  CONSTRAINT "pk_usuStCodigo" PRIMARY KEY (usu_st_codigo),
+  CONSTRAINT "fk_perInCodigo" FOREIGN KEY (per_in_codigo)
+      REFERENCES glaperfil (per_in_codigo) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE glausuario
+  OWNER TO postgres;
+GRANT ALL ON TABLE glausuario TO postgres;
+GRANT ALL ON TABLE glausuario TO public;
+COMMENT ON TABLE glausuario
+  IS 'Tabela de usuários';
