@@ -33,6 +33,4 @@ public class BeanVar implements Serializable{
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
-    
-    
 }

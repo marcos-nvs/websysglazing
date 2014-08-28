@@ -6,7 +6,6 @@
 
 package br.com.ln.views;
 
-import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.Glausuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -16,7 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-/**
+    /**
  *
  * @author Marcos Naves
  */
@@ -48,6 +47,14 @@ public class GlaAccess implements Serializable{
 
     public void setUsuStSenha(String usuStSenha) {
         this.usuStSenha = usuStSenha;
+    }
+
+    public String getStrDbName() {
+        return strDbName;
+    }
+
+    public void setStrDbName(String strDbName) {
+        this.strDbName = strDbName;
     }
 
     @Override
@@ -103,25 +110,25 @@ public class GlaAccess implements Serializable{
         return true;
     }
     
-    
-    public void realizaLogin(){
-        
-        strDbName = JsfHelper.getRequestParameter("nome");
-        System.out.println("Banco definico como : " + strDbName);
+    public void realizaLogin() {
 
-        if (usuStCodigo != null && usuStSenha != null){
-            glausuario = Postgress.getGlausuario(usuStCodigo, strDbName);
-            
-            if (glausuario != null) {
-                if (!glausuario.getUsuStSenha().equals(usuStSenha)) {
-                    mensagem = "Usuário ou Senha Inválido";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
-                }
+        System.out.println("Banco : " + strDbName);
+        
+        if (strDbName != null) {
+            if (usuStCodigo != null && usuStSenha != null) {
+                glausuario = Postgress.getGlausuario(usuStCodigo, strDbName);
+
+                if (glausuario != null) {
+                    if (!glausuario.getUsuStSenha().equals(usuStSenha)) {
+                        mensagem = "Usuário ou Senha Inválido";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
+                    }
+                } 
+            } else {
+                mensagem = "Usuário ou senha em Branco.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
             }
-        } else {
-            mensagem = "Usuário ou senha em Branco.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
         }
     }
-    
+
 }

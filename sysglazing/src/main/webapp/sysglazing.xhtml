@@ -15,22 +15,32 @@
         </h:head>
         <h:body id="idBoby"
                 style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;">
+            <h:outputText value="#{glazingView.usuStCodigo}"/>
+            <h:outputText value="#{defineCaminho.retorno} "/> 
             <p:layout fullPage="true">
-                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true">
                     <h:form id="idFormTop">
+                        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                         <h:panelGrid id="idGridTop" columns="2">
                             <h:graphicImage url="img/logoDASA.jpg" />
                             <!--<h:graphicImage url="img/ln2.jpg" />-->
                             <p:panel id="idPanelTopLogin" header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
-                                <h:panelGrid id="idGridLogin" columns="5"  >
+                                <h:panelGrid id="idGridLogin" columns="5" rendered="#{empty glazingView.glausuario}" >
                                     <h:outputText id="idTextUser" value="#{msgs['template.user']}"/>
                                     <p:inputText id="inputUser" required="true" maxlength="40" value="#{glazingView.usuStCodigo}"/>
                                     <h:outputText value="#{msgs['page.textFields.password']}"/>
                                     <p:password id="inputPassword" required="true" value="#{glazingView.usuStSenha}"/>
                                     <p:commandButton id="idButtonLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
+                                                     partialSubmit="false" process="@this, inputUser, inputPassword, idGridLogado" action ="#{glazingView.realizaLogin}"
+                                                     update="@this, inputUser, inputPassword, idGridLogado"/>
+                                    <p:focus for="inputUser"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="idGridLogado" columns="2" rendered="#{not empty glazingView.glausuario}">
+                                    <h:outputText id="idTextUserlogado" value="Você está logado"/>
+                                    <h:outputText value="Bom dia."/>
+<!--                                    <p:commandButton id="idButtonLogout" value="#{msgs['template.logout']}" icon="ui-icon-check" ajax="false"
                                                      partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.realizaLogin}"
-                                                     update="@this, inputUser, inputPassword"/>
+                                                     update="@this, inputUser, inputPassword"/>-->
                                 </h:panelGrid>
                             </p:panel>
                         </h:panelGrid>
