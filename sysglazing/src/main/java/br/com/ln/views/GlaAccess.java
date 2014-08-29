@@ -6,7 +6,6 @@
 
 package br.com.ln.views;
 
-import br.com.ln.entity.Glausuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
@@ -26,7 +25,6 @@ public class GlaAccess implements Serializable{
     
     private String usuStCodigo;
     private String usuStSenha;
-    private Glausuario glausuario;
     private String mensagem;
     private String strDbName;
 
@@ -57,18 +55,6 @@ public class GlaAccess implements Serializable{
         this.strDbName = strDbName;
     }
 
-    @Override
-    public String toString() {
-        return "GlaAccess{" + "usuStCodigo=" + usuStCodigo + ", usuStSenha=" + usuStSenha + ", glausuario=" + glausuario + '}';
-    }
-
-    public Glausuario getGlausuario() {
-        return glausuario;
-    }
-
-    public void setGlausuario(Glausuario glausuario) {
-        this.glausuario = glausuario;
-    }
 
     public String getMensagem() {
         return mensagem;
@@ -85,7 +71,6 @@ public class GlaAccess implements Serializable{
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.usuStCodigo);
         hash = 97 * hash + Objects.hashCode(this.usuStSenha);
-        hash = 97 * hash + Objects.hashCode(this.glausuario);
         return hash;
     }
 
@@ -104,9 +89,6 @@ public class GlaAccess implements Serializable{
         if (!Objects.equals(this.usuStSenha, other.usuStSenha)) {
             return false;
         }
-        if (!Objects.equals(this.glausuario, other.glausuario)) {
-            return false;
-        }
         return true;
     }
     
@@ -114,21 +96,21 @@ public class GlaAccess implements Serializable{
 
         System.out.println("Banco : " + strDbName);
         
-        if (strDbName != null) {
-            if (usuStCodigo != null && usuStSenha != null) {
-                glausuario = Postgress.getGlausuario(usuStCodigo, strDbName);
-
-                if (glausuario != null) {
-                    if (!glausuario.getUsuStSenha().equals(usuStSenha)) {
-                        mensagem = "Usuário ou Senha Inválido";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
-                    }
-                } 
-            } else {
-                mensagem = "Usuário ou senha em Branco.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
-            }
-        }
+//        if (strDbName != null) {
+//            if (usuStCodigo != null && usuStSenha != null) {
+////                glausuario = Postgress.getGlausuario(usuStCodigo, strDbName);
+//
+//                if (glausuario != null) {
+//                    if (!glausuario.getUsuStSenha().equals(usuStSenha)) {
+//                        mensagem = "Usuário ou Senha Inválido";
+//                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+//                    }
+//                } 
+//            } else {
+//                mensagem = "Usuário ou senha em Branco.";
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+//            }
+//        }
     }
 
 }

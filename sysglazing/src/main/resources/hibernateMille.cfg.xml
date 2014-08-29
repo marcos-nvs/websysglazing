@@ -10,10 +10,5 @@
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">namnambulu</property>
 
-    <mapping class="br.com.ln.entity.Glamodulo"/>
-    <mapping class="br.com.ln.entity.Glamodulofuncao"/>
-    <mapping class="br.com.ln.entity.Glaperfil"/>
-    <mapping class="br.com.ln.entity.Glaperfilitem"/>
-    <mapping class="br.com.ln.entity.Glausuario"/>
   </session-factory>
 </hibernate-configuration>

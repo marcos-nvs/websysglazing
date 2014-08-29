@@ -1,5 +1,4 @@
 
-import br.com.ln.entity.Glausuario;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.util.List;
 import org.hibernate.Query;
@@ -23,17 +22,17 @@ public class Teste {
         Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
         Transaction tx = session.beginTransaction();
         
-        Glausuario glaUsuarios = null;
-        Query query = session.getNamedQuery("Glausuario.findAll");
-        
-        List l = query.list();
-        
-        if (l != null && l.size() > 0){
-            glaUsuarios = (Glausuario) l.get(0);
-            
-            System.out.println("usuario : " + glaUsuarios.toString());
-        } else {
-            System.out.println("lista vazia.....");
-        }
+//        Glausuario glaUsuarios = null;
+//        Query query = session.getNamedQuery("Glausuario.findAll");
+//
+//        List l = query.list();
+//
+//        if (l != null && l.size() > 0) {
+//            glaUsuarios = (Glausuario) l.get(0);
+//
+//            System.out.println("usuario : " + glaUsuarios.toString());
+//        } else {
+//            System.out.println("lista vazia.....");
+//        }
     }
 }

@@ -6,7 +6,6 @@
 package br.com.ln.hibernate;
 
 import java.io.Serializable;
-import br.com.ln.entity.Glausuario;
 import java.text.SimpleDateFormat;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -40,36 +39,36 @@ public class Postgress implements Serializable{
      * @return 
      */
     
-    public static Glausuario getGlausuario(String usuStCodigo, String strDbName){
-        
-        Session session = null;
-        Transaction tx;
-        Glausuario glausuario = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("Glausuario.findByUsuStCodigo");
-            query.setString("usuStCodigo", usuStCodigo);
-            
-            List l = query.list();
-            tx.commit();
-            
-            if (l != null && l.size() > 0){
-                glausuario = (Glausuario) l.get(0);
-            }
-        }catch(HibernateException ex){
-            System.out.println("Hibernate Exception : " + ex.getMessage());
-        }finally{
-            
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return glausuario;
-    }
-    
+//    public static Glausuario getGlausuario(String usuStCodigo, String strDbName){
+//        
+//        Session session = null;
+//        Transaction tx;
+//        Glausuario glausuario = null;
+//        
+//        try{
+//            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+//            tx = session.beginTransaction();
+//            
+//            Query query = session.getNamedQuery("Glausuario.findByUsuStCodigo");
+//            query.setString("usuStCodigo", usuStCodigo);
+//            
+//            List l = query.list();
+//            tx.commit();
+//            
+//            if (l != null && l.size() > 0){
+//                glausuario = (Glausuario) l.get(0);
+//            }
+//        }catch(HibernateException ex){
+//            System.out.println("Hibernate Exception : " + ex.getMessage());
+//        }finally{
+//            
+//            if (session != null && session.isOpen()){
+//                session.close();
+//            }
+//        }
+//        return glausuario;
+//    }
+//    
     
 
     /**
