@@ -22,10 +22,11 @@
                     <h:form id="idFormTop">
                         <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                         <h:panelGrid id="idGridTop" columns="2">
-                            <h:graphicImage url="img/logoDASA.jpg" />
-                            <!--<h:graphicImage url="img/ln2.jpg" />-->
+                            <!--<h:graphicImage url="img/glazing.jpg" />-->
+                            <!--<h:graphicImage url="img/logoDASA.jpg" />-->
+                            <h:graphicImage url="img/ln2.jpg"/>
                             <p:panel id="idPanelTopLogin" header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
-                                <h:panelGrid id="idGridLogin" columns="5" rendered="#{empty glazingView.glausuario}" >
+                                <h:panelGrid id="idGridLogin" columns="5"  >
                                     <h:outputText id="idTextUser" value="#{msgs['template.user']}"/>
                                     <p:inputText id="inputUser" required="true" maxlength="40" value="#{glazingView.usuStCodigo}"/>
                                     <h:outputText value="#{msgs['page.textFields.password']}"/>
@@ -35,13 +36,13 @@
                                                      update="@this, inputUser, inputPassword, idGridLogado"/>
                                     <p:focus for="inputUser"/>
                                 </h:panelGrid>
-                                <h:panelGrid id="idGridLogado" columns="2" rendered="#{not empty glazingView.glausuario}">
+<!--                                <h:panelGrid id="idGridLogado" columns="2" rendered="#{not empty glazingView.glausuario}">
                                     <h:outputText id="idTextUserlogado" value="Você está logado"/>
                                     <h:outputText value="Bom dia."/>
-<!--                                    <p:commandButton id="idButtonLogout" value="#{msgs['template.logout']}" icon="ui-icon-check" ajax="false"
+                                    <p:commandButton id="idButtonLogout" value="#{msgs['template.logout']}" icon="ui-icon-check" ajax="false"
                                                      partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.realizaLogin}"
-                                                     update="@this, inputUser, inputPassword"/>-->
-                                </h:panelGrid>
+                                                     update="@this, inputUser, inputPassword"/>
+                                </h:panelGrid>-->
                             </p:panel>
                         </h:panelGrid>
                     </h:form>
