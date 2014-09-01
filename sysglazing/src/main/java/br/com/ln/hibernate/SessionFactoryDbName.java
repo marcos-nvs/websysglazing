@@ -28,7 +28,6 @@ public class SessionFactoryDbName implements Serializable{
     
     private static SessionFactory getSessionFactoryByName(String strDbName){
         if (mapSessionFactory.containsKey(strDbName)){
-            System.out.println("achou");
             return mapSessionFactory.get(strDbName);
         } else{
             SessionFactory sessionFactory = buildSessionFactoryByDbName(strDbName);
@@ -50,7 +49,8 @@ public class SessionFactoryDbName implements Serializable{
                     sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
                     break;
                 case "":
-                    System.out.println("Erro não encontrado o arquivo de configuração.");
+                    System.out.println("Buscando Session no banco dados : " + strDbName);
+                    sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
             }
         }catch (HibernateException ex){
             System.out.println(ex.getMessage());

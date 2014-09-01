@@ -7,20 +7,14 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -62,10 +56,6 @@ public class LnModulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "mod_ch_ativo")
     private Character modChAtivo;
-    @ManyToMany(mappedBy = "lnModuloList", fetch = FetchType.EAGER)
-    private List<LnMenu> lnMenuList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lnModulo", fetch = FetchType.EAGER)
-    private List<LnPerfilacesso> lnPerfilacessoList;
 
     public LnModulo() {
     }
@@ -138,24 +128,6 @@ public class LnModulo implements Serializable {
 
     public void setModChAtivo(Character modChAtivo) {
         this.modChAtivo = modChAtivo;
-    }
-
-    @XmlTransient
-    public List<LnMenu> getLnMenuList() {
-        return lnMenuList;
-    }
-
-    public void setLnMenuList(List<LnMenu> lnMenuList) {
-        this.lnMenuList = lnMenuList;
-    }
-
-    @XmlTransient
-    public List<LnPerfilacesso> getLnPerfilacessoList() {
-        return lnPerfilacessoList;
-    }
-
-    public void setLnPerfilacessoList(List<LnPerfilacesso> lnPerfilacessoList) {
-        this.lnPerfilacessoList = lnPerfilacessoList;
     }
 
     @Override

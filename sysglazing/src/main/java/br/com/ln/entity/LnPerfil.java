@@ -7,19 +7,14 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,8 +40,6 @@ public class LnPerfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "per_ch_ativo")
     private Character perChAtivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lnPerfil", fetch = FetchType.EAGER)
-    private List<LnPerfilacesso> lnPerfilacessoList;
 
     public LnPerfil() {
     }
@@ -83,15 +76,6 @@ public class LnPerfil implements Serializable {
 
     public void setPerChAtivo(Character perChAtivo) {
         this.perChAtivo = perChAtivo;
-    }
-
-    @XmlTransient
-    public List<LnPerfilacesso> getLnPerfilacessoList() {
-        return lnPerfilacessoList;
-    }
-
-    public void setLnPerfilacessoList(List<LnPerfilacesso> lnPerfilacessoList) {
-        this.lnPerfilacessoList = lnPerfilacessoList;
     }
 
     @Override

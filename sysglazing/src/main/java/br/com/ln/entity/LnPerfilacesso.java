@@ -11,9 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -50,12 +47,6 @@ public class LnPerfilacesso implements Serializable {
     @Basic(optional = false)
     @Column(name = "pac_ch_pesquisar")
     private Character pacChPesquisar;
-    @JoinColumn(name = "mod_in_codigo", referencedColumnName = "mod_in_codigo", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private LnModulo lnModulo;
-    @JoinColumn(name = "per_in_codigo", referencedColumnName = "per_in_codigo", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private LnPerfil lnPerfil;
 
     public LnPerfilacesso() {
     }
@@ -114,22 +105,6 @@ public class LnPerfilacesso implements Serializable {
 
     public void setPacChPesquisar(Character pacChPesquisar) {
         this.pacChPesquisar = pacChPesquisar;
-    }
-
-    public LnModulo getLnModulo() {
-        return lnModulo;
-    }
-
-    public void setLnModulo(LnModulo lnModulo) {
-        this.lnModulo = lnModulo;
-    }
-
-    public LnPerfil getLnPerfil() {
-        return lnPerfil;
-    }
-
-    public void setLnPerfil(LnPerfil lnPerfil) {
-        this.lnPerfil = lnPerfil;
     }
 
     @Override

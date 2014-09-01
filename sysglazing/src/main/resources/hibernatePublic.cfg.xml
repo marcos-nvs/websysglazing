@@ -11,6 +11,7 @@
     <property name="hibernate.connection.password">namnambulu</property>
     
     <mapping class="br.com.ln.entity.LnMenu"/>
+    <mapping class="br.com.ln.entity.LnMenumodulo"/>
     <mapping class="br.com.ln.entity.LnModulo"/>
     <mapping class="br.com.ln.entity.LnPerfil"/>
     <mapping class="br.com.ln.entity.LnPerfilacesso"/>

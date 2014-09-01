@@ -38,7 +38,7 @@ public class Teste {
                 System.out.println("Não encontrado");
             }
         }finally{
-            
+            session.close();
         }        
         
     }

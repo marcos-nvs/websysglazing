@@ -121,17 +121,15 @@ insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo")
 
 -- DROP TABLE ln_menumodulo;
 
+-- Table: ln_menumodulo
+
+-- DROP TABLE ln_menumodulo;
+
 CREATE TABLE ln_menumodulo
 (
   men_in_codigo integer NOT NULL, -- Código do Menu
   mod_in_codigo integer NOT NULL, -- Código do menu
-  CONSTRAINT "pk_menuModulo" PRIMARY KEY (men_in_codigo, mod_in_codigo),
-  CONSTRAINT fk_menu FOREIGN KEY (men_in_codigo)
-      REFERENCES ln_menu (men_in_codigo) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_modulo FOREIGN KEY (mod_in_codigo)
-      REFERENCES ln_modulo (mod_in_codigo) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT "pk_menuModulo" PRIMARY KEY (men_in_codigo, mod_in_codigo)
 )
 WITH (
   OIDS=FALSE
@@ -189,6 +187,10 @@ insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo
 
 -- DROP TABLE ln_perfilacesso;
 
+-- Table: ln_perfilacesso
+
+-- DROP TABLE ln_perfilacesso;
+
 CREATE TABLE ln_perfilacesso
 (
   per_in_codigo integer NOT NULL, -- Define o perfil ao qual pertence
@@ -197,13 +199,7 @@ CREATE TABLE ln_perfilacesso
   pac_ch_alterar character(1) NOT NULL, -- Define a função
   pac_ch_excluir character(1) NOT NULL, -- Define a função
   pac_ch_pesquisar character(1) NOT NULL, -- Define a função
-  CONSTRAINT pc_perfilacesso PRIMARY KEY (per_in_codigo, mod_in_codigo),
-  CONSTRAINT fk_perfil FOREIGN KEY (per_in_codigo)
-      REFERENCES ln_perfil (per_in_codigo) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT pk_modulo FOREIGN KEY (mod_in_codigo)
-      REFERENCES ln_modulo (mod_in_codigo) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT pc_perfilacesso PRIMARY KEY (per_in_codigo, mod_in_codigo)
 )
 WITH (
   OIDS=FALSE
