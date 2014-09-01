@@ -6,6 +6,7 @@
 
 package br.com.ln.views;
 
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class GlaAccess implements Serializable{
     private String usuStSenha;
     private String mensagem;
     private String strDbName;
+    private LnUsuario lnUsuario;
 
     public GlaAccess() {
     }
@@ -47,6 +49,14 @@ public class GlaAccess implements Serializable{
         this.usuStSenha = usuStSenha;
     }
 
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
     public String getStrDbName() {
         return strDbName;
     }
@@ -55,22 +65,22 @@ public class GlaAccess implements Serializable{
         this.strDbName = strDbName;
     }
 
-
-    public String getMensagem() {
-        return mensagem;
+    public LnUsuario getLnUsuario() {
+        return lnUsuario;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setLnUsuario(LnUsuario lnUsuario) {
+        this.lnUsuario = lnUsuario;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.usuStCodigo);
-        hash = 97 * hash + Objects.hashCode(this.usuStSenha);
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.usuStCodigo);
+        hash = 43 * hash + Objects.hashCode(this.usuStSenha);
+        hash = 43 * hash + Objects.hashCode(this.mensagem);
+        hash = 43 * hash + Objects.hashCode(this.strDbName);
+        hash = 43 * hash + Objects.hashCode(this.lnUsuario);
         return hash;
     }
 
@@ -89,28 +99,43 @@ public class GlaAccess implements Serializable{
         if (!Objects.equals(this.usuStSenha, other.usuStSenha)) {
             return false;
         }
+        if (!Objects.equals(this.mensagem, other.mensagem)) {
+            return false;
+        }
+        if (!Objects.equals(this.strDbName, other.strDbName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lnUsuario, other.lnUsuario)) {
+            return false;
+        }
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "GlaAccess{" + "usuStCodigo=" + usuStCodigo + ", usuStSenha=" + usuStSenha + ", mensagem=" + mensagem + ", strDbName=" + strDbName + ", lnUsuario=" + lnUsuario + '}';
+    }
+
+   
     public void realizaLogin() {
 
-        System.out.println("Banco : " + strDbName);
+        System.out.println("Banco realizalogin : " + strDbName);
         
-//        if (strDbName != null) {
-//            if (usuStCodigo != null && usuStSenha != null) {
-////                glausuario = Postgress.getGlausuario(usuStCodigo, strDbName);
-//
-//                if (glausuario != null) {
-//                    if (!glausuario.getUsuStSenha().equals(usuStSenha)) {
-//                        mensagem = "Usuário ou Senha Inválido";
-//                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
-//                    }
-//                } 
-//            } else {
-//                mensagem = "Usuário ou senha em Branco.";
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
-//            }
-//        }
+        if (strDbName != null) {
+            if (usuStCodigo != null && usuStSenha != null) {
+                lnUsuario = Postgress.getUsuario(usuStCodigo, strDbName);
+
+                if (lnUsuario != null) {
+                    if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
+                        mensagem = "Usuário ou Senha Inválido";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+                    }
+                } 
+            } else {
+                mensagem = "Usuário ou senha em Branco.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+            }
+        }
     }
 
 }

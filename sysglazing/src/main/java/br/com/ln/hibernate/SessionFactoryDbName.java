@@ -28,6 +28,7 @@ public class SessionFactoryDbName implements Serializable{
     
     private static SessionFactory getSessionFactoryByName(String strDbName){
         if (mapSessionFactory.containsKey(strDbName)){
+            System.out.println("achou");
             return mapSessionFactory.get(strDbName);
         } else{
             SessionFactory sessionFactory = buildSessionFactoryByDbName(strDbName);
@@ -39,7 +40,6 @@ public class SessionFactoryDbName implements Serializable{
         
         SessionFactory sessionFactory = null;
         try{
-
             switch (strDbName) {
                 case "Public":
                     System.out.println("Buscando Session no banco dados : " + strDbName);

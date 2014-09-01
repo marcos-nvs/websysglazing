@@ -10,7 +10,11 @@
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">namnambulu</property>
     
-    <!--<mapping class="br.com.ln.entity.Glamodulo"/>-->
+    <mapping class="br.com.ln.entity.LnMenu"/>
+    <mapping class="br.com.ln.entity.LnModulo"/>
+    <mapping class="br.com.ln.entity.LnPerfil"/>
+    <mapping class="br.com.ln.entity.LnPerfilacesso"/>
+    <mapping class="br.com.ln.entity.LnUsuario"/>
     
   </session-factory>
 </hibernate-configuration>

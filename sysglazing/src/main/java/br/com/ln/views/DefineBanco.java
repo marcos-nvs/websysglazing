@@ -25,13 +25,13 @@ public class DefineBanco {
 
     public DefineBanco() {
         this.strDbName = JsfHelper.getRequestParameter("nome");
+        System.out.println("Banco definebanco : " + strDbName);
         acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
         acesso.setStrDbName(this.strDbName);
     }
     
     public void inicia(){
         retorno = "yes";
-        
     }
 
     public String getRetorno() {
@@ -41,8 +41,4 @@ public class DefineBanco {
     public void setRetorno(String retorno) {
         this.retorno = retorno;
     }
-    
-    
-    
-    
 }
