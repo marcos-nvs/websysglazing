@@ -128,12 +128,12 @@ public class GlaAccess implements Serializable{
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
                         mensagem = "Usuário ou Senha Inválido";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     }
                 } 
             } else {
                 mensagem = "Usuário ou senha em Branco.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
             }
         }
     }
