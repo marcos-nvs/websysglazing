@@ -25,12 +25,7 @@ public class DefineBanco implements Serializable {
     private String retorno;
 
     public DefineBanco() {
-        
-        if (!JsfHelper.getRequestParameter("nome").isEmpty()) {
-            this.strDbName = JsfHelper.getRequestParameter("nome");
-        }
-
-        System.out.println("Banco definebanco : " + strDbName);
+        this.strDbName = JsfHelper.getRequestParameter("nome");
         acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
         acesso.setStrDbName(this.strDbName);
     }

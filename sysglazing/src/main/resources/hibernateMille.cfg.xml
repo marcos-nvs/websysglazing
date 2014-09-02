@@ -8,7 +8,7 @@
     <property name="hibernate.default_schema">Mille</property>
     
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">namnambulu</property>
+    <property name="hibernate.connection.password">Kareta44!@#$</property>
 
     <mapping class="br.com.ln.entity.LnMenu"/>
     <mapping class="br.com.ln.entity.LnModulo"/>
