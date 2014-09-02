@@ -21,9 +21,11 @@ import java.util.Locale;
 public class BeanVar implements Serializable{
     
     private String localizacao;
+    private String novaTela;
 
     public BeanVar() {
         this.localizacao = VarComuns.local();
+        this.novaTela = "WEB-INF/templates/login.xhtml";
     }
         
     public String getLocalizacao() {
@@ -33,4 +35,14 @@ public class BeanVar implements Serializable{
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
+
+    public String getNovaTela() {
+        return novaTela;
+    }
+
+    public void setNovaTela(String novaTela) {
+        this.novaTela = novaTela;
+    }
+    
+    
 }

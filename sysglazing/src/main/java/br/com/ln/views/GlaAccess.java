@@ -6,6 +6,8 @@
 
 package br.com.ln.views;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -29,8 +31,11 @@ public class GlaAccess implements Serializable{
     private String mensagem;
     private String strDbName;
     private LnUsuario lnUsuario;
+    private BeanVar beanVar;
 
     public GlaAccess() {
+        
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public String getUsuStCodigo() {
@@ -119,23 +124,41 @@ public class GlaAccess implements Serializable{
    
     public void realizaLogin() {
 
-        System.out.println("Banco realizalogin : " + strDbName);
-        
         if (strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
                 lnUsuario = Postgress.getUsuario(usuStCodigo, strDbName);
 
                 if (lnUsuario != null) {
+                    
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
+                        lnUsuario = null;
                         mensagem = "Usuário ou Senha Inválido";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
+                    } else {
+                        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                     }
                 } 
             } else {
                 mensagem = "Usuário ou senha em Branco.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "UsuÃ¡rio e Senha", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
             }
         }
     }
 
+    public void logout() { 
+
+        cleanUpEveryThing();
+
+        try {
+            FacesContext externalcontext = FacesContext.getCurrentInstance();
+            externalcontext.getExternalContext().redirect("/sysglazing/encerra.ln");
+        } catch (Exception ex) {
+        } finally {
+
+        }
+    }
+
+    private void cleanUpEveryThing() {
+        this.lnUsuario = null;
+    }
 }

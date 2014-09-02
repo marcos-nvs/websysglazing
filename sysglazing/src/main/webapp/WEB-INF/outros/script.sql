@@ -46,6 +46,10 @@ ALTER TABLE seq_modulo
 
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Cliente','S','S','S','S','S')
 
 
 -- Table: ln_usuario
@@ -64,6 +68,7 @@ CREATE TABLE ln_usuario
   usu_ch_expirasenha character(1) NOT NULL, -- Define se a senha do usuário expira
   usu_dt_expiracao date, -- Define quando expira a senha do usuário
   usu_dt_cadastro date, -- Define a data do cadastro do usuário
+  per_in_codigo integer NOT NULL, -- Define o perfil de acesso do usuario
   CONSTRAINT pk_usu_st_codigo PRIMARY KEY (usu_st_codigo)
 )
 WITH (
@@ -71,6 +76,8 @@ WITH (
 );
 ALTER TABLE ln_usuario
   OWNER TO postgres;
+GRANT ALL ON TABLE ln_usuario TO postgres;
+GRANT ALL ON TABLE ln_usuario TO public;
 COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
 COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
 COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
@@ -81,10 +88,12 @@ COMMENT ON COLUMN ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou
 COMMENT ON COLUMN ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
 COMMENT ON COLUMN ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
 COMMENT ON COLUMN ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
+COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
+
 
 insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_cadastro" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448!@#$','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE)
+                                 "usu_dt_cadastro", "per_in_codigo" ) values 
+                                ('Marcos', 'Marcos Naves','Kareta448!@#$','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1)
 
 
 -- Table: ln_menu
@@ -115,6 +124,7 @@ COMMENT ON COLUMN ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inati
 
 
 insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Cadastros','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Pedido','S')
 
 
 -- Table: ln_menumodulo
@@ -141,6 +151,8 @@ COMMENT ON COLUMN ln_menumodulo.mod_in_codigo IS 'Código do menu';
 
 
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,1)
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,2)
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,3)
 
 
 -- Table: ln_perfil
