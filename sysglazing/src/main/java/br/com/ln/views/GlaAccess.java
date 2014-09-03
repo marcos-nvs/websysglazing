@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.menu.MenuModel;
 
     /**
  *
@@ -32,9 +33,9 @@ public class GlaAccess implements Serializable{
     private String strDbName;
     private LnUsuario lnUsuario;
     private BeanVar beanVar;
+    private MenuModel model;
 
     public GlaAccess() {
-        
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
@@ -136,6 +137,8 @@ public class GlaAccess implements Serializable{
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     } else {
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+                        MenuView menuView = new MenuView();
+                        model = menuView.getModel();
                     }
                 } 
             } else {
@@ -161,4 +164,14 @@ public class GlaAccess implements Serializable{
     private void cleanUpEveryThing() {
         this.lnUsuario = null;
     }
+
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+    
+    
 }
