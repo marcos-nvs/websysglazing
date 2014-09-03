@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 
-package br.com.ln.views;
+package br.com.ln.glazing;
 
 import br.com.ln.comum.JsfHelper;
-import br.com.ln.entity.LnUsuario;
+import br.com.ln.views.GlaAccess;
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -23,12 +21,12 @@ import org.primefaces.model.menu.MenuModel;
 
 //@SessionScoped
 //@ManagedBean(name = "menuView")
-public class MenuView implements Serializable{
+public class MenuSistema implements Serializable{
     
     private MenuModel model;
     private GlaAccess glaAccess;
 
-    public MenuView() {
+    public MenuSistema() {
     }
 
     public void montaMenu(){
