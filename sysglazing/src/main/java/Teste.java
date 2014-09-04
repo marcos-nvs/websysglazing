@@ -1,11 +1,6 @@
 
-import br.com.ln.entity.LnMenu;
-import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
-import br.com.ln.entity.LnUsuario;
-import br.com.ln.glazing.MenuSistema;
 import br.com.ln.hibernate.SessionFactoryDbName;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
