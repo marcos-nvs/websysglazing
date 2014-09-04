@@ -1,6 +1,7 @@
 
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
+import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.glazing.MenuSistema;
 import br.com.ln.hibernate.SessionFactoryDbName;
@@ -58,8 +59,32 @@ public class Teste {
 //        }        
 //        
         
-        MenuSistema menu = new MenuSistema(null, "Public");
-        menu.getModel();
+//        MenuSistema menu = new MenuSistema(null, "Public");
+//        menu.getModel();
 
+        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
+        Transaction tx = session.beginTransaction();
+        
+        try {
+            Query query = session.getNamedQuery("LnPerfil.findAll");
+            
+            List l = query.list();
+            tx.commit();
+            
+            if (l != null && !l.isEmpty()){
+                
+                List<LnPerfil> listPerfil = (List<LnPerfil>) l;
+                
+                for (LnPerfil lnPerfil : listPerfil) {
+                    System.out.println("perfil : " + lnPerfil.getPerStDescricao());
+                }                
+            } else{
+                System.out.println("Não encontrado");
+            }
+        }finally{
+            session.close();
+        }        
+        
+        
     }
 }
