@@ -7,14 +7,24 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.ManyToAny;
 
 /**
  *
@@ -41,6 +51,10 @@ public class LnMenu implements Serializable {
     @Column(name = "men_ch_ativo")
     private Character menChAtivo;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "ln_menumodulo", joinColumns ={@JoinColumn(name = "men_in_codigo", unique = true)}, inverseJoinColumns = {@JoinColumn(name = "mod_in_codigo")})
+    private Set<LnModulo> listModulos = new HashSet<>();
+    
     public LnMenu() {
     }
 
@@ -78,6 +92,15 @@ public class LnMenu implements Serializable {
         this.menChAtivo = menChAtivo;
     }
 
+    public Set<LnModulo> getListModulos() {
+        return listModulos;
+    }
+
+    public void setListModulos(Set<LnModulo> listModulos) {
+        this.listModulos = listModulos;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -7,10 +7,13 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -56,6 +59,9 @@ public class LnModulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "mod_ch_ativo")
     private Character modChAtivo;
+    
+    @ManyToMany(mappedBy = "listModulos", fetch = FetchType.LAZY)
+    private List<LnMenu> listMenu; 
 
     public LnModulo() {
     }

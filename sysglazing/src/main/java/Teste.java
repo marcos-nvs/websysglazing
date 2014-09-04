@@ -1,5 +1,5 @@
 
-import br.com.ln.entity.LnUsuario;
+import br.com.ln.entity.LnPerfil;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.util.List;
 import org.hibernate.Query;
@@ -20,26 +20,66 @@ public class Teste {
     
     public static void main(String... args) {
         
+//        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
+//        Transaction tx = session.beginTransaction();
+//        
+//        try {
+//            Query query = session.getNamedQuery("LnMenu.findAll");
+//            
+//            List l = query.list();
+//            tx.commit();
+//            
+//            if (l != null && !l.isEmpty()){
+//                
+//                List<LnMenu> listMenu = (List<LnMenu>) l;
+//                
+//                for (LnMenu lnMenu : listMenu) {
+//                    System.out.println("Menu : " + lnMenu.getMenStDescricao());
+//
+//                    Iterator iter = lnMenu.getListModulos().iterator();
+//                    
+//                    while (iter.hasNext()){
+//                        LnModulo modulo = (LnModulo) iter.next();
+//                        
+//                        System.out.println("modulo : " + modulo.getModStDescricao());
+//                    }
+//                    
+//                }
+//                
+//            } else{
+//                System.out.println("Não encontrado");
+//            }
+//        }finally{
+//            session.close();
+//        }        
+//        
+        
+//        MenuSistema menu = new MenuSistema(null, "Public");
+//        menu.getModel();
+
         Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
         Transaction tx = session.beginTransaction();
         
         try {
-            Query query = session.getNamedQuery("LnUsuario.findByUsuStCodigo");
-            query.setString("usuStCodigo", "Marcos");
+            Query query = session.getNamedQuery("LnPerfil.findAll");
             
             List l = query.list();
             tx.commit();
             
             if (l != null && !l.isEmpty()){
-                LnUsuario lnUsuario = (LnUsuario) l.get(0);
                 
-                System.out.println("Nome do usuário : " + lnUsuario.getUsuStNome());
+                List<LnPerfil> listPerfil = (List<LnPerfil>) l;
+                
+                for (LnPerfil lnPerfil : listPerfil) {
+                    System.out.println("perfil : " + lnPerfil.getPerStDescricao());
+                }                
             } else{
                 System.out.println("Não encontrado");
             }
         }finally{
             session.close();
         }        
+        
         
     }
 }
