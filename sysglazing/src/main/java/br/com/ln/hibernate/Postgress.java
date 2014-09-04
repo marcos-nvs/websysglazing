@@ -5,6 +5,7 @@
  */
 package br.com.ln.hibernate;
 
+import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
 //import java.util.Date;
@@ -72,8 +74,49 @@ public class Postgress implements Serializable{
         return lnUsuario;
     }
     
-    
+    /**
+     *
+     * @param clazz
+     * @param strDbName
+     * @return List Object
+     */
+    public static List getListObject(Class clazz, String strDbName) {
 
+        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Transaction tx = session.beginTransaction();
+        List result;
+
+        try {
+            Criteria criteria = session.createCriteria(clazz);
+            result = criteria.list();
+            tx.commit();
+
+        } finally {
+            if (session.isOpen()) {
+                session.close();
+            }
+        }
+
+        return result;
+    }
+    
+    public static List<LnMenu> getMenu(String strDbName){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Transaction tx = session.beginTransaction();
+        List<LnMenu> listMenu = null;
+        try{
+            Query query = session.getNamedQuery("LnMenu.findAll");
+            listMenu = (List<LnMenu>) query.list();
+            
+        }finally{
+            if (session !=null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listMenu;
+    }
     /**
      *
      * @param clazz
@@ -81,6 +124,7 @@ public class Postgress implements Serializable{
      * @param strDbName
      * @return Object
      */
+
 //    public static Object getObject(Class clazz, long id, String strDbName) {
 //
 //        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
@@ -150,31 +194,6 @@ public class Postgress implements Serializable{
 //        return obj;
 //    }
 //
-//    /**
-//     *
-//     * @param clazz
-//     * @param strDbName
-//     * @return List Object
-//     */
-//    public static List getListObject(Class clazz, String strDbName) {
-//
-//        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-//        Transaction tx = session.beginTransaction();
-//        List result;
-//
-//        try {
-//            Criteria criteria = session.createCriteria(clazz);
-//            result = criteria.list();
-//            tx.commit();
-//
-//        } finally {
-//            if (session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//        return result;
-//    }
 //
 //    /**
 //     *
