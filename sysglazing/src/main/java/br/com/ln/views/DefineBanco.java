@@ -7,6 +7,7 @@
 package br.com.ln.views;
 
 import br.com.ln.comum.JsfHelper;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -17,7 +18,7 @@ import javax.faces.bean.ViewScoped;
 
 @ViewScoped
 @ManagedBean(name = "defineCaminho")
-public class DefineBanco {
+public class DefineBanco implements Serializable {
     
     private String strDbName;
     private GlaAccess acesso;
@@ -25,7 +26,6 @@ public class DefineBanco {
 
     public DefineBanco() {
         this.strDbName = JsfHelper.getRequestParameter("nome");
-        System.out.println("Banco definebanco : " + strDbName);
         acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
         acesso.setStrDbName(this.strDbName);
     }

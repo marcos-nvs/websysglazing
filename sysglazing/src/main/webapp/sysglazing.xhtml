@@ -37,10 +37,9 @@
                                     <p:focus for="inputUser"/>
                                 </h:panelGrid>
                                 <h:panelGrid id="idGridLogado" columns="2" rendered="#{not empty glazingView.lnUsuario}">
-                                    <h:outputText id="idTextUserlogado" value="Você está logado"/>
-                                    <h:outputText value="Bom dia."/>
-                                    <p:commandButton id="idButtonLogout" value="#{msgs['template.logout']}" icon="ui-icon-check" ajax="false"
-                                                     partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.realizaLogin}"
+                                    <h:outputText id="idTextUserlogado" value="Usuário : #{glazingView.lnUsuario.usuStNome}"/>
+                                    <p:commandButton id="idButtonLogout" value="#{msgs['node.logout']}" icon="ui-icon-check" ajax="false"
+                                                     partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.logout()}"
                                                      update="@this, inputUser, inputPassword"/>
                                 </h:panelGrid>
                             </p:panel>
@@ -52,8 +51,10 @@
                     <h:outputText value="South unit content." />
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true" visible="false">
-                    <h:outputText value="West unit content." />
+                <p:layoutUnit position="west" size="200" header="Menu" resizable="true" closable="true" collapsible="true" visible="#{not empty glazingView.lnUsuario}">
+                    <h:form id='idformmenu'>
+                        <p:menu model="#{menuView.model}"/>
+                    </h:form>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop" visible="false">
@@ -64,7 +65,7 @@
                     <h:form id="IdFormCenter">
                         <h:panelGrid columns="1">
                             <ui:insert id="idInsertCentral">
-                                <ui:include src="WEB-INF/templates/login.xhtml"/>
+                                <ui:include src="#{beanVar.novaTela}"/>
                             </ui:insert>
                         </h:panelGrid>
                     </h:form>
