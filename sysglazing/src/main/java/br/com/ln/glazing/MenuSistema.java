@@ -8,6 +8,7 @@ package br.com.ln.glazing;
 
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
+import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class MenuSistema implements Serializable{
     
     private MenuModel model;
     private LnUsuario lnUsuario;
+    private LnPerfil lnPerfil;
     private String strDbName;
 
     public MenuSistema() {
@@ -78,6 +80,14 @@ public class MenuSistema implements Serializable{
             }
             
             model.addElement(subMenu);
+        }
+    }
+    
+    public void menuPerfil(){
+        
+        if (lnUsuario != null){
+            
+            
         }
     }
 }

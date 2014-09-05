@@ -6,6 +6,7 @@
 package br.com.ln.hibernate;
 
 import br.com.ln.entity.LnMenu;
+import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -117,6 +118,33 @@ public class Postgress implements Serializable{
         
         return listMenu;
     }
+    
+    public static LnPerfil getPerfil(Integer perInCodigo,String strDbName){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Transaction tx = session.beginTransaction();
+        LnPerfil lnPerfil = null;
+        
+        try{
+            Query query = session.getNamedQuery("LnPerfil.findByPerInCodigo");
+            query.setInteger("perInCodigo", perInCodigo);
+            
+            List l = query.list();
+            
+            if (l != null && !l.isEmpty()){
+                lnPerfil = (LnPerfil) l.get(0); 
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnPerfil;
+        
+    }
+    
     /**
      *
      * @param clazz

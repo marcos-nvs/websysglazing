@@ -1,6 +1,9 @@
 
 import br.com.ln.entity.LnPerfil;
+import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.hibernate.Postgress;
 import br.com.ln.hibernate.SessionFactoryDbName;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -57,29 +60,41 @@ public class Teste {
 //        MenuSistema menu = new MenuSistema(null, "Public");
 //        menu.getModel();
 
-        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
-        Transaction tx = session.beginTransaction();
+//        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
+//        Transaction tx = session.beginTransaction();
+//        
+//        try {
+//            Query query = session.getNamedQuery("LnPerfil.findAll");
+//            
+//            List l = query.list();
+//            tx.commit();
+//            
+//            if (l != null && !l.isEmpty()){
+//                
+//                List<LnPerfil> listPerfil = (List<LnPerfil>) l;
+//                
+//                for (LnPerfil lnPerfil : listPerfil) {
+//                    System.out.println("perfil : " + lnPerfil.getPerStDescricao());
+//                }                
+//            } else{
+//                System.out.println("Não encontrado");
+//            }
+//        }finally{
+//            session.close();
+//        }        
+
+        LnPerfil perfil = Postgress.getPerfil(1, "Public");
         
-        try {
-            Query query = session.getNamedQuery("LnPerfil.findAll");
-            
-            List l = query.list();
-            tx.commit();
-            
-            if (l != null && !l.isEmpty()){
-                
-                List<LnPerfil> listPerfil = (List<LnPerfil>) l;
-                
-                for (LnPerfil lnPerfil : listPerfil) {
-                    System.out.println("perfil : " + lnPerfil.getPerStDescricao());
-                }                
-            } else{
-                System.out.println("Não encontrado");
-            }
-        }finally{
-            session.close();
-        }        
+        System.out.println("Perfil : " + perfil.toString());
         
+//        Iterator iterator = perfil.getListPerfilacesso().iterator();
+//        
+//        while (iterator.hasNext()){
+//            
+//            LnPerfilacesso lnPerfilacesso = (LnPerfilacesso) iterator.next();
+//            
+//            System.out.println("Perfil Acesso : " + lnPerfilacesso.toString());
+//        }
         
     }
 }

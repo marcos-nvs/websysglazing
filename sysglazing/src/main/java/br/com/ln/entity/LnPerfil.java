@@ -46,9 +46,9 @@ public class LnPerfil implements Serializable {
     @Column(name = "per_ch_ativo")
     private Character perChAtivo;
     
-    @OneToMany()
-    @JoinTable(joinColumns = @JoinColumn(name = "per_in_codigo"))
-    private Set<LnPerfilacesso> listPerfilacesso = new HashSet<LnPerfilacesso>();
+//    @OneToMany()
+//    @JoinTable(name = "ln_perfilacesso", joinColumns = {@JoinColumn(name = "per_in_codigo")})
+//    private Set<LnPerfilacesso> listPerfilacesso = new HashSet<LnPerfilacesso>();
 
     public LnPerfil() {
     }
@@ -87,13 +87,13 @@ public class LnPerfil implements Serializable {
         this.perChAtivo = perChAtivo;
     }
 
-    public Set<LnPerfilacesso> getListPerfilacesso() {
-        return listPerfilacesso;
-    }
-
-    public void setListPerfilacesso(Set<LnPerfilacesso> listPerfilacesso) {
-        this.listPerfilacesso = listPerfilacesso;
-    }
+//    public Set<LnPerfilacesso> getListPerfilacesso() {
+//        return listPerfilacesso;
+//    }
+//
+//    public void setListPerfilacesso(Set<LnPerfilacesso> listPerfilacesso) {
+//        this.listPerfilacesso = listPerfilacesso;
+//    }
     
 
     @Override
