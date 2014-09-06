@@ -1,6 +1,8 @@
 
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnUsuario;
+import br.com.ln.glazing.MenuSistema;
 import br.com.ln.hibernate.Postgress;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.util.Iterator;
@@ -22,6 +24,16 @@ import org.hibernate.Transaction;
 public class Teste {
     
     public static void main(String... args) {
+        
+        LnUsuario usuario = Postgress.getUsuario("Marcos", "Public");
+        
+        if (usuario != null){
+            MenuSistema menuSistema = new MenuSistema(usuario, "Public");
+            
+            menuSistema.menuPerfil();
+        }
+        
+        
         
 //        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");
 //        Transaction tx = session.beginTransaction();
@@ -83,9 +95,9 @@ public class Teste {
 //            session.close();
 //        }        
 
-        LnPerfil perfil = Postgress.getPerfil(1, "Public");
-        
-        System.out.println("Perfil : " + perfil.toString());
+//        LnPerfil perfil = Postgress.getPerfil(1, "Public");
+//        
+//        System.out.println("Perfil : " + perfil.toString());
         
 //        Iterator iterator = perfil.getListPerfilacesso().iterator();
 //        

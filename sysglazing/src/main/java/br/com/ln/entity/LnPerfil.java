@@ -15,9 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -46,10 +46,6 @@ public class LnPerfil implements Serializable {
     @Column(name = "per_ch_ativo")
     private Character perChAtivo;
     
-//    @OneToMany()
-//    @JoinTable(name = "ln_perfilacesso", joinColumns = {@JoinColumn(name = "per_in_codigo")})
-//    private Set<LnPerfilacesso> listPerfilacesso = new HashSet<LnPerfilacesso>();
-
     public LnPerfil() {
     }
 
@@ -86,15 +82,6 @@ public class LnPerfil implements Serializable {
     public void setPerChAtivo(Character perChAtivo) {
         this.perChAtivo = perChAtivo;
     }
-
-//    public Set<LnPerfilacesso> getListPerfilacesso() {
-//        return listPerfilacesso;
-//    }
-//
-//    public void setListPerfilacesso(Set<LnPerfilacesso> listPerfilacesso) {
-//        this.listPerfilacesso = listPerfilacesso;
-//    }
-    
 
     @Override
     public int hashCode() {

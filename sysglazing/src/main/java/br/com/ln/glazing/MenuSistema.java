@@ -9,14 +9,21 @@ package br.com.ln.glazing;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
+import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -24,12 +31,13 @@ import org.primefaces.model.menu.MenuModel;
  * @author Marcos Naves
  */
 
-public class MenuSistema implements Serializable{
+public class MenuSistema implements MenuModel, ActionListener,Serializable{
     
     private MenuModel model;
     private LnUsuario lnUsuario;
     private LnPerfil lnPerfil;
     private String strDbName;
+    private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
 
     public MenuSistema() {
     }
@@ -61,6 +69,8 @@ public class MenuSistema implements Serializable{
     }
 
     private void montaMenu(){
+
+        menuPerfil();
         
         List<LnMenu> listMenu = Postgress.getMenu(strDbName);
         
@@ -70,15 +80,23 @@ public class MenuSistema implements Serializable{
         
         for (LnMenu lnMenu : listMenu) {
             subMenu = new DefaultSubMenu(lnMenu.getMenStDescricao());
+            subMenu.setRendered(false);
             
             Iterator inIt = lnMenu.getListModulos().iterator();
             
             while (inIt.hasNext()){
                 LnModulo lnModulo = (LnModulo) inIt.next();
-                item = new DefaultMenuItem(lnModulo.getModStDescricao());
-                subMenu.addElement(item);
+                
+                if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))){
+                    item = new DefaultMenuItem(lnModulo.getModStDescricao());
+                    item.setUpdate("IdFormCenter");
+                    item.setProcess("IdFormCenter");
+                    subMenu.addElement(item);
+                    subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
+                    
+                    subMenu.setRendered(true);
+                }
             }
-            
             model.addElement(subMenu);
         }
     }
@@ -86,8 +104,37 @@ public class MenuSistema implements Serializable{
     public void menuPerfil(){
         
         if (lnUsuario != null){
+            LnPerfil lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(), strDbName);
             
-            
+            List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class, strDbName);
+
+            for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {
+                
+                String Key = Integer.toString(perfilAcesso.getLnPerfilacessoPK().getModInCodigo());
+                if (!mapPerfilUsuario.containsKey(Key)){
+                    mapPerfilUsuario.put(Key, perfilAcesso);
+                }
+            }
         }
+    }
+
+    @Override
+    public List<MenuElement> getElements() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addElement(MenuElement me) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void generateUniqueIds() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void processAction(ActionEvent event) throws AbortProcessingException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

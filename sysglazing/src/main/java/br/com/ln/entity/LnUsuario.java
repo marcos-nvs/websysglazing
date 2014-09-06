@@ -69,6 +69,8 @@ public class LnUsuario implements Serializable {
     @Column(name = "usu_dt_cadastro")
     @Temporal(TemporalType.DATE)
     private Date usuDtCadastro;
+    @Column(name = "per_in_codigo")
+    private Integer perInCodigo;
 
     public LnUsuario() {
     }
@@ -164,6 +166,14 @@ public class LnUsuario implements Serializable {
 
     public void setUsuDtCadastro(Date usuDtCadastro) {
         this.usuDtCadastro = usuDtCadastro;
+    }
+
+    public Integer getPerInCodigo() {
+        return perInCodigo;
+    }
+
+    public void setPerInCodigo(Integer perInCodigo) {
+        this.perInCodigo = perInCodigo;
     }
 
     @Override

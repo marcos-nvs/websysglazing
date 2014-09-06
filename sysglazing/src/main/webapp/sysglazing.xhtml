@@ -51,9 +51,9 @@
                     <h:outputText value="South unit content." />
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="200" header="Menu" resizable="true" closable="true" collapsible="true" visible="#{not empty glazingView.lnUsuario}">
+                <p:layoutUnit position="west" size="200" header="Menu" resizable="true" closable="false" collapsible="true" visible="#{not empty glazingView.lnUsuario}" >
                     <h:form id='idformmenu'>
-                        <p:panelMenu model="#{glazingView.model}" />
+                        <p:panelMenu model="#{glazingView.model}"/>
                     </h:form>
                 </p:layoutUnit>
 
