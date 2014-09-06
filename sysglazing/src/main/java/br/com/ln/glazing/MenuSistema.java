@@ -13,6 +13,7 @@ import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +22,6 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
@@ -33,24 +33,27 @@ import org.primefaces.model.menu.MenuModel;
 
 public class MenuSistema implements MenuModel, ActionListener,Serializable{
     
-    private MenuModel model;
+//    private MenuModel model;
     private LnUsuario lnUsuario;
     private LnPerfil lnPerfil;
     private String strDbName;
     private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
 
+    protected List<MenuElement> elements = new ArrayList<MenuElement>();
+    
     public MenuSistema() {
     }
 
     public MenuSistema(LnUsuario lnUsuario, String strDbName) {
         this.lnUsuario = lnUsuario;
         this.strDbName = strDbName;
+        montaMenu();
     }
 
-    public MenuModel getModel() {
-        montaMenu();
-        return model;
-    }
+//    public MenuModel getModel() {
+//        montaMenu();
+//        return model;
+//    }
 
     public LnUsuario getLnUsuario() {
         return lnUsuario;
@@ -69,12 +72,13 @@ public class MenuSistema implements MenuModel, ActionListener,Serializable{
     }
 
     private void montaMenu(){
+        resetElements();
 
         menuPerfil();
         
         List<LnMenu> listMenu = Postgress.getMenu(strDbName);
         
-        model = new DefaultMenuModel();
+//        model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
         DefaultMenuItem item;
         
@@ -97,7 +101,7 @@ public class MenuSistema implements MenuModel, ActionListener,Serializable{
                     subMenu.setRendered(true);
                 }
             }
-            model.addElement(subMenu);
+            this.addElement(subMenu);
         }
     }
     
@@ -120,21 +124,25 @@ public class MenuSistema implements MenuModel, ActionListener,Serializable{
 
     @Override
     public List<MenuElement> getElements() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return elements;
     }
 
     @Override
     public void addElement(MenuElement me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        elements.add(me);
     }
 
     @Override
     public void generateUniqueIds() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet generate unique."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    protected void resetElements(){
+        elements = new ArrayList<>();
+    }
+    
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet processaction."); //To change body of generated methods, choose Tools | Templates.
     }
 }
