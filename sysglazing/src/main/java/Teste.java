@@ -24,15 +24,15 @@ import org.hibernate.Transaction;
 public class Teste {
     
     public static void main(String... args) {
-        
-        LnUsuario usuario = Postgress.getUsuario("Marcos", "Public");
-        
-        if (usuario != null){
-            MenuSistema menuSistema = new MenuSistema(usuario, "Public");
-            
-            menuSistema.menuPerfil();
-        }
-        
+//        
+//        LnUsuario usuario = Postgress.getUsuario("Marcos", "Public");
+//        
+//        if (usuario != null){
+//            MenuSistema menuSistema = new MenuSistema(usuario, "Public");
+//            
+//            menuSistema.menuPerfil();
+//        }
+//        
         
         
 //        Session session = SessionFactoryDbName.getCurrentSessionByName("Public");

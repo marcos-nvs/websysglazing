@@ -138,8 +138,8 @@ public class GlaAccess implements Serializable{
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     } else {
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
-//                        MenuSistema menuView = new MenuSistema(lnUsuario,strDbName);
-                        model = new MenuSistema(lnUsuario, strDbName);
+                        MenuSistema menuView = new MenuSistema(lnUsuario,strDbName);
+                        model = menuView.getModel();
                     }
                 } 
             } else {
