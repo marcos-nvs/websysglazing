@@ -9,7 +9,7 @@ package br.com.ln.views;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.glazing.MenuSistema;
+import br.com.ln.glazing.LnMenuModel;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,7 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.model.menu.MenuModel;
 
     /**
  *
@@ -34,7 +33,8 @@ public class GlaAccess implements Serializable{
     private String strDbName;
     private LnUsuario lnUsuario;
     private BeanVar beanVar;
-    private MenuModel model;
+//    private MenuModel model;
+    private LnMenuModel model;
 
     public GlaAccess() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
@@ -138,8 +138,7 @@ public class GlaAccess implements Serializable{
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     } else {
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
-                        MenuSistema menuView = new MenuSistema(lnUsuario,strDbName);
-                        model = menuView.getModel();
+                        model = new LnMenuModel(lnUsuario, strDbName);
                     }
                 } 
             } else {
@@ -166,13 +165,21 @@ public class GlaAccess implements Serializable{
         this.lnUsuario = null;
     }
 
-    public MenuModel getModel() {
+//    public MenuModel getModel() {
+//        return model;
+//    }
+//
+//    public void setModel(MenuModel model) {
+//        this.model = model;
+//    }
+    public LnMenuModel getModel() {
         return model;
     }
 
-    public void setModel(MenuModel model) {
+    public void setModel(LnMenuModel model) {
         this.model = model;
     }
     
+
     
 }

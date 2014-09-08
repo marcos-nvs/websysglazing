@@ -2,7 +2,6 @@
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.glazing.MenuSistema;
 import br.com.ln.hibernate.Postgress;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.util.Iterator;

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.ln.glazing;
 
 import br.com.ln.entity.LnMenu;
@@ -21,7 +22,6 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
@@ -30,51 +30,28 @@ import org.primefaces.model.menu.MenuModel;
  *
  * @author Marcos Naves
  */
-public class MenuSistema implements ActionListener, Serializable {
-
-    private MenuModel model;
+public class LnMenuModel implements MenuModel, ActionListener, Serializable {
+    
+    private List<MenuElement> listMenuElement = new ArrayList<MenuElement>();
     private LnUsuario lnUsuario;
     private LnPerfil lnPerfil;
     private String strDbName;
     private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
 
-
-    public MenuSistema() {
+    public LnMenuModel() {
     }
 
-    public MenuSistema(LnUsuario lnUsuario, String strDbName) {
+    public LnMenuModel(LnUsuario lnUsuario, String strDbName) {
         this.lnUsuario = lnUsuario;
         this.strDbName = strDbName;
-    }
-
-    public MenuModel getModel() {
         montaMenu();
-        return model;
     }
-
-    public LnUsuario getLnUsuario() {
-        return lnUsuario;
-    }
-
-    public void setLnUsuario(LnUsuario lnUsuario) {
-        this.lnUsuario = lnUsuario;
-    }
-
-    public String getStrDbName() {
-        return strDbName;
-    }
-
-    public void setStrDbName(String strDbName) {
-        this.strDbName = strDbName;
-    }
-
-    private void montaMenu() {
-
+    
+    private void montaMenu(){
         menuPerfil();
 
         List<LnMenu> listMenu = Postgress.getMenu(strDbName);
 
-        model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
         DefaultMenuItem item;
 
@@ -89,20 +66,22 @@ public class MenuSistema implements ActionListener, Serializable {
 
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
+                    item.setCommand("#{glaAcesso.usuario}");
                     subMenu.addElement(item);
                     subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
 
                     subMenu.setRendered(true);
                 }
             }
-            model.addElement(subMenu);
+            this.addElement(subMenu);
         }
     }
+
 
     private void menuPerfil() {
 
         if (lnUsuario != null) {
-            LnPerfil lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(), strDbName);
+            lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(), strDbName);
 
             List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class, strDbName);
 
@@ -115,11 +94,30 @@ public class MenuSistema implements ActionListener, Serializable {
             }
         }
     }
+    
+    
+    @Override
+    public List<MenuElement> getElements() {
+        return listMenuElement;
+    }
 
+    @Override
+    public void addElement(MenuElement me) {
+        listMenuElement.add(me);
+    }
+
+    @Override
+    public void generateUniqueIds() {
+        this.generateUniqueIds(getElements(), null);
+    }
+
+    private void generateUniqueIds(List<MenuElement> elements, String seed) {
+        if (elements == null || elements.isEmpty()) {
+        }
+    }
 
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
-        throw new UnsupportedOperationException("Not supported yet processaction."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
