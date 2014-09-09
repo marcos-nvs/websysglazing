@@ -6,6 +6,8 @@
 
 package br.com.ln.glazing;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
@@ -13,32 +15,33 @@ import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ActionListener;
+import javax.faces.bean.ManagedBean;
 import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
-import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
 
 /**
  *
  * @author Marcos Naves
  */
-public class LnMenuModel implements MenuModel, ActionListener, Serializable {
+
+@ManagedBean
+public class LnMenuModel implements Serializable {
     
-    private List<MenuElement> listMenuElement = new ArrayList<MenuElement>();
+    private MenuModel model;
     private LnUsuario lnUsuario;
     private LnPerfil lnPerfil;
     private String strDbName;
     private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
+    private BeanVar beanVar;
 
     public LnMenuModel() {
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public LnMenuModel(LnUsuario lnUsuario, String strDbName) {
@@ -52,13 +55,14 @@ public class LnMenuModel implements MenuModel, ActionListener, Serializable {
 
         List<LnMenu> listMenu = Postgress.getMenu(strDbName);
 
+        model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
         DefaultMenuItem item;
 
         for (LnMenu lnMenu : listMenu) {
             subMenu = new DefaultSubMenu(lnMenu.getMenStDescricao());
             subMenu.setRendered(false);
-
+            
             Iterator inIt = lnMenu.getListModulos().iterator();
 
             while (inIt.hasNext()) {
@@ -66,14 +70,17 @@ public class LnMenuModel implements MenuModel, ActionListener, Serializable {
 
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
-                    item.setCommand("#{glaAcesso.usuario}");
+                    item.setId(Integer.toString(lnModulo.getModInCodigo()));
+                    item.setCommand("#{lnMenuModel.cadastroUsuario}");
+                    item.setUpdate(":idLayoutCenter");
+                    item.setProcess(":idLayoutCenter");
+//                    item.setIcon(strDbName);
                     subMenu.addElement(item);
                     subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
-
                     subMenu.setRendered(true);
                 }
             }
-            this.addElement(subMenu);
+            model.addElement(subMenu);
         }
     }
 
@@ -94,30 +101,17 @@ public class LnMenuModel implements MenuModel, ActionListener, Serializable {
             }
         }
     }
+
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+
+    public void cadastroUsuario(){
+        beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
+    }
     
-    
-    @Override
-    public List<MenuElement> getElements() {
-        return listMenuElement;
-    }
-
-    @Override
-    public void addElement(MenuElement me) {
-        listMenuElement.add(me);
-    }
-
-    @Override
-    public void generateUniqueIds() {
-        this.generateUniqueIds(getElements(), null);
-    }
-
-    private void generateUniqueIds(List<MenuElement> elements, String seed) {
-        if (elements == null || elements.isEmpty()) {
-        }
-    }
-
-    @Override
-    public void processAction(ActionEvent event) throws AbortProcessingException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
