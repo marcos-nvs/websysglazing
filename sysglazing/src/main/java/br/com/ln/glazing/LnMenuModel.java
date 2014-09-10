@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -52,7 +54,7 @@ public class LnMenuModel implements Serializable {
     
     private void montaMenu(){
         menuPerfil();
-
+        
         List<LnMenu> listMenu = Postgress.getMenu(strDbName);
 
         model = new DefaultMenuModel();
@@ -71,14 +73,15 @@ public class LnMenuModel implements Serializable {
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
                     item.setId(Integer.toString(lnModulo.getModInCodigo()));
-                    item.setCommand("#{glazingView.cadastroUsuario}");
+                    item.setTitle(lnModulo.getModStDescricao());
+                    item.setCommand("#{lnMenuModel.menuActionClick}");
                     item.setUpdate(":idLayoutCenter");
                     item.setProcess(":idLayoutCenter");
                     item.setAjax(false);
-//                    item.setIcon(strDbName);
+                    item.setIcon("ui-icon-folder-open");
                     subMenu.addElement(item);
-                    subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
                     subMenu.setRendered(true);
+                    subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
                 }
             }
             model.addElement(subMenu);
@@ -88,6 +91,7 @@ public class LnMenuModel implements Serializable {
 
     private void menuPerfil() {
 
+        
         if (lnUsuario != null) {
             lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(), strDbName);
 
@@ -111,4 +115,21 @@ public class LnMenuModel implements Serializable {
         this.model = model;
     }
 
+    public void menuActionClick(MenuActionEvent menuActionEvent){
+        
+        if (menuActionEvent != null) {
+            String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
+            switch (itemMenuClick) {
+                case "Usuário":
+                    beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
+                    break;
+                case "Perfil":
+                    beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
+                    break;
+                case "Cliente":
+                    beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+                    break;
+            }
+        }
+    }
 }

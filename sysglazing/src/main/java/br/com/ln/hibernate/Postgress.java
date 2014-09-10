@@ -53,8 +53,9 @@ public class Postgress implements Serializable{
             session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("LnUsuario.findByUsuStCodigo");
+            Query query = session.getNamedQuery("LnUsuario.findAllSituacao");
             query.setString("usuStCodigo", usuStCodigo);
+            query.setString("usuChAtivo", "S");
             
             List l = query.list();
             tx.commit();

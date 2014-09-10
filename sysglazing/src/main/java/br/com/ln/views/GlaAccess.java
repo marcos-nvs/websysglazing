@@ -80,6 +80,14 @@ public class GlaAccess implements Serializable{
         this.lnUsuario = lnUsuario;
     }
 
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -166,18 +174,4 @@ public class GlaAccess implements Serializable{
         this.lnUsuario = null;
     }
 
-    public MenuModel getModel() {
-        return model;
-    }
-
-    public void setModel(MenuModel model) {
-        this.model = model;
-    }
-    
-    public void cadastroUsuario(){
-        beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
-        System.out.println("aqui");
-    }
-    
-    
 }
