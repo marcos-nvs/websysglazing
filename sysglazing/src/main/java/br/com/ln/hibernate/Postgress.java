@@ -43,7 +43,7 @@ public class Postgress implements Serializable{
      * @return 
      */
     
-    public static LnUsuario getUsuario(String usuStCodigo, String strDbName){
+    public static LnUsuario getUsuario(String usuStCodigo, Character usuChAtivo, String strDbName){
         
         Session session = null;
         Transaction tx;
@@ -53,9 +53,9 @@ public class Postgress implements Serializable{
             session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("LnUsuario.findAllSituacao");
+            Query query = session.getNamedQuery("LnUsuario.findAllUsuStCodigoUsuChAtivo");
             query.setString("usuStCodigo", usuStCodigo);
-            query.setString("usuChAtivo", "S");
+            query.setCharacter("usuChAtivo", usuChAtivo);
             
             List l = query.list();
             tx.commit();
@@ -102,13 +102,14 @@ public class Postgress implements Serializable{
         return result;
     }
     
-    public static List<LnMenu> getMenu(String strDbName){
+    public static List<LnMenu> getMenu(String strDbName, Character menChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
         Transaction tx = session.beginTransaction();
         List<LnMenu> listMenu = null;
         try{
-            Query query = session.getNamedQuery("LnMenu.findAll");
+            Query query = session.getNamedQuery("LnMenu.findAllAtivo");
+            query.setCharacter("menChAtivo", 'S');
             listMenu = (List<LnMenu>) query.list();
             
         }finally{
@@ -120,15 +121,16 @@ public class Postgress implements Serializable{
         return listMenu;
     }
     
-    public static LnPerfil getPerfil(Integer perInCodigo,String strDbName){
+    public static LnPerfil getPerfil(Integer perInCodigo, Character perChAtivo,String strDbName){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
         Transaction tx = session.beginTransaction();
         LnPerfil lnPerfil = null;
         
         try{
-            Query query = session.getNamedQuery("LnPerfil.findByPerInCodigo");
+            Query query = session.getNamedQuery("LnPerfil.findByPerInCodigoPerChAtivo");
             query.setInteger("perInCodigo", perInCodigo);
+            query.setCharacter("perChAtivo", perChAtivo);
             
             List l = query.list();
             
