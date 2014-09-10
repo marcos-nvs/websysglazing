@@ -174,6 +174,10 @@ public class GlaAccess implements Serializable{
         this.model = model;
     }
     
+    public void cadastroUsuario(){
+        beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
+        System.out.println("aqui");
+    }
     
     
 }

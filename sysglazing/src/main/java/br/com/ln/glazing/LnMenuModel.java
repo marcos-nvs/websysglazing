@@ -71,9 +71,10 @@ public class LnMenuModel implements Serializable {
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
                     item.setId(Integer.toString(lnModulo.getModInCodigo()));
-                    item.setCommand("#{lnMenuModel.cadastroUsuario}");
+                    item.setCommand("#{glazingView.cadastroUsuario}");
                     item.setUpdate(":idLayoutCenter");
                     item.setProcess(":idLayoutCenter");
+                    item.setAjax(false);
 //                    item.setIcon(strDbName);
                     subMenu.addElement(item);
                     subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
@@ -110,8 +111,4 @@ public class LnMenuModel implements Serializable {
         this.model = model;
     }
 
-    public void cadastroUsuario(){
-        beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
-    }
-    
 }
