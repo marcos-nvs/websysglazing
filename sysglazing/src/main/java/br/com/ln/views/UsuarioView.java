@@ -6,9 +6,11 @@
 
 package br.com.ln.views;
 
+import br.com.ln.entity.LnUsuario;
+import br.com.ln.hibernate.Postgress;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.primefaces.model.TreeNode;
 
 /**
  *
@@ -19,7 +21,18 @@ import org.primefaces.model.TreeNode;
 @ManagedBean(name = "usuarioView")
 public class UsuarioView {
     
-    private TreeNode lnRoot;
+    private List<LnUsuario> listUsuario = Postgress.getListObject(LnUsuario.class, "Public");
+
+    public UsuarioView() {
+    }
+
+    public List<LnUsuario> getListUsuario() {
+        return listUsuario;
+    }
+
+    public void setListUsuario(List<LnUsuario> listUsuario) {
+        this.listUsuario = listUsuario;
+    }
     
     
     

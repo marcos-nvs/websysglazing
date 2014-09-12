@@ -4,9 +4,37 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:panel style="position: absolute;width: 99%;border-style: none;text-align: center;" header="Cadastro de Usuários" >
-        <h:panelGrid columns="4">
-            
-        </h:panelGrid>
-    </p:panel>
+    <p:dataTable var="usuario" value="#{usuarioView.listUsuario}" >
+        <f:facet name="header"  >
+            Usuários
+        </f:facet>
+        <p:column headerText="Usuário">
+            <h:outputText value="#{usuario.usuStCodigo}"/>
+        </p:column>
+        <p:column headerText="Nome">
+            <h:outputText value="#{usuario.usuStNome}"/>
+        </p:column>
+        <p:column headerText="E-mail">
+            <h:outputText value="#{usuario.usuStEmail}"/>
+        </p:column>
+        <p:column headerText="Ativo">
+            <h:outputText value="#{usuario.usuChAtivo}"/>
+        </p:column>
+        <p:column headerText="Altera Senha">
+            <h:outputText value="#{usuario.usuChAlterasenha}"/>
+        </p:column>
+        <p:column headerText="Expira">
+            <h:outputText value="#{usuario.usuChExpirasenha}"/>
+        </p:column>
+        <p:column headerText="Data Cadastro">
+            <h:outputText value="#{usuario.usuDtCadastro}"/>
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton value="Incluir"/>
+            <p:commandButton value="Alterar"/>
+            <p:commandButton value="Excluir"/>
+        </f:facet>
+    </p:dataTable>
+
+
 </ui:composition>
