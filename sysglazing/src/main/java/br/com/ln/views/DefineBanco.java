@@ -7,6 +7,7 @@
 package br.com.ln.views;
 
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.VarComuns;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,14 +21,20 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "defineCaminho")
 public class DefineBanco implements Serializable {
     
-    private String strDbName;
     private GlaAccess acesso;
+    private UsuarioView usuarioView;
     private String retorno;
 
     public DefineBanco() {
-        this.strDbName = JsfHelper.getRequestParameter("nome");
-        acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
-        acesso.setStrDbName(this.strDbName);
+        
+        VarComuns.strDbName = JsfHelper.getRequestParameter("nome");
+        
+        if (VarComuns.strDbName == null){
+            VarComuns.strDbName = "Public";
+        }
+        
+//        acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
+//        acesso.setStrDbName(VarComuns.strDbName);
     }
     
     public void inicia(){

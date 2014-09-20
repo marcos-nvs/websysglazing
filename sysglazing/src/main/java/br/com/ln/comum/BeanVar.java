@@ -44,5 +44,4 @@ public class BeanVar implements Serializable{
         this.novaTela = novaTela;
     }
     
-    
 }

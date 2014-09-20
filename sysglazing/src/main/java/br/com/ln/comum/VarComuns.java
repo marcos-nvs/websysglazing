@@ -13,11 +13,21 @@ import java.util.Locale;
  *
  * @author Marcos Naves
  */
+
 public class VarComuns implements Serializable{
+    
+    public static String strDbName;
     
     public static String local(){
         Locale locale = Locale.getDefault();
         return locale.toString();
     }
-    
+
+    public static String getStrDbName() {
+        return strDbName;
+    }
+
+    public static void setStrDbName(String strDbName) {
+        VarComuns.strDbName = strDbName;
+    }
 }

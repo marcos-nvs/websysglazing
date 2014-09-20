@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dialog header="Cadastro de Usuário" widgetVar="dlg2" modal="true" height="160" resizable="false" style="background-color: white">
+    <p:dialog header="Cadastro de Usuário" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" style="background-color: white">
         <p:panel id="idPanelCadUsu">
             <h:panelGrid id="idgridUsuario" columns="1">
                 <h:panelGrid columns="10">
@@ -33,8 +33,8 @@
                     <p:commandButton value="Novo Perifl"/>
                 </h:panelGrid>
                 <f:facet name="footer">
-                    <p:commandButton value="Gravar" process="idUsuario" update="idUsuario" oncomplete="PF('dlg2').close()" ajax="false"/>
-                    <p:commandButton value="Cancelar" process="idUsuario,:IdFormCenter:idPanelCadUsu" update="idUsuario,:IdFormCenter:idPanelCadUsu" actionListener="#{usuarioView.setbotaoCancelar}" ajax="false"/>
+                    <p:commandButton value="Gravar" update=":IdFormCenter,:formDialog" oncomplete="PF('dialogCadUser').hide" ajax="false"/>
+                    <p:commandButton value="Cancelar" update=":IdFormCenter, :formDialog" oncomplete="PF('dialogCadUser').hide" ajax="false"/>
                 </f:facet>
             </h:panelGrid>
         </p:panel>

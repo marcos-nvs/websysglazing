@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
-                 selectionMode="single" rowKey="#{usuario.usuStCodigo}" rendered="#{not usuarioView.bApresenta}" >
+                 selectionMode="single" rowKey="#{usuario.usuStCodigo}">
         <f:facet name="header"  >
             Usuários
         </f:facet>
@@ -31,9 +31,10 @@
             <h:outputText value="#{usuario.usuDtCadastro}"/>
         </p:column>
         <f:facet name="footer">
-            <p:commandButton value="Incluir" process="idUsuario" update=":diologteste:idPanelCadUsu" oncomplete="PF('dlg2').show()"/>
-            <p:commandButton value="Alterar" process="idUsuario" update=":diologteste:idPanelCadUsu" oncomplete="PF('dlg2').show()"/>
-            <p:commandButton value="Excluir" process="idUsuario" update=":diologteste:idPanelCadUsu" oncomplete="PF('dlg2').show()"/>
+            <p:commandButton value="Incluir" process="idUsuario" update=":formDialog:idPanelCadUsu" oncomplete="PF('dialogCadUser').show()"
+                             actionListener="#{usuarioView.setbotaoIncluir()}"/>
+            <p:commandButton value="Alterar" process="idUsuario" update=":formDialog:idPanelCadUsu" oncomplete="PF('dialogCadUser').show()"/>
+            <p:commandButton value="Excluir" process="idUsuario" update=":formDialog:idPanelCadUsu" oncomplete="PF('dialogCadUser').show()"/>
         </f:facet>
     </p:dataTable>
 </ui:composition>

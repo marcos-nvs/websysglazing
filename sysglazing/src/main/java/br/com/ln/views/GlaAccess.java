@@ -8,6 +8,7 @@ package br.com.ln.views;
 
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.glazing.LnMenuModel;
 import br.com.ln.hibernate.Postgress;
@@ -31,7 +32,6 @@ public class GlaAccess implements Serializable{
     private String usuStCodigo;
     private String usuStSenha;
     private String mensagem;
-    private String strDbName;
     private LnUsuario lnUsuario;
     private BeanVar beanVar;
     private MenuModel model;
@@ -64,14 +64,6 @@ public class GlaAccess implements Serializable{
         this.mensagem = mensagem;
     }
 
-    public String getStrDbName() {
-        return strDbName;
-    }
-
-    public void setStrDbName(String strDbName) {
-        this.strDbName = strDbName;
-    }
-
     public LnUsuario getLnUsuario() {
         return lnUsuario;
     }
@@ -94,7 +86,6 @@ public class GlaAccess implements Serializable{
         hash = 43 * hash + Objects.hashCode(this.usuStCodigo);
         hash = 43 * hash + Objects.hashCode(this.usuStSenha);
         hash = 43 * hash + Objects.hashCode(this.mensagem);
-        hash = 43 * hash + Objects.hashCode(this.strDbName);
         hash = 43 * hash + Objects.hashCode(this.lnUsuario);
         return hash;
     }
@@ -117,9 +108,6 @@ public class GlaAccess implements Serializable{
         if (!Objects.equals(this.mensagem, other.mensagem)) {
             return false;
         }
-        if (!Objects.equals(this.strDbName, other.strDbName)) {
-            return false;
-        }
         if (!Objects.equals(this.lnUsuario, other.lnUsuario)) {
             return false;
         }
@@ -128,15 +116,15 @@ public class GlaAccess implements Serializable{
 
     @Override
     public String toString() {
-        return "GlaAccess{" + "usuStCodigo=" + usuStCodigo + ", usuStSenha=" + usuStSenha + ", mensagem=" + mensagem + ", strDbName=" + strDbName + ", lnUsuario=" + lnUsuario + '}';
+        return "GlaAccess{" + "usuStCodigo=" + usuStCodigo + ", usuStSenha=" + usuStSenha + ", mensagem=" + mensagem + ", lnUsuario=" + lnUsuario + '}';
     }
 
    
     public void realizaLogin() {
 
-        if (strDbName != null) {
+        if (VarComuns.strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
-                lnUsuario = Postgress.getUsuario(usuStCodigo, 'S', strDbName);
+                lnUsuario = Postgress.getUsuario(usuStCodigo, 'S', VarComuns.strDbName);
 
                 if (lnUsuario != null) {
                     
@@ -146,7 +134,7 @@ public class GlaAccess implements Serializable{
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     } else {
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
-                        LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, strDbName); 
+                        LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
                     }
                 } 
