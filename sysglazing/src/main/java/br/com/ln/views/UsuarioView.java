@@ -40,12 +40,10 @@ public class UsuarioView implements Serializable{
     private boolean bExpiraSenha;
     private boolean bSenha;
     private boolean bDialog;
-    private BeanVar beanVar;
 
     public UsuarioView() {
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
         listPerfil = Postgress.getListObject(LnPerfil.class, VarComuns.strDbName);
-        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
     
     public List<LnUsuario> getListUsuario() {
