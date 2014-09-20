@@ -6,12 +6,15 @@
 
 package br.com.ln.views;
 
+import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -35,10 +38,14 @@ public class UsuarioView implements Serializable{
     private boolean bAtivo;
     private boolean bAlteraSenha;
     private boolean bExpiraSenha;
+    private boolean bSenha;
+    private boolean bDialog;
+    private BeanVar beanVar;
 
     public UsuarioView() {
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
         listPerfil = Postgress.getListObject(LnPerfil.class, VarComuns.strDbName);
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
     
     public List<LnUsuario> getListUsuario() {
@@ -84,24 +91,76 @@ public class UsuarioView implements Serializable{
     public void setbExpiraSenha(boolean bExpiraSenha) {
         this.bExpiraSenha = bExpiraSenha;
     }
+
+    public boolean isbSenha() {
+        return bSenha;
+    }
+
+    public boolean isbDialog() {
+        return bDialog;
+    }
+
+    public void setbDialog(boolean bDialog) {
+        this.bDialog = bDialog;
+    }
+    
+    public void setbSenha(boolean bSenha) {
+        this.bSenha = bSenha;
+    }
     
     public void setbotaoIncluir(){
         lnUsuario = new LnUsuario();
+        bDialog = true;
+        bSenha = true;
+    }
+    
+    public void setbotalAlterar(){
+        bSenha = false;
+        if (lnUsuario != null){
+            bDialog = true;
+            bAtivo = lnUsuario.getUsuChAtivo() == 'S';
+            bAlteraSenha = lnUsuario.getUsuChAlterasenha() == 'S';
+            bExpiraSenha = lnUsuario.getUsuChExpirasenha() == 'S';
+        } else {
+            bDialog = false;
+        }
     }
 
     public void setbotaoGravar(){
         
+        if (bAtivo){
+            lnUsuario.setUsuChAtivo('S');
+        } else {
+            lnUsuario.setUsuChAtivo('N');
+        }
+        
+        if (bAlteraSenha){
+            lnUsuario.setUsuChAlterasenha('S');
+        } else {
+            lnUsuario.setUsuChAlterasenha('N');
+        }
+        
+        if (bExpiraSenha){
+            lnUsuario.setUsuChExpirasenha('S');
+            lnUsuario.setUsuInDia(30);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(Postgress.getDateFromDB(VarComuns.strDbName));
+            calendar.add(30, 0);
+            lnUsuario.setUsuDtExpiracao(calendar.getTime());
+        } else {
+            lnUsuario.setUsuChExpirasenha('N');
+        }
+        lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB(VarComuns.strDbName));
+
+        Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
+        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
+        lnUsuario = null;
     }
     
-    public void onRowSelect(SelectEvent event) {
-
-        lnUsuario = (LnUsuario) event.getObject();
-        System.out.println("Usuário selecionado : " + lnUsuario.getUsuStCodigo());
-        
+    public void setbotaoDelete(){
+        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
+        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
+        lnUsuario =  null;
     }
-
-    public void onRowUnselect(UnselectEvent event) {
-        FacesMessage msg = new FacesMessage("Usuario não selecionado", ((LnUsuario) event.getObject()).getUsuStCodigo());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+    
 }

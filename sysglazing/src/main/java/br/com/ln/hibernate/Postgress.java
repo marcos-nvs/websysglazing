@@ -10,6 +10,7 @@ import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -148,6 +149,99 @@ public class Postgress implements Serializable{
         
     }
     
+    /**
+     *
+     * @param obj save or update a obj
+     * @param strDbName
+     *
+     */
+    public static void saveOrUpdateObject(Object obj, String strDbName) {
+        Session session = null;
+        Transaction tx ;
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            tx = session.beginTransaction();
+            session.saveOrUpdate(obj);
+            tx.commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public static Date getDateFromDB(String strDbName) {
+
+        Session session = null;
+        Transaction tx = null;
+        Date rightNow = null;
+        try {
+
+            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            tx = session.beginTransaction();
+
+            Query query = session.createSQLQuery("select now()");
+            List listQuery = query.list();
+
+            if (listQuery != null && !listQuery.isEmpty()) {
+                for (int i = 0; i < listQuery.size(); i++) {
+                    java.sql.Timestamp rightNowTimeStamp = (java.sql.Timestamp) listQuery.get(i);
+                    rightNow = new Date(rightNowTimeStamp.getTime());
+                    break;
+                }
+            }
+
+        } catch (HibernateException xcp) {
+            System.out.println(xcp.getMessage());
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        return rightNow;
+    }
+
+    /**
+     *
+     * @param obj save a obj
+     * @param strDbName *
+     */
+    public static void saveObject(Object obj, String strDbName) {
+        Session session = null;
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            Transaction tx = session.beginTransaction();
+            session.save(obj);
+            tx.commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param obj delete object
+     * @param strDbName
+     */
+    public static void deleteObject(Object obj, String strDbName) {
+        Session session = null;
+        Transaction tx;
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            tx = session.beginTransaction();
+            session.delete(obj);
+            tx.commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+    }
+
     /**
      *
      * @param clazz
@@ -365,24 +459,6 @@ public class Postgress implements Serializable{
 //        return result;
 //    }
 //
-//    /**
-//     *
-//     * @param obj save a obj
-//     * @param strDbName *
-//     */
-//    public static void saveObject(Object obj, String strDbName) {
-//        Session session = null;
-//        try {
-//            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-//            Transaction tx = session.beginTransaction();
-//            session.save(obj);
-//            tx.commit();
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//    }
 //
 //    public static Object saveObjectReturn(Object obj, String strDbName) {
 //        Session session = null;
@@ -414,28 +490,6 @@ public class Postgress implements Serializable{
 //            for (Object obj : list) {
 //                session.save(obj);
 //            }
-//            tx.commit();
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
-//
-//    /**
-//     *
-//     * @param obj save or update a obj
-//     * @param strDbName
-//     *
-//     */
-//    public static void saveOrUpdateObject(Object obj, String strDbName) {
-//        Session session = null;
-//        Transaction tx ;
-//        try {
-//            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-//            tx = session.beginTransaction();
-//            session.saveOrUpdate(obj);
 //            tx.commit();
 //        } finally {
 //            if (session != null && session.isOpen()) {
@@ -553,26 +607,6 @@ public class Postgress implements Serializable{
 //
 //    }
 //
-//    /**
-//     *
-//     * @param obj delete object
-//     * @param strDbName
-//     */
-//    public static void deleteObject(Object obj, String strDbName) {
-//        Session session = null;
-//        Transaction tx;
-//        try {
-//            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-//            tx = session.beginTransaction();
-//            session.delete(obj);
-//            tx.commit();
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
 //
 //    /**
 //     *
@@ -874,38 +908,6 @@ public class Postgress implements Serializable{
 //
 ////    public static Long getLabRelatorioNextId(String strDbName) {
 ////        return new Long(getIdByNextValueStringSQL("select SEQ_REL_IN_CODIGO.nextval from dual", strDbName));
-////    }
-//
-////    public static Date getDateFromDB(String strDbName) {
-////
-////        Session session = null;
-////        Transaction tx = null;
-////        Date rightNow = null;
-////        try {
-////
-////            session = SessionFactoriByDBName.getCurrentSession4FacesByDbName(strDbName);
-////            tx = session.beginTransaction();
-////
-////            Query query = session.createSQLQuery("SELECT SYSDATE FROM Dual");
-////            List listQuery = query.list();
-////
-////            if (listQuery != null && !listQuery.isEmpty()) {
-////                for (int i = 0; i < listQuery.size(); i++) {
-////                    java.sql.Timestamp rightNowTimeStamp = (java.sql.Timestamp) listQuery.get(i);
-////                    rightNow = new Date(rightNowTimeStamp.getTime());
-////                    break;
-////                }
-////            }
-////
-////        } catch (HibernateException xcp) {
-////            System.out.println(xcp.getMessage());
-////        } finally {
-////            if (session != null && session.isOpen()) {
-////                session.close();
-////            }
-////        }
-////
-////        return rightNow;
 ////    }
 //
 }

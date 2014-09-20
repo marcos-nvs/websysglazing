@@ -16,7 +16,7 @@
         <h:body id="idBoby"
                 style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;">
             <h:outputText value="#{defineCaminho.retorno} "/> -->
-            <h:form id="formDialog" style="">
+            <h:form id="formDialog" >
                 <ui:insert id="idInsertDialog">
                     <ui:include src="WEB-INF/templates/dialogUsuario.xhtml"/>
                 </ui:insert>
@@ -27,8 +27,8 @@
                         <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                         <h:panelGrid id="idGridTop" columns="2">
                             <!--<h:graphicImage url="img/glazing.jpg" />-->
-                            <h:graphicImage url="img/logoDASA.jpg" />
-                            <!--<h:graphicImage url="img/ln2.jpg"/>-->
+                            <!--<h:graphicImage url="img/logoDASA.jpg" />-->
+                            <h:graphicImage url="img/ln2.jpg"/>
                             <p:panel id="idPanelTopLogin" header="GLAZING - Sistema para Vidraçaria" style="position: fixed;left:30%;top: 12px">
                                 <h:panelGrid id="idGridLogin" columns="5" rendered="#{empty glazingView.lnUsuario}" >
                                     <h:outputText id="idTextUser" value="#{msgs['template.user']}"/>

@@ -22,6 +22,7 @@ public class BeanVar implements Serializable{
     
     private String localizacao;
     private String novaTela;
+    private String novoDialog;
 
     public BeanVar() {
         this.localizacao = VarComuns.local();

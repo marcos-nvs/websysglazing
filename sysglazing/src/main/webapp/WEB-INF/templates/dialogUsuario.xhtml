@@ -4,14 +4,15 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dialog header="Cadastro de Usuário" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" style="background-color: white">
+    <p:dialog header="Cadastro de Usuário" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" style="background-color: white"
+              closable="false">
         <p:panel id="idPanelCadUsu">
             <h:panelGrid id="idgridUsuario" columns="1">
                 <h:panelGrid columns="10">
                     <h:outputText value="Usuário:" />
                     <h:inputText value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
-                    <h:outputText value="Senha:"/>
-                    <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20"/>
+                    <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
+                    <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
                     <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
                     <h:outputText value="Ativo"/>
                     <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
@@ -33,7 +34,8 @@
                     <p:commandButton value="Novo Perifl"/>
                 </h:panelGrid>
                 <f:facet name="footer">
-                    <p:commandButton value="Gravar" update=":IdFormCenter,:formDialog" oncomplete="PF('dialogCadUser').hide" ajax="false"/>
+                    <p:commandButton value="Gravar" update=":IdFormCenter,:formDialog" oncomplete="PF('dialogCadUser').hide" ajax="false"
+                                     actionListener="#{usuarioView.setbotaoGravar()}"/>
                     <p:commandButton value="Cancelar" update=":IdFormCenter, :formDialog" oncomplete="PF('dialogCadUser').hide" ajax="false"/>
                 </f:facet>
             </h:panelGrid>
