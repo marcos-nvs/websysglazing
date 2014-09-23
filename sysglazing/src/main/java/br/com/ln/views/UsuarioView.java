@@ -110,9 +110,12 @@ public class UsuarioView implements Serializable{
         lnUsuario = new LnUsuario();
         bDialog = true;
         bSenha = true;
+        
+        System.out.println("incluir");
     }
     
     public void setbotalAlterar(){
+        System.out.println("usuario := " + lnUsuario.toString());
         bSenha = false;
         if (lnUsuario != null){
             bDialog = true;
@@ -122,9 +125,14 @@ public class UsuarioView implements Serializable{
         } else {
             bDialog = false;
         }
+        System.out.println("alterar");
     }
 
     public void setbotaoGravar(){
+        
+        if (lnUsuario != null) {
+            System.out.println("Usuario := " + lnUsuario.toString());
+        }
         
         if (bAtivo){
             lnUsuario.setUsuChAtivo('S');
@@ -153,6 +161,7 @@ public class UsuarioView implements Serializable{
         Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
         lnUsuario = null;
+        System.out.println("gravar");
     }
     
     public void setbotaoDelete(){
