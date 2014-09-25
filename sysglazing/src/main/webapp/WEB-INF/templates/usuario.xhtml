@@ -3,13 +3,18 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:form>
+        
+    </h:form>
+        
 
         <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
                      selectionMode="single" rowKey="#{usuario.usuStCodigo}">
             <f:facet name="header"  >
-                Usuários
+                <h:outputText value="#{msgs['template.user']}"/>
             </f:facet>
-            <p:column headerText="UsuÃ¡rio">
+            <p:column headerText="#{msgs['template.user']}">
                 <h:outputText value="#{usuario.usuStCodigo}"/>
             </p:column>
             <p:column headerText="Nome">
@@ -38,19 +43,19 @@
                 <p:commandButton value="Alterar Senha"/>
             </f:facet>
         </p:dataTable>
-        <p:dialog id="idDialogUsuario" header="Cadastro de Usuário" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" 
+        <p:dialog id="idDialogUsuario" header="#{msgs['template.user.register']}" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" 
                   style="background-color: white" closable="false" appendTo="@(body)">
             <p:panel id="idPanelCadUsu">
                 <h:panelGrid id="idgridUsuario" columns="1">
                     <h:panelGrid columns="10">
-                        <h:outputText value="UsuÃ¡rio:" />
+                        <h:outputText value="#{msgs['template.user']}:" />
                         <h:inputText value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
                         <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
                         <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
                         <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
                         <h:outputText value="Ativo"/>
                         <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
-                        <h:outputText value="UsuÃ¡rio Altera Senha"/>
+                        <h:outputText value="Usuário Altera Senha"/>
                         <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" />
                         <h:outputText value="Expira Senha"/>
                     </h:panelGrid>
@@ -69,9 +74,8 @@
                         <p:commandButton value="Novo Perfil"/>
                     </h:panelGrid>
                     <f:facet name="footer">
-                        <p:commandButton id="idBtGravar" value="Gravar" oncomplete="PF('dialogCadUser').hide" update=":IdFormCenter:idUsuario"
-                                         action="#{usuarioView.setbotaoGravar()}"/>
-                        <p:commandButton id="idBtCancelar" value="Cancelar" update=":IdFormCenter"/>
+                        <p:commandButton id="idBtGravar" value="Gravar" oncomplete="PF('dialogCadUser').hide"/>
+                        <p:commandButton id="idBtCancelar" value="Cancelar" />
                     </f:facet>
                 </h:panelGrid>
             </p:panel>

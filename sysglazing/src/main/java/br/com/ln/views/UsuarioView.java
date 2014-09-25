@@ -111,7 +111,7 @@ public class UsuarioView implements Serializable{
         bDialog = true;
         bSenha = true;
         
-        System.out.println("incluir");
+        System.out.println("incluir : " + lnUsuario.toString());
     }
     
     public void setbotalAlterar(){
