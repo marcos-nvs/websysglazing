@@ -3,12 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-    <h:form>
-        
-    </h:form>
-        
 
+    <h:form id="idFormUsuario">
         <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
                      selectionMode="single" rowKey="#{usuario.usuStCodigo}">
             <f:facet name="header"  >
@@ -36,10 +32,10 @@
                 <h:outputText value="#{usuario.usuDtCadastro}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="Incluir" oncomplete="PF('dialogCadUser').show()" process="idUsuario" action="#{usuarioView.setbotaoIncluir()}" />
-                <p:commandButton value="Alterar" process="idUsuario" update="idUsuario, :IdFormCenter:idgridUsuario"  
+                <p:commandButton value="Incluir" oncomplete="PF('dialogCadUser').show()" process=":IdFormCenter:idFormUsuario:idUsuario" action="#{usuarioView.setbotaoIncluir()}" />
+                <p:commandButton value="Alterar" process=":IdFormCenter:idFormUsuario:idUsuario" update=":IdFormCenter:idFormUsuario:idUsuario, :IdFormCenter:idFormUsuario:idgridUsuario"  
                                  oncomplete="PF('dialogCadUser').show()" action="#{usuarioView.setbotalAlterar()}" />
-                <p:commandButton value="Excluir" process="idUsuario" update="idUsuario" action="#{usuarioView.setbotaoDelete()}" />
+                <p:commandButton value="Excluir" process=":IdFormCenter:idFormUsuario:idUsuario" update=":IdFormCenter:idFormUsuario:idUsuario" action="#{usuarioView.setbotaoDelete()}" />
                 <p:commandButton value="Alterar Senha"/>
             </f:facet>
         </p:dataTable>
@@ -75,9 +71,11 @@
                     </h:panelGrid>
                     <f:facet name="footer">
                         <p:commandButton id="idBtGravar" value="Gravar" oncomplete="PF('dialogCadUser').hide"/>
-                        <p:commandButton id="idBtCancelar" value="Cancelar" />
+                        <p:commandButton id="idBtCancelar" value="Cancelar" oncomplete="PF('dialogCadUser').hide" />
                     </f:facet>
                 </h:panelGrid>
             </p:panel>
         </p:dialog>  
+
+    </h:form>
 </ui:composition>
