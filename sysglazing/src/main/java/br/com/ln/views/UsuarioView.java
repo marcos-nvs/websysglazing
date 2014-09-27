@@ -6,8 +6,6 @@
 
 package br.com.ln.views;
 
-import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
@@ -16,12 +14,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -39,7 +33,7 @@ public class UsuarioView implements Serializable{
     private boolean bAlteraSenha;
     private boolean bExpiraSenha;
     private boolean bSenha;
-    private boolean bDialog;
+    private boolean bTCad;
 
     public UsuarioView() {
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
@@ -94,45 +88,37 @@ public class UsuarioView implements Serializable{
         return bSenha;
     }
 
-    public boolean isbDialog() {
-        return bDialog;
-    }
-
-    public void setbDialog(boolean bDialog) {
-        this.bDialog = bDialog;
-    }
-    
     public void setbSenha(boolean bSenha) {
         this.bSenha = bSenha;
+    }
+
+    public boolean isbTCad() {
+        return bTCad;
+    }
+
+    public void setbTCad(boolean bTCad) {
+        this.bTCad = bTCad;
     }
     
     public void setbotaoIncluir(){
         lnUsuario = new LnUsuario();
-        bDialog = true;
         bSenha = true;
+        bTCad = true;
         
-        System.out.println("incluir : " + lnUsuario.toString());
+        System.out.println("Incluir");
     }
     
     public void setbotalAlterar(){
-        System.out.println("usuario := " + lnUsuario.toString());
         bSenha = false;
+        bTCad = true;
         if (lnUsuario != null){
-            bDialog = true;
             bAtivo = lnUsuario.getUsuChAtivo() == 'S';
             bAlteraSenha = lnUsuario.getUsuChAlterasenha() == 'S';
             bExpiraSenha = lnUsuario.getUsuChExpirasenha() == 'S';
-        } else {
-            bDialog = false;
         }
-        System.out.println("alterar");
     }
 
     public void setbotaoGravar(){
-        
-        if (lnUsuario != null) {
-            System.out.println("Usuario := " + lnUsuario.toString());
-        }
         
         if (bAtivo){
             lnUsuario.setUsuChAtivo('S');
@@ -161,13 +147,12 @@ public class UsuarioView implements Serializable{
         Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
         lnUsuario = null;
-        System.out.println("gravar");
     }
     
-    public void setbotaoDelete(){
-        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
-        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-        lnUsuario =  null;
-    }
+//    public void setbotaoDelete(){
+//        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
+//        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
+//        lnUsuario =  null;
+//    }
     
 }

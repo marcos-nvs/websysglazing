@@ -4,78 +4,73 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form id="idFormUsuario">
-        <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
-                     selectionMode="single" rowKey="#{usuario.usuStCodigo}">
-            <f:facet name="header"  >
-                <h:outputText value="#{msgs['template.user']}"/>
-            </f:facet>
-            <p:column headerText="#{msgs['template.user']}">
-                <h:outputText value="#{usuario.usuStCodigo}"/>
-            </p:column>
-            <p:column headerText="Nome">
-                <h:outputText value="#{usuario.usuStNome}"/>
-            </p:column>
-            <p:column headerText="E-mail">
-                <h:outputText value="#{usuario.usuStEmail}"/>
-            </p:column>
-            <p:column headerText="Ativo">
-                <h:outputText value="#{usuario.usuChAtivo}"/>
-            </p:column>
-            <p:column headerText="Altera Senha">
-                <h:outputText value="#{usuario.usuChAlterasenha}"/>
-            </p:column>
-            <p:column headerText="Expira">
-                <h:outputText value="#{usuario.usuChExpirasenha}"/>
-            </p:column>
-            <p:column headerText="Data Cadastro">
-                <h:outputText value="#{usuario.usuDtCadastro}"/>
-            </p:column>
+    <p:panel id="idPanelCadUsu" header="Cadastro de Usuário" rendered="#{usuarioView.bTCad}">
+        <h:panelGrid id="idgridUsuario" columns="1" >
+            <h:panelGrid columns="10">
+                <h:outputText value="#{msgs['template.user']}:" />
+                <h:inputText value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
+                <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
+                <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
+                <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
+                <h:outputText value="Ativo"/>
+                <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
+                <h:outputText value="Usuário Altera Senha"/>
+                <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" />
+                <h:outputText value="Expira Senha"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <h:outputText value="Nome:"/>
+                <h:inputText value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
+                <h:outputText value="E-mail:"/>
+                <h:inputText value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <h:outputText value="Perfil:"/>
+                <h:selectOneMenu id="idperfil" value="#{usuarioView.lnUsuario.perInCodigo}">
+                    <f:selectItems value="#{usuarioView.listPerfil}" var="perfil" itemLabel="#{perfil.perStDescricao}" 
+                                   itemValue="#{perfil.perInCodigo}" />
+                </h:selectOneMenu>
+                <p:commandButton value="Novo Perfil"/>
+            </h:panelGrid>
             <f:facet name="footer">
-                <p:commandButton value="Incluir" oncomplete="PF('dialogCadUser').show()" process=":IdFormCenter:idFormUsuario:idUsuario" action="#{usuarioView.setbotaoIncluir()}" />
-                <p:commandButton value="Alterar" process=":IdFormCenter:idFormUsuario:idUsuario" update=":IdFormCenter:idFormUsuario:idUsuario, :IdFormCenter:idFormUsuario:idgridUsuario"  
-                                 oncomplete="PF('dialogCadUser').show()" action="#{usuarioView.setbotalAlterar()}" />
-                <p:commandButton value="Excluir" process=":IdFormCenter:idFormUsuario:idUsuario" update=":IdFormCenter:idFormUsuario:idUsuario" action="#{usuarioView.setbotaoDelete()}" />
-                <p:commandButton value="Alterar Senha"/>
+                <p:commandButton id="idBtGravar" value="Gravar" action="#{usuarioView.setbotaoGravar()}" />
+                <p:commandButton id="idBtCancelar" value="Cancelar"/>
             </f:facet>
-        </p:dataTable>
-        <p:dialog id="idDialogUsuario" header="#{msgs['template.user.register']}" widgetVar="dialogCadUser" modal="true" height="160" resizable="false" 
-                  style="background-color: white" closable="false" appendTo="@(body)">
-            <p:panel id="idPanelCadUsu">
-                <h:panelGrid id="idgridUsuario" columns="1">
-                    <h:panelGrid columns="10">
-                        <h:outputText value="#{msgs['template.user']}:" />
-                        <h:inputText value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
-                        <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
-                        <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
-                        <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
-                        <h:outputText value="Ativo"/>
-                        <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
-                        <h:outputText value="Usuário Altera Senha"/>
-                        <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" />
-                        <h:outputText value="Expira Senha"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="4">
-                        <h:outputText value="Nome:"/>
-                        <h:inputText value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
-                        <h:outputText value="E-mail:"/>
-                        <h:inputText value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="4">
-                        <h:outputText value="Perfil:"/>
-                        <h:selectOneMenu id="idperfil" value="#{usuarioView.lnUsuario.perInCodigo}">
-                            <f:selectItems value="#{usuarioView.listPerfil}" var="perfil" itemLabel="#{perfil.perStDescricao}" 
-                                           itemValue="#{perfil.perInCodigo}" />
-                        </h:selectOneMenu>
-                        <p:commandButton value="Novo Perfil"/>
-                    </h:panelGrid>
-                    <f:facet name="footer">
-                        <p:commandButton id="idBtGravar" value="Gravar" oncomplete="PF('dialogCadUser').hide"/>
-                        <p:commandButton id="idBtCancelar" value="Cancelar" oncomplete="PF('dialogCadUser').hide" />
-                    </f:facet>
-                </h:panelGrid>
-            </p:panel>
-        </p:dialog>  
-
-    </h:form>
+        </h:panelGrid>
+    </p:panel>
+    <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
+                 selectionMode="single" rowKey="#{usuario.usuStCodigo}">
+        <f:facet name="header"  >
+            <h:outputText value="#{msgs['template.user']}"/>
+        </f:facet>
+        <p:column headerText="#{msgs['template.user']}">
+            <h:outputText value="#{usuario.usuStCodigo}"/>
+        </p:column>
+        <p:column headerText="Nome">
+            <h:outputText value="#{usuario.usuStNome}"/>
+        </p:column>
+        <p:column headerText="E-mail">
+            <h:outputText value="#{usuario.usuStEmail}"/>
+        </p:column>
+        <p:column headerText="Ativo">
+            <h:outputText value="#{usuario.usuChAtivo}"/>
+        </p:column>
+        <p:column headerText="Altera Senha">
+            <h:outputText value="#{usuario.usuChAlterasenha}"/>
+        </p:column>
+        <p:column headerText="Expira">
+            <h:outputText value="#{usuario.usuChExpirasenha}"/>
+        </p:column>
+        <p:column headerText="Data Cadastro">
+            <h:outputText value="#{usuario.usuDtCadastro}"/>
+        </p:column>
+        <f:facet name="footer" rendered="#{not usuarioView.bTCad}">
+            <p:commandButton value="Incluir" process="idUsuario" update="idUsuario"
+                             action="#{usuarioView.setbotaoIncluir}" ajax="false"/>
+            <p:commandButton value="Alterar" process="idUsuario" 
+                             action="#{usuarioView.setbotalAlterar}" ajax="false"/>
+            <p:commandButton value="Excluir"/>
+            <p:commandButton value="Alterar Senha"/>
+        </f:facet>
+    </p:dataTable>
 </ui:composition>
