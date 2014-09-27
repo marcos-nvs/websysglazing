@@ -27,7 +27,7 @@ import javax.faces.bean.ViewScoped;
 public class UsuarioView implements Serializable{
     
     private List<LnUsuario> listUsuario;
-    private LnUsuario lnUsuario;
+    private LnUsuario lnUsuario = null;
     private List<LnPerfil> listPerfil;
     private boolean bAtivo;
     private boolean bAlteraSenha;
@@ -38,6 +38,7 @@ public class UsuarioView implements Serializable{
     public UsuarioView() {
         listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
         listPerfil = Postgress.getListObject(LnPerfil.class, VarComuns.strDbName);
+        lnUsuario = new LnUsuario();
     }
     
     public List<LnUsuario> getListUsuario() {
@@ -100,15 +101,15 @@ public class UsuarioView implements Serializable{
         this.bTCad = bTCad;
     }
     
-    public void setbotaoIncluir(){
-        lnUsuario = new LnUsuario();
+    public void setBotaoIncluir(){
+//        lnUsuario = new LnUsuario();
         bSenha = true;
         bTCad = true;
         
-        System.out.println("Incluir");
-    }
+        System.out.println("usuario na inclusão : " + lnUsuario.toString());
+    } 
     
-    public void setbotalAlterar(){
+    public void setBotaoAlterar(){
         bSenha = false;
         bTCad = true;
         if (lnUsuario != null){
@@ -117,42 +118,53 @@ public class UsuarioView implements Serializable{
             bExpiraSenha = lnUsuario.getUsuChExpirasenha() == 'S';
         }
     }
+    
+    public void setBotaoCancelar(){
+        bTCad = false;
+        lnUsuario = new LnUsuario();
+    }
 
-    public void setbotaoGravar(){
+    public void setBotaoGravar(){
         
-        if (bAtivo){
-            lnUsuario.setUsuChAtivo('S');
-        } else {
-            lnUsuario.setUsuChAtivo('N');
-        }
-        
-        if (bAlteraSenha){
-            lnUsuario.setUsuChAlterasenha('S');
-        } else {
-            lnUsuario.setUsuChAlterasenha('N');
-        }
-        
-        if (bExpiraSenha){
-            lnUsuario.setUsuChExpirasenha('S');
-            lnUsuario.setUsuInDia(30);
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(Postgress.getDateFromDB(VarComuns.strDbName));
-            calendar.add(30, 0);
-            lnUsuario.setUsuDtExpiracao(calendar.getTime());
-        } else {
-            lnUsuario.setUsuChExpirasenha('N');
-        }
-        lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB(VarComuns.strDbName));
-
-        Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
-        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-        lnUsuario = null;
+        System.out.println("inicio da gravação");
+        bTCad = false;
+        System.out.println("Usuario : " + lnUsuario.toString());
+//        
+//        if (bAtivo){
+//            lnUsuario.setUsuChAtivo('S');
+//        } else {
+//            lnUsuario.setUsuChAtivo('N');
+//        }
+//        
+//        if (bAlteraSenha){
+//            lnUsuario.setUsuChAlterasenha('S');
+//        } else {
+//            lnUsuario.setUsuChAlterasenha('N');
+//        }
+//        
+//        if (bExpiraSenha){
+//            lnUsuario.setUsuChExpirasenha('S');
+//            lnUsuario.setUsuInDia(30);
+//            Calendar calendar = new GregorianCalendar();
+//            calendar.setTime(Postgress.getDateFromDB(VarComuns.strDbName));
+//            calendar.add(30, 0);
+//            lnUsuario.setUsuDtExpiracao(calendar.getTime());
+//        } else {
+//            lnUsuario.setUsuChExpirasenha('N');
+//        }
+//        lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB(VarComuns.strDbName));
+//
+//        System.out.println("envio para o servidor");
+//        Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
+//        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
+//        System.out.println("fim para o servidor");
+//        lnUsuario = new LnUsuario();
     }
     
-//    public void setbotaoDelete(){
-//        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
-//        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-//        lnUsuario =  null;
-//    }
+    public void setBotaoDelete(){
+        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
+        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
+        lnUsuario = new LnUsuario();
+    }
     
 }

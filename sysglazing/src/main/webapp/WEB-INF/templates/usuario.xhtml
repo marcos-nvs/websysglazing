@@ -4,13 +4,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:panel id="idPanelCadUsu" header="Cadastro de Usuário" rendered="#{usuarioView.bTCad}">
+    <p:panel id="idPanelCadUsu" header="Cadastro de Usuário" visible="#{usuarioView.bTCad}">
         <h:panelGrid id="idgridUsuario" columns="1" >
             <h:panelGrid columns="10">
                 <h:outputText value="#{msgs['template.user']}:" />
-                <h:inputText value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
+                <h:inputText id="idUsuStCodigo" value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
                 <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
-                <h:inputSecret value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
+                <h:inputSecret id="idUsuStSenha" value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
                 <h:outputText value="Ativo"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
@@ -33,8 +33,11 @@
                 <p:commandButton value="Novo Perfil"/>
             </h:panelGrid>
             <f:facet name="footer">
-                <p:commandButton id="idBtGravar" value="Gravar" action="#{usuarioView.setbotaoGravar()}" />
-                <p:commandButton id="idBtCancelar" value="Cancelar"/>
+                <p:commandButton id="idBtGravar" value="Gravar" process="idUsuario,:IdFormCenter:idPanelCadUsu, idUsuStCodigo" 
+                                 update=":IdFormCenter:idPanelCadUsu, idUsuStCodigo"
+                                 action="#{usuarioView.setBotaoGravar}" />
+                <p:commandButton id="idBtCancelar" value="Cancelar" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
+                                 action="#{usuarioView.setBotaoCancelar}"  />
             </f:facet>
         </h:panelGrid>
     </p:panel>
@@ -64,11 +67,11 @@
         <p:column headerText="Data Cadastro">
             <h:outputText value="#{usuario.usuDtCadastro}"/>
         </p:column>
-        <f:facet name="footer" rendered="#{not usuarioView.bTCad}">
-            <p:commandButton value="Incluir" process="idUsuario" update="idUsuario"
-                             action="#{usuarioView.setbotaoIncluir}" ajax="false"/>
-            <p:commandButton value="Alterar" process="idUsuario" 
-                             action="#{usuarioView.setbotalAlterar}" ajax="false"/>
+        <f:facet name="footer">
+            <p:commandButton value="Incluir" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
+                             action="#{usuarioView.setBotaoIncluir}" />
+            <p:commandButton value="Alterar" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
+                             action="#{usuarioView.setBotaoAlterar}" />
             <p:commandButton value="Excluir"/>
             <p:commandButton value="Alterar Senha"/>
         </f:facet>
