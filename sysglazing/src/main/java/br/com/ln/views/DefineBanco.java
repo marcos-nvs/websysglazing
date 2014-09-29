@@ -21,8 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "defineCaminho")
 public class DefineBanco implements Serializable {
     
-    private GlaAccess acesso;
-    private UsuarioView usuarioView;
     private String retorno;
 
     public DefineBanco() {
@@ -32,9 +30,6 @@ public class DefineBanco implements Serializable {
         if (VarComuns.strDbName == null){
             VarComuns.strDbName = "Public";
         }
-        
-//        acesso = (GlaAccess) JsfHelper.getSessionAttribute("glazingView");
-//        acesso.setStrDbName(VarComuns.strDbName);
     }
     
     public void inicia(){

@@ -55,7 +55,7 @@ public class LnMenuModel implements Serializable {
     private void montaMenu(){
         menuPerfil();
         
-        List<LnMenu> listMenu = Postgress.getMenu(strDbName,'S');
+        List<LnMenu> listMenu = Postgress.getMenu('S');
 
         model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
@@ -93,9 +93,9 @@ public class LnMenuModel implements Serializable {
 
         
         if (lnUsuario != null) {
-            lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(),'S', strDbName);
+            lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(),'S');
 
-            List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class, strDbName);
+            List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class);
 
             for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {
 

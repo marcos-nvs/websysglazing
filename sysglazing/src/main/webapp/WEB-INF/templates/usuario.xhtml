@@ -3,77 +3,80 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-
-    <p:panel id="idPanelCadUsu" header="Cadastro de Usuário" visible="#{usuarioView.bTCad}">
+    
+    <p:panel id="idPanelCadUsuario" header="#{msgs['template.user.register']}" visible="#{usuarioView.bTelaCadastro}">
         <h:panelGrid id="idgridUsuario" columns="1" >
             <h:panelGrid columns="10">
                 <h:outputText value="#{msgs['template.user']}:" />
                 <h:inputText id="idUsuStCodigo" value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
-                <h:outputText value="Senha:" rendered="#{usuarioView.bSenha}"/>
-                <h:inputSecret id="idUsuStSenha" value="#{usuarioView.lnUsuario.usuStSenha}" maxlength="40" size="20" rendered="#{usuarioView.bSenha}"/>
+                <h:outputText value="#{msgs['page.textFields.password']}:" rendered="#{usuarioView.bMostraSenha}"/>
+                <h:inputSecret id="idUsuStSenha" value="#{usuarioView.lnUsuario.usuStSenha}" rendered="#{usuarioView.bMostraSenha}" 
+                               maxlength="40" size="20"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
-                <h:outputText value="Ativo"/>
+                <h:outputText id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
-                <h:outputText value="Usuário Altera Senha"/>
+                <h:outputText id="idUsuChAlteraSenha" value="#{msgs['node.user.changes.password']}"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" />
-                <h:outputText value="Expira Senha"/>
+                <h:outputText id="idUsuChExpiraSenha" value="#{msgs['password expires']}"/>
             </h:panelGrid>
             <h:panelGrid columns="4">
-                <h:outputText value="Nome:"/>
-                <h:inputText value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
-                <h:outputText value="E-mail:"/>
-                <h:inputText value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
+                <h:outputText value="#{msgs['page.tree.employee.name.label']}:"/>
+                <h:inputText id="idUsuStUsuario" value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
+                <h:outputText value="#{msgs['node.email']}:"/>
+                <h:inputText id="idUsuStEmaiil" value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
             </h:panelGrid>
             <h:panelGrid columns="4">
-                <h:outputText value="Perfil:"/>
+                <h:outputText value="#{msgs['template.profile']}:"/>
                 <h:selectOneMenu id="idperfil" value="#{usuarioView.lnUsuario.perInCodigo}">
                     <f:selectItems value="#{usuarioView.listPerfil}" var="perfil" itemLabel="#{perfil.perStDescricao}" 
                                    itemValue="#{perfil.perInCodigo}" />
                 </h:selectOneMenu>
-                <p:commandButton value="Novo Perfil"/>
             </h:panelGrid>
             <f:facet name="footer">
-                <p:commandButton id="idBtGravar" value="Gravar" process="idUsuario,:IdFormCenter:idPanelCadUsu, idUsuStCodigo" 
-                                 update=":IdFormCenter:idPanelCadUsu, idUsuStCodigo"
-                                 action="#{usuarioView.setBotaoGravar}" />
-                <p:commandButton id="idBtCancelar" value="Cancelar" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
-                                 action="#{usuarioView.setBotaoCancelar}"  />
+                <p:commandButton id="idBtGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelCadUsuario" 
+                                 update="idPanelCadUsuario, :idFormCenter:idDtUsuario, :idFormTop:growl" action="#{usuarioView.btGravar}"/>
+                <p:commandButton id="idBtCancelar" value="#{msgs['node.cancel']}" process="idPanelCadUsuario" update="idPanelCadUsuario"
+                                 action="#{usuarioView.btCancelar}"/>
             </f:facet>
         </h:panelGrid>
     </p:panel>
-    <p:dataTable id="idUsuario" var="usuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}" 
-                 selectionMode="single" rowKey="#{usuario.usuStCodigo}">
-        <f:facet name="header"  >
+    <p:dataTable id="idDtUsuario" var="codUsuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}"
+                 selectionMode="single" rowKey="#{codUsuario.usuStCodigo}">
+        <f:facet name="header">
             <h:outputText value="#{msgs['template.user']}"/>
         </f:facet>
         <p:column headerText="#{msgs['template.user']}">
-            <h:outputText value="#{usuario.usuStCodigo}"/>
+            <h:outputText value="#{codUsuario.usuStCodigo}"/>
         </p:column>
-        <p:column headerText="Nome">
-            <h:outputText value="#{usuario.usuStNome}"/>
+        <p:column headerText="#{msgs['page.tree.employee.name.label']}">
+            <h:outputText value="#{codUsuario.usuStNome}"/>
         </p:column>
-        <p:column headerText="E-mail">
-            <h:outputText value="#{usuario.usuStEmail}"/>
+        <p:column headerText="#{msgs['node.email']}">
+            <h:outputText value="#{codUsuario.usuStEmail}"/>
         </p:column>
-        <p:column headerText="Ativo">
-            <h:outputText value="#{usuario.usuChAtivo}"/>
+        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+            <h:outputText value="#{codUsuario.usuChAtivo}"/>
         </p:column>
-        <p:column headerText="Altera Senha">
-            <h:outputText value="#{usuario.usuChAlterasenha}"/>
+        <p:column headerText="#{msgs['node.user.changes.password']}">
+            <h:outputText value="#{codUsuario.usuChAlterasenha}"/>
         </p:column>
-        <p:column headerText="Expira">
-            <h:outputText value="#{usuario.usuChExpirasenha}"/>
+        <p:column headerText="#{msgs['password expires']}">
+            <h:outputText value="#{codUsuario.usuChExpirasenha}"/>
         </p:column>
-        <p:column headerText="Data Cadastro">
-            <h:outputText value="#{usuario.usuDtCadastro}"/>
+        <p:column headerText="#{msgs['node.Registration.Date']}">
+            <h:outputText value="#{codUsuario.usuDtCadastro}"/>
         </p:column>
         <f:facet name="footer">
-            <p:commandButton value="Incluir" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
-                             action="#{usuarioView.setBotaoIncluir}" />
-            <p:commandButton value="Alterar" process="idUsuario,:IdFormCenter:idPanelCadUsu" update=":IdFormCenter:idPanelCadUsu"
-                             action="#{usuarioView.setBotaoAlterar}" />
-            <p:commandButton value="Excluir"/>
-            <p:commandButton value="Alterar Senha"/>
+            <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario"
+                             action="#{usuarioView.btIncluir}"/>
+            <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btAlterar}"/>
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btExcluir()}"/>
         </f:facet>
     </p:dataTable>
+    <p:dialog>
+        
+    </p:dialog>
+        
 </ui:composition>

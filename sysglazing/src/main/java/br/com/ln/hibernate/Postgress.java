@@ -5,6 +5,7 @@
  */
 package br.com.ln.hibernate;
 
+import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
@@ -44,14 +45,14 @@ public class Postgress implements Serializable{
      * @return 
      */
     
-    public static LnUsuario getUsuario(String usuStCodigo, Character usuChAtivo, String strDbName){
+    public static LnUsuario getUsuario(String usuStCodigo, Character usuChAtivo){
         
         Session session = null;
         Transaction tx;
         LnUsuario lnUsuario = null;
         
         try{
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
             Query query = session.getNamedQuery("LnUsuario.findAllUsuStCodigoUsuChAtivo");
@@ -77,15 +78,46 @@ public class Postgress implements Serializable{
         return lnUsuario;
     }
     
+    public static LnUsuario getUsuario(String usuStCodigo){
+        
+        Session session = null;
+        Transaction tx;
+        LnUsuario lnUsuario = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnUsuario.findByUsuStCodigo");
+            query.setString("usuStCodigo", usuStCodigo);
+            
+            List l = query.list();
+            tx.commit();
+            
+            if (l != null && l.size() > 0){
+                lnUsuario = (LnUsuario) l.get(0);
+            } else {
+                System.out.println("Usuário não encontrado !!!!!!!!!!!!!!!!");
+            }
+        }catch(HibernateException ex){
+            System.out.println("Hibernate Exception : " + ex.getMessage());
+        }finally{
+            
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return lnUsuario;
+    }
     /**
      *
      * @param clazz
      * @param strDbName
      * @return List Object
      */
-    public static List getListObject(Class clazz, String strDbName) {
+    public static List getListObject(Class clazz) {
 
-        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
         List result;
 
@@ -103,9 +135,9 @@ public class Postgress implements Serializable{
         return result;
     }
     
-    public static List<LnMenu> getMenu(String strDbName, Character menChAtivo){
+    public static List<LnMenu> getMenu(Character menChAtivo){
         
-        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
         List<LnMenu> listMenu = null;
         try{
@@ -122,9 +154,9 @@ public class Postgress implements Serializable{
         return listMenu;
     }
     
-    public static LnPerfil getPerfil(Integer perInCodigo, Character perChAtivo,String strDbName){
+    public static LnPerfil getPerfil(Integer perInCodigo, Character perChAtivo){
         
-        Session session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
         LnPerfil lnPerfil = null;
         
@@ -144,22 +176,39 @@ public class Postgress implements Serializable{
                 session.close();
             }
         }
-        
         return lnPerfil;
-        
     }
     
+    public static List<LnPerfil> getListPerfilAtivo(Character perChAtivo){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+        Transaction tx = session.beginTransaction();
+        List<LnPerfil> listPerfil;
+        
+        try{
+            Query query = session.getNamedQuery("LnPerfil.findByPerChAtivo");
+            query.setCharacter("perChAtivo", perChAtivo);
+            listPerfil = query.list();
+            tx.commit();
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listPerfil;
+    }
+
     /**
      *
      * @param obj save or update a obj
      * @param strDbName
      *
      */
-    public static void saveOrUpdateObject(Object obj, String strDbName) {
+    public static void saveOrUpdateObject(Object obj) {
         Session session = null;
         Transaction tx ;
         try {
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             session.saveOrUpdate(obj);
             tx.commit();
@@ -170,14 +219,14 @@ public class Postgress implements Serializable{
         }
     }
 
-    public static Date getDateFromDB(String strDbName) {
+    public static Date getDateFromDB() {
 
         Session session = null;
         Transaction tx = null;
         Date rightNow = null;
         try {
 
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
 
             Query query = session.createSQLQuery("select now()");
@@ -207,10 +256,10 @@ public class Postgress implements Serializable{
      * @param obj save a obj
      * @param strDbName *
      */
-    public static void saveObject(Object obj, String strDbName) {
+    public static void saveObject(Object obj) {
         Session session = null;
         try {
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             Transaction tx = session.beginTransaction();
             session.save(obj);
             tx.commit();
@@ -226,11 +275,11 @@ public class Postgress implements Serializable{
      * @param obj delete object
      * @param strDbName
      */
-    public static void deleteObject(Object obj, String strDbName) {
+    public static void deleteObject(Object obj) {
         Session session = null;
         Transaction tx;
         try {
-            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             session.delete(obj);
             tx.commit();

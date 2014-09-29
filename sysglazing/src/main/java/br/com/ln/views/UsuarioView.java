@@ -3,44 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.ln.views;
 
-import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Marcos Naves
  */
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "usuarioView")
 public class UsuarioView implements Serializable{
     
     private List<LnUsuario> listUsuario;
-    private LnUsuario lnUsuario = null;
+    private LnUsuario lnUsuario;
     private List<LnPerfil> listPerfil;
+    private boolean bTelaCadastro;
     private boolean bAtivo;
     private boolean bAlteraSenha;
     private boolean bExpiraSenha;
-    private boolean bSenha;
-    private boolean bTCad;
+    private boolean bMostraSenha;
+    private String sTipoFuncao;
+    private String mensagem;
 
     public UsuarioView() {
-        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-        listPerfil = Postgress.getListObject(LnPerfil.class, VarComuns.strDbName);
-        lnUsuario = new LnUsuario();
+        this.listUsuario = Postgress.getListObject(LnUsuario.class);
+        this.listPerfil = Postgress.getListPerfilAtivo('S');
     }
-    
+
     public List<LnUsuario> getListUsuario() {
         return listUsuario;
     }
@@ -59,6 +58,18 @@ public class UsuarioView implements Serializable{
 
     public List<LnPerfil> getListPerfil() {
         return listPerfil;
+    }
+
+    public void setListPerfil(List<LnPerfil> listPerfil) {
+        this.listPerfil = listPerfil;
+    }
+
+    public boolean isbTelaCadastro() {
+        return bTelaCadastro;
+    }
+
+    public void setbTelaCadastro(boolean bTelaCadastro) {
+        this.bTelaCadastro = bTelaCadastro;
     }
 
     public boolean isbAtivo() {
@@ -85,86 +96,109 @@ public class UsuarioView implements Serializable{
         this.bExpiraSenha = bExpiraSenha;
     }
 
-    public boolean isbSenha() {
-        return bSenha;
+    public boolean isbMostraSenha() {
+        return bMostraSenha;
     }
 
-    public void setbSenha(boolean bSenha) {
-        this.bSenha = bSenha;
-    }
-
-    public boolean isbTCad() {
-        return bTCad;
-    }
-
-    public void setbTCad(boolean bTCad) {
-        this.bTCad = bTCad;
+    public void setbMostraSenha(boolean bMostraSenha) {
+        this.bMostraSenha = bMostraSenha;
     }
     
-    public void setBotaoIncluir(){
-//        lnUsuario = new LnUsuario();
-        bSenha = true;
-        bTCad = true;
-        
-        System.out.println("usuario na inclusão : " + lnUsuario.toString());
-    } 
+    public void btIncluir(){
+        lnUsuario = new LnUsuario();
+        this.bTelaCadastro = true;
+        this.bAtivo = false;
+        this.bAlteraSenha = false;
+        this.bExpiraSenha = false;
+        this.sTipoFuncao = "I";
+        this.bMostraSenha = true;
+    }
     
-    public void setBotaoAlterar(){
-        bSenha = false;
-        bTCad = true;
-        if (lnUsuario != null){
-            bAtivo = lnUsuario.getUsuChAtivo() == 'S';
-            bAlteraSenha = lnUsuario.getUsuChAlterasenha() == 'S';
-            bExpiraSenha = lnUsuario.getUsuChExpirasenha() == 'S';
+    public void btAlterar(){
+        if (lnUsuario != null) {
+            this.bTelaCadastro = true;
+            this.sTipoFuncao = "A";
+            this.bMostraSenha = false;
+            
+            if (lnUsuario.getUsuChAlterasenha().equals('S')){
+                bAlteraSenha = true;
+            } else {
+                bAlteraSenha = false;
+            }
+
+            if (lnUsuario.getUsuChAtivo().equals('S')){
+                bAtivo = true;
+            } else {
+                bAtivo = false;
+            }
+
+            if (lnUsuario.getUsuChExpirasenha().equals('S')) {
+                bExpiraSenha = true;
+            } else {
+                bExpiraSenha = false;
+            }
+
+        } else {
+            mensagem = "Por favor, escolha um Usuário.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
         }
     }
     
-    public void setBotaoCancelar(){
-        bTCad = false;
-        lnUsuario = new LnUsuario();
+    public void btExcluir(){
+        if (lnUsuario != null){
+            Postgress.deleteObject(lnUsuario);
+            listUsuario = Postgress.getListObject(LnUsuario.class);
+        } else {
+            mensagem = "Por favor, escolha um Usuário.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        }
     }
-
-    public void setBotaoGravar(){
+    
+    public void btGravar(){
+        this.bTelaCadastro = false;
         
-        System.out.println("inicio da gravação");
-        bTCad = false;
+        if (bAtivo){
+            lnUsuario.setUsuChAtivo('S');
+        } else {
+            lnUsuario.setUsuChAtivo('N');
+        }
+        
+        if (bAlteraSenha){
+            lnUsuario.setUsuChAlterasenha('S');
+        } else {
+            lnUsuario.setUsuChAlterasenha('N');
+        }
+        
+        if(bExpiraSenha){
+            lnUsuario.setUsuChExpirasenha('S');
+        } else {
+            lnUsuario.setUsuChExpirasenha('N');
+        }
+        
         System.out.println("Usuario : " + lnUsuario.toString());
-//        
-//        if (bAtivo){
-//            lnUsuario.setUsuChAtivo('S');
-//        } else {
-//            lnUsuario.setUsuChAtivo('N');
-//        }
-//        
-//        if (bAlteraSenha){
-//            lnUsuario.setUsuChAlterasenha('S');
-//        } else {
-//            lnUsuario.setUsuChAlterasenha('N');
-//        }
-//        
-//        if (bExpiraSenha){
-//            lnUsuario.setUsuChExpirasenha('S');
-//            lnUsuario.setUsuInDia(30);
-//            Calendar calendar = new GregorianCalendar();
-//            calendar.setTime(Postgress.getDateFromDB(VarComuns.strDbName));
-//            calendar.add(30, 0);
-//            lnUsuario.setUsuDtExpiracao(calendar.getTime());
-//        } else {
-//            lnUsuario.setUsuChExpirasenha('N');
-//        }
-//        lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB(VarComuns.strDbName));
-//
-//        System.out.println("envio para o servidor");
-//        Postgress.saveOrUpdateObject(lnUsuario, VarComuns.strDbName);
-//        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-//        System.out.println("fim para o servidor");
-//        lnUsuario = new LnUsuario();
+        
+        if (sTipoFuncao.equals("I")){
+            novoUsuario();
+        } else {
+            Postgress.saveOrUpdateObject(lnUsuario);
+        }
+        
+        listUsuario = Postgress.getListObject(LnUsuario.class);
     }
     
-    public void setBotaoDelete(){
-        Postgress.deleteObject(lnUsuario, VarComuns.strDbName);
-        listUsuario = Postgress.getListObject(LnUsuario.class, VarComuns.strDbName);
-        lnUsuario = new LnUsuario();
+    public void btCancelar(){
+        this.bTelaCadastro = false;
     }
     
+    private void novoUsuario(){
+        
+        LnUsuario lnNovoUsuario = Postgress.getUsuario(lnUsuario.getUsuStCodigo());
+        
+        if (lnNovoUsuario != null){
+            mensagem = "Usuário já Cadastrado.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        } else {
+            Postgress.saveObject(lnUsuario);
+        }
+    }
 }
