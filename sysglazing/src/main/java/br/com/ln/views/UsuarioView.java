@@ -207,8 +207,6 @@ public class UsuarioView implements Serializable{
             lnUsuario.setUsuChExpirasenha('N');
         }
         
-        System.out.println("Usuario : " + lnUsuario.toString());
-        
         if (sTipoFuncao.equals("I")){
             novoUsuario();
         } else {
