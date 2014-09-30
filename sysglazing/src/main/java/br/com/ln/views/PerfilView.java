@@ -5,6 +5,7 @@
  */
 package br.com.ln.views;
 
+import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.hibernate.Postgress;
@@ -74,7 +75,9 @@ public class PerfilView implements Serializable{
     public void setbVerAcesso(boolean bVerAcesso) {
         this.bVerAcesso = bVerAcesso;
     }
-
+    
+    
+    
     public void btVisualizar(){
         
         if (lnPerfil != null) {
@@ -84,6 +87,10 @@ public class PerfilView implements Serializable{
         mensagem = "Por favor, escolha o perfil que deseja visualizar";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Perfil", mensagem));
         }
+    }
+    
+    public void btFechar(){
+        this.bVerAcesso = false;
     }
     
 }

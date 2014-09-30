@@ -61,8 +61,8 @@ public class LnModulo implements Serializable {
     @Column(name = "mod_ch_ativo")
     private Character modChAtivo;
     
-    @ManyToMany(mappedBy = "listModulos", fetch = FetchType.LAZY)
-    private List<LnMenu> listMenu; 
+//    @ManyToMany(mappedBy = "listModulos", fetch = FetchType.LAZY)
+//    private List<LnMenu> listMenu; 
 
     public LnModulo() {
     }

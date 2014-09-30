@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPerfilacesso.findByPacChAlterar", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChAlterar = :pacChAlterar"),
     @NamedQuery(name = "LnPerfilacesso.findByPacChExcluir", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChExcluir = :pacChExcluir"),
     @NamedQuery(name = "LnPerfilacesso.findByPacChPesquisar", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChPesquisar = :pacChPesquisar")})
+
 public class LnPerfilacesso implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -107,6 +108,8 @@ public class LnPerfilacesso implements Serializable {
     public void setPacChPesquisar(Character pacChPesquisar) {
         this.pacChPesquisar = pacChPesquisar;
     }
+    
+    
 
     @Override
     public int hashCode() {
