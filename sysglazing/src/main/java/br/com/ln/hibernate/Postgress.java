@@ -317,6 +317,29 @@ public class Postgress implements Serializable{
         return lnPerfilAcesso;
     }
     
+    public static List<LnPerfilacesso> getPerfilAcessoperInCodigo(Integer perInCodigo){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+        Transaction tx = session.beginTransaction();
+        List<LnPerfilacesso> listlnPerfilAcesso = null;
+        
+        try{
+            Query query = session.getNamedQuery("LnPerfilacesso.findByPerInCodigo");
+            query.setInteger("perInCodigo", perInCodigo);
+            
+            List l = query.list();
+            
+            if (l != null && !l.isEmpty()){
+                listlnPerfilAcesso = l; 
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listlnPerfilAcesso;
+    }
 
     /**
      *

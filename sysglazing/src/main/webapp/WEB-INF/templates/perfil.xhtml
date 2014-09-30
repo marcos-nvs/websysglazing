@@ -4,5 +4,56 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <h:outputText value="Cadastro de Peril"/>
+    <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
+                 selectionMode="single" rowKey="#{codPerfil.perInCodigo}">
+        <f:facet name="header">
+            <h:outputText value="#{msgs['template.profile']}" />
+        </f:facet>
+        <p:column headerText="Descrição">
+            <h:outputText value="#{codPerfil.perStDescricao}"/>
+        </p:column>
+        <p:column headerText="Ativo">
+            <h:outputText value="#{codPerfil.perChAtivo}"/>
+        </p:column>
+        <p:column headerText="Alt. Senha Usuários">
+            <h:outputText value="#{codPerfil.perChAlteraSenha}"/>
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton value="#{msgs['node.include']}" />
+            <p:commandButton value="#{msgs['template.change']}" />
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" />
+            <p:commandButton value="Visualizar" process="idDtPerfil" update =":idFormCenter:idPanelPerfilAcesso, :idFormTop:growl"
+                             action="#{perfilView.btVisualizar}"/>
+        </f:facet>
+    </p:dataTable>
+
+    <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="#{perfilView.bVerAcesso}">
+        <p:dataTable id="idDtPerfilAcesso" var="codPerfilAcesso" value="#{perfilView.listPerfilAcesso}" selection="#{perfilView.lnPerfilacesso}"
+                     selectionMode="single" rowKey="#{codPerfilAcesso.lnPerfilacessoPK.perInCodigo}">
+            <f:facet name="header">
+                <h:outputText value="Tipo de Acesso" />
+            </f:facet>
+            <p:column headerText="Módulo">
+                <h:outputText value="#{codPerfilAcesso.lnPerfilacessoPK.modInCodigo}"/>
+            </p:column>
+            <p:column headerText="Incluir">
+                <h:outputText value="#{codPerfilAcesso.pacChIncluir}"/>
+            </p:column>
+            <p:column headerText="Alterar">
+                <h:outputText value="#{codPerfilAcesso.pacChAlterar}"/>
+            </p:column>
+            <p:column headerText="Excluir">
+                <h:outputText value="#{codPerfilAcesso.pacChExcluir}"/>
+            </p:column>
+            <p:column headerText="Pesquisar">
+                <h:outputText value="#{codPerfilAcesso.pacChPesquisar}"/>
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton value="#{msgs['node.include']}" />
+                <p:commandButton value="#{msgs['template.change']}" />
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" />
+                <p:commandButton value="Fechar" />
+            </f:facet>
+        </p:dataTable>
+    </p:panel>
 </ui:composition>
