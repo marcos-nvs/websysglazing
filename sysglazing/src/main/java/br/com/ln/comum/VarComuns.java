@@ -6,6 +6,8 @@
 
 package br.com.ln.comum;
 
+import br.com.ln.entity.LnPerfil;
+import br.com.ln.entity.LnPerfilacesso;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -17,17 +19,11 @@ import java.util.Locale;
 public class VarComuns implements Serializable{
     
     public static String strDbName;
+    public static LnPerfil lnPerfil;
+    public static LnPerfilacesso lnPerfilacesso;
     
     public static String local(){
         Locale locale = Locale.getDefault();
         return locale.toString();
-    }
-
-    public static String getStrDbName() {
-        return strDbName;
-    }
-
-    public static void setStrDbName(String strDbName) {
-        VarComuns.strDbName = strDbName;
     }
 }

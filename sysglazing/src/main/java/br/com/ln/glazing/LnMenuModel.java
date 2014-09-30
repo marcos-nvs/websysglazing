@@ -8,6 +8,7 @@ package br.com.ln.glazing;
 
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
@@ -72,7 +73,7 @@ public class LnMenuModel implements Serializable {
 
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
-                    item.setId(Integer.toString(lnModulo.getModInCodigo()));
+//                    item.setId("idMenuUsuario" + Integer.toString(lnModulo.getModInCodigo()));
                     item.setTitle(lnModulo.getModStDescricao());
                     item.setCommand("#{lnMenuModel.menuActionClick}");
                     item.setUpdate(":idLayoutCenter");
@@ -94,6 +95,7 @@ public class LnMenuModel implements Serializable {
         
         if (lnUsuario != null) {
             lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(),'S');
+            VarComuns.lnPerfil = lnPerfil;
 
             List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class);
 
@@ -122,6 +124,7 @@ public class LnMenuModel implements Serializable {
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
+                    VarComuns.lnPerfilacesso = Postgress.getPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");

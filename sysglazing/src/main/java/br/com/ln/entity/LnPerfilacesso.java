@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "LnPerfilacesso.findAll", query = "SELECT l FROM LnPerfilacesso l"),
     @NamedQuery(name = "LnPerfilacesso.findByPerInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.perInCodigo = :perInCodigo"),
+    @NamedQuery(name = "LnPerfilacesso.findByPerInCodigoModInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.perInCodigo = :perInCodigo and l.lnPerfilacessoPK.modInCodigo = :modInCodigo"),
     @NamedQuery(name = "LnPerfilacesso.findByModInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.modInCodigo = :modInCodigo"),
     @NamedQuery(name = "LnPerfilacesso.findByPacChIncluir", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChIncluir = :pacChIncluir"),
     @NamedQuery(name = "LnPerfilacesso.findByPacChAlterar", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChAlterar = :pacChAlterar"),
@@ -129,7 +130,8 @@ public class LnPerfilacesso implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnPerfilacesso[ lnPerfilacessoPK=" + lnPerfilacessoPK + " ]";
+        return "LnPerfilacesso{" + "lnPerfilacessoPK=" + lnPerfilacessoPK + ", pacChIncluir=" + pacChIncluir + ", pacChAlterar=" + pacChAlterar + ", pacChExcluir=" + pacChExcluir + ", pacChPesquisar=" + pacChPesquisar + '}';
     }
+
     
 }

@@ -67,8 +67,8 @@
             <h:outputText value="#{codUsuario.usuDtCadastro}"/>
         </p:column>
         <f:facet name="footer">
-            <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario"
-                             action="#{usuarioView.btIncluir}"/>
+            <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btIncluir}" />
             <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
                              action="#{usuarioView.btAlterar}"/>
             <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"

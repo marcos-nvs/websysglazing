@@ -8,6 +8,7 @@ package br.com.ln.hibernate;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnPerfil;
+import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -290,6 +291,32 @@ public class Postgress implements Serializable{
         }
 
     }
+    
+    public static LnPerfilacesso getPerfilAcesso(Integer perInCodigo, Integer modInCodigo){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+        Transaction tx = session.beginTransaction();
+        LnPerfilacesso lnPerfilAcesso = null;
+        
+        try{
+            Query query = session.getNamedQuery("LnPerfilacesso.findByPerInCodigoModInCodigo");
+            query.setInteger("perInCodigo", perInCodigo);
+            query.setInteger("modInCodigo", modInCodigo);
+            
+            List l = query.list();
+            
+            if (l != null && !l.isEmpty()){
+                lnPerfilAcesso = (LnPerfilacesso) l.get(0); 
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return lnPerfilAcesso;
+    }
+    
 
     /**
      *
