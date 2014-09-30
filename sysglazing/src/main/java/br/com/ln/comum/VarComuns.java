@@ -8,19 +8,23 @@ package br.com.ln.comum;
 
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 import java.util.Locale;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Marcos Naves
  */
 
+@SessionScoped
 public class VarComuns implements Serializable{
     
     public static String strDbName;
     public static LnPerfil lnPerfil;
     public static LnPerfilacesso lnPerfilacesso;
+    public static LnUsuario lnUsusario;
     
     public static String local(){
         Locale locale = Locale.getDefault();

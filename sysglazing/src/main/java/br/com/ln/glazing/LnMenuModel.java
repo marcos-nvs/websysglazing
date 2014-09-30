@@ -91,12 +91,10 @@ public class LnMenuModel implements Serializable {
 
 
     private void menuPerfil() {
-
-        
         if (lnUsuario != null) {
             lnPerfil = Postgress.getPerfil(lnUsuario.getPerInCodigo(),'S');
             VarComuns.lnPerfil = lnPerfil;
-
+            
             List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class);
 
             for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {

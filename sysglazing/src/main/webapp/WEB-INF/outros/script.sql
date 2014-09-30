@@ -164,6 +164,7 @@ CREATE TABLE ln_perfil
   per_in_codigo integer NOT NULL, -- Define através de sequence o id do perfil
   per_st_descricao character varying(50) NOT NULL, -- Descrição do perifl
   per_ch_ativo character(1) NOT NULL, -- Define se está ativo ou inativo
+  per_ch_alterasenha character(1) NOT NULL, -- Define se o usuário pode alterar a senha de outros usuários
   CONSTRAINT pk_perfil PRIMARY KEY (per_in_codigo)
 )
 WITH (
@@ -176,6 +177,7 @@ COMMENT ON TABLE ln_perfil
 COMMENT ON COLUMN ln_perfil.per_in_codigo IS 'Define através de sequence o id do perfil';
 COMMENT ON COLUMN ln_perfil.per_st_descricao IS 'Descrição do perifl';
 COMMENT ON COLUMN ln_perfil.per_ch_ativo IS 'Define se está ativo ou inativo';
+COMMENT ON COLUMN ln_perfil.per_ch_alterasenha IS 'Define se o usuário pode alterar a senha de outros usuários';
 
 
 -- Sequence: seq_perfil
@@ -192,7 +194,7 @@ ALTER TABLE seq_perfil
   OWNER TO postgres;
 
 
-insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo") values (nextval('seq_perfil'),'Perfil de Administrador Master','S')
+insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo","per_ch_alterasenha") values (nextval('seq_perfil'),'Perfil de Administrador Master','S','S')
 
 
 -- Table: ln_perfilacesso

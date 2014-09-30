@@ -40,6 +40,22 @@
             </f:facet>
         </h:panelGrid>
     </p:panel>
+    <p:panel id="idPanelSenha" header="#{msgs['node.change.password']}" visible="#{usuarioView.bPerSenha}">
+        <h:outputText value="#{msgs['template.user']}: #{usuarioView.lnUsuario.usuStNome}"/>
+        <h:panelGrid columns="2">
+            <h:outputText value="Entre com a nova senha :"/>
+            <h:inputSecret value="#{usuarioView.novaSenha}"/>
+            <h:outputText value="Repita a nova senha    :"/>
+            <h:inputSecret value="#{usuarioView.repeteSenha}"/>
+        </h:panelGrid>
+        <f:facet name="footer">
+            <p:commandButton id="idBtGravarSenha" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelSenha"
+                             update="idPanelSenha, :idFormCenter:idDtUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btGravaSenha}"/>
+            <p:commandButton id="idBtCancelarSenha" value="#{msgs['node.cancel']}" process="idPanelSenha" 
+                             update="idPanelSenha, :idFormCenter:idDtUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btCancelarSenha}"/>
+        </f:facet></p:panel>
     <p:dataTable id="idDtUsuario" var="codUsuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}"
                  selectionMode="single" rowKey="#{codUsuario.usuStCodigo}">
         <f:facet name="header">
@@ -68,15 +84,16 @@
         </p:column>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
-                             action="#{usuarioView.btIncluir}" />
+                             action="#{usuarioView.btIncluir}"/>
             <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
                              action="#{usuarioView.btAlterar}"/>
             <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
                              action="#{usuarioView.btExcluir()}"/>
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btExcluir()}"/>
+            <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
+                             update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
+                             action="#{usuarioView.btAltSenha}"/>
         </f:facet>
     </p:dataTable>
-    <p:dialog>
-        
-    </p:dialog>
-        
 </ui:composition>

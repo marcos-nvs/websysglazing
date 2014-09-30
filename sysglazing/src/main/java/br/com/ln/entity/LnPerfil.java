@@ -46,6 +46,9 @@ public class LnPerfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "per_ch_ativo")
     private Character perChAtivo;
+    @Basic(optional = false)
+    @Column(name = "per_ch_alterasenha")
+    private Character perChAlteraSenha;
     
     public LnPerfil() {
     }
@@ -84,6 +87,14 @@ public class LnPerfil implements Serializable {
         this.perChAtivo = perChAtivo;
     }
 
+    public Character getPerChAlteraSenha() {
+        return perChAlteraSenha;
+    }
+
+    public void setPerChAlteraSenha(Character perChAlteraSenha) {
+        this.perChAlteraSenha = perChAlteraSenha;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -106,7 +117,7 @@ public class LnPerfil implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnPerfil[ perInCodigo=" + perInCodigo + " ]";
+        return "LnPerfil{" + "perInCodigo=" + perInCodigo + ", perStDescricao=" + perStDescricao + ", perChAtivo=" + perChAtivo + ", perChAlteraSenha=" + perChAlteraSenha + '}';
     }
-    
+
 }

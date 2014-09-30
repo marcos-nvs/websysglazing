@@ -35,8 +35,11 @@ public class UsuarioView implements Serializable{
     private boolean bAlteraSenha;
     private boolean bExpiraSenha;
     private boolean bMostraSenha;
+    private boolean bPerSenha;
     private String sTipoFuncao;
     private String mensagem;
+    private String novaSenha;
+    private String repeteSenha;
 
     public UsuarioView() {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
@@ -115,7 +118,30 @@ public class UsuarioView implements Serializable{
     public void setLnPerfilAcesso(LnPerfilacesso lnPerfilAcesso) {
         this.lnPerfilAcesso = lnPerfilAcesso;
     }
-    
+
+    public boolean isbPerSenha() {
+        return bPerSenha;
+    }
+
+    public void setbPerSenha(boolean bPerSenha) {
+        this.bPerSenha = bPerSenha;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getRepeteSenha() {
+        return repeteSenha;
+    }
+
+    public void setRepeteSenha(String repeteSenha) {
+        this.repeteSenha = repeteSenha;
+    }
     
     public void btIncluir(){
         if (lnPerfilAcesso.getPacChIncluir().equals('S')) {
@@ -214,6 +240,8 @@ public class UsuarioView implements Serializable{
         }
         
         listUsuario = Postgress.getListObject(LnUsuario.class);
+        mensagem = "Usuário gravado com sucesso!!!!";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
     }
     
     public void btCancelar(){
@@ -230,5 +258,36 @@ public class UsuarioView implements Serializable{
         } else {
             Postgress.saveObject(lnUsuario);
         }
+    }
+    
+    public void btAltSenha(){
+        if (VarComuns.lnPerfil.getPerChAlteraSenha().equals('S')){
+            if (lnUsuario != null){
+                this.bPerSenha = true;
+            } else {
+                mensagem = "Por favor, escolha um Usuário .";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            }
+        } else {
+            mensagem = "Usuário sem permissão para alterar a senha de outro usuário.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        }
+    }
+    
+    public void btGravaSenha(){
+        
+        if (novaSenha.equals(repeteSenha)) {
+            this.bPerSenha = false;
+            Postgress.saveOrUpdateObject(lnUsuario);
+            mensagem = "Senha alterada com sucesso.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        } else {
+            mensagem = "Senhas não conferem.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        }
+    }
+    
+    public void btCancelarSenha(){
+        this.bPerSenha = false;
     }
 }

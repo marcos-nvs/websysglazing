@@ -127,12 +127,12 @@ public class GlaAccess implements Serializable{
                 lnUsuario = Postgress.getUsuario(usuStCodigo, 'S');
 
                 if (lnUsuario != null) {
-                    
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
                         lnUsuario = null;
                         mensagem = "Usuário ou Senha Inválido";
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
                     } else {
+                        VarComuns.lnUsusario = lnUsuario;
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
