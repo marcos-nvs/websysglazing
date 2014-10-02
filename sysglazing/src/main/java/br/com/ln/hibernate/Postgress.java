@@ -7,6 +7,7 @@ package br.com.ln.hibernate;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnMenu;
+import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
@@ -340,7 +341,86 @@ public class Postgress implements Serializable{
         }
         return listlnPerfilAcesso;
     }
+    
+    public static List<LnModulo> getListModuloAtivo(Character modChAtivo){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+        Transaction tx = session.beginTransaction();
+        List<LnModulo> listlnModulo = null;
+        
+        try{
+            Query query = session.getNamedQuery("LnModulo.findAllAtivo");
+            query.setCharacter("modChAtivo", modChAtivo);
+            
+            List l = query.list();
+            
+            if (l != null && !l.isEmpty()){
+                listlnModulo = l; 
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listlnModulo;
+    }
 
+    public static LnPerfil getPerfilperStDesc(String perStDescricao){
+        
+        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+        Transaction tx = session.beginTransaction();
+        LnPerfil lnPerfil = null;
+        
+        try{
+            Query query = session.getNamedQuery("LnPerfil.findByPerStDescricao");
+            query.setString("perStDescricao", perStDescricao);
+            
+            List l = query.list();
+            
+            if (l != null && !l.isEmpty()){
+                lnPerfil = (LnPerfil) l.get(0); 
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return lnPerfil;
+    }
+
+    public static Integer getLnPeriflNextId() {
+        return new Integer(getIdByNextValueStringSQL("select seq_perfil.nextval from dual"));
+    }
+
+    
+    public static String getIdByNextValueStringSQL(String strSql) {
+
+        Session session = null;
+        String strResult = null;
+        List result;
+
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            Transaction tx = session.beginTransaction();
+            org.hibernate.Query query = session.createSQLQuery(strSql);
+            result = query.list();
+            tx.commit();
+            if (result != null) {
+                strResult = result.get(0).toString();
+            }
+
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return strResult;
+
+    }
+    
+    
     /**
      *
      * @param clazz
@@ -980,33 +1060,6 @@ public class Postgress implements Serializable{
 //
 //    }
 //
-//    public static String getIdByNextValueStringSQL(String strSql, String strDbName) {
 //
-//        Session session = null;
-//        String strResult = null;
-//        List result;
-//
-//        try {
-//            session = SessionFactoryDbName.getCurrentSessionByName(strDbName);
-//            Transaction tx = session.beginTransaction();
-//            org.hibernate.Query query = session.createSQLQuery(strSql);
-//            result = query.list();
-//            tx.commit();
-//            if (result != null) {
-//                strResult = result.get(0).toString();
-//            }
-//
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//        return strResult;
-//
-//    }
-//
-////    public static Long getLabRelatorioNextId(String strDbName) {
-////        return new Long(getIdByNextValueStringSQL("select SEQ_REL_IN_CODIGO.nextval from dual", strDbName));
-////    }
 //
 }

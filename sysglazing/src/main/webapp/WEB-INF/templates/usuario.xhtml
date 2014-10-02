@@ -89,8 +89,6 @@
                              action="#{usuarioView.btAlterar}"/>
             <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
                              action="#{usuarioView.btExcluir()}"/>
-            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
-                             action="#{usuarioView.btExcluir()}"/>
             <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
                              update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
                              action="#{usuarioView.btAltSenha}"/>

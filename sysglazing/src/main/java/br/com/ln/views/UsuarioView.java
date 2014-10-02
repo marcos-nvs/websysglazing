@@ -7,7 +7,6 @@ package br.com.ln.views;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
-import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class UsuarioView implements Serializable{
     
     private List<LnUsuario> listUsuario;
     private LnUsuario lnUsuario;
-    private LnPerfilacesso lnPerfilAcesso;
+//    private LnPerfilacesso lnPerfilAcesso;
     private List<LnPerfil> listPerfil;
     private boolean bTelaCadastro;
     private boolean bAtivo;
@@ -36,6 +35,7 @@ public class UsuarioView implements Serializable{
     private boolean bExpiraSenha;
     private boolean bMostraSenha;
     private boolean bPerSenha;
+    private boolean bExclui;
     private String sTipoFuncao;
     private String mensagem;
     private String novaSenha;
@@ -44,7 +44,6 @@ public class UsuarioView implements Serializable{
     public UsuarioView() {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
         this.listPerfil = Postgress.getListPerfilAtivo('S');
-        this.lnPerfilAcesso = VarComuns.lnPerfilacesso;
     }
 
     public List<LnUsuario> getListUsuario() {
@@ -111,14 +110,6 @@ public class UsuarioView implements Serializable{
         this.bMostraSenha = bMostraSenha;
     }
 
-    public LnPerfilacesso getLnPerfilAcesso() {
-        return lnPerfilAcesso;
-    }
-
-    public void setLnPerfilAcesso(LnPerfilacesso lnPerfilAcesso) {
-        this.lnPerfilAcesso = lnPerfilAcesso;
-    }
-
     public boolean isbPerSenha() {
         return bPerSenha;
     }
@@ -144,7 +135,7 @@ public class UsuarioView implements Serializable{
     }
     
     public void btIncluir(){
-        if (lnPerfilAcesso.getPacChIncluir().equals('S')) {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnUsuario = new LnUsuario();
             this.bTelaCadastro = true;
             this.bAtivo = false;
@@ -154,13 +145,13 @@ public class UsuarioView implements Serializable{
             this.bMostraSenha = true;
         } else {
             mensagem = "Usuário sem permissão de inclusão.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         }
     }
 
     public void btAlterar() {
 
-        if (lnPerfilAcesso.getPacChAlterar().equals('S')) {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
 
             if (lnUsuario != null) {
                 this.bTelaCadastro = true;
@@ -187,28 +178,28 @@ public class UsuarioView implements Serializable{
 
             } else {
                 mensagem = "Por favor, escolha um Usuário.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
             }
         } else {
             mensagem = "Usuário sem permissão de Alteração.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         }
     }
     
     public void btExcluir() {
 
-        if (lnPerfilAcesso.getPacChExcluir().equals('S')) {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
 
             if (lnUsuario != null) {
                 Postgress.deleteObject(lnUsuario);
                 listUsuario = Postgress.getListObject(LnUsuario.class);
             } else {
                 mensagem = "Por favor, escolha um Usuário.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
             }
         } else {
                 mensagem = "Usuário sem permissão de Exclusão.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         }
     }
     
@@ -241,7 +232,7 @@ public class UsuarioView implements Serializable{
         
         listUsuario = Postgress.getListObject(LnUsuario.class);
         mensagem = "Usuário gravado com sucesso!!!!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
     }
     
     public void btCancelar(){
@@ -254,7 +245,7 @@ public class UsuarioView implements Serializable{
         
         if (lnNovoUsuario != null){
             mensagem = "Usuário já Cadastrado.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         } else {
             Postgress.saveObject(lnUsuario);
         }
@@ -266,11 +257,11 @@ public class UsuarioView implements Serializable{
                 this.bPerSenha = true;
             } else {
                 mensagem = "Por favor, escolha um Usuário .";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
             }
         } else {
             mensagem = "Usuário sem permissão para alterar a senha de outro usuário.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         }
     }
     
@@ -280,10 +271,10 @@ public class UsuarioView implements Serializable{
             this.bPerSenha = false;
             Postgress.saveOrUpdateObject(lnUsuario);
             mensagem = "Senha alterada com sucesso.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         } else {
             mensagem = "Senhas não conferem.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         }
     }
     

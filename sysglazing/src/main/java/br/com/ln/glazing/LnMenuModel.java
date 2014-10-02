@@ -70,6 +70,10 @@ public class LnMenuModel implements Serializable {
 
             while (inIt.hasNext()) {
                 LnModulo lnModulo = (LnModulo) inIt.next();
+                
+                if (!VarComuns.mapModulo.containsKey(lnModulo.getModInCodigo())){
+                    VarComuns.mapModulo.put(lnModulo.getModInCodigo(), lnModulo.getModStDescricao());
+                }
 
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
@@ -126,9 +130,11 @@ public class LnMenuModel implements Serializable {
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
+                    VarComuns.lnPerfilacesso = Postgress.getPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
                 case "Cliente":
                     beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+                    VarComuns.lnPerfilacesso = Postgress.getPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
                     break;
             }
         }
