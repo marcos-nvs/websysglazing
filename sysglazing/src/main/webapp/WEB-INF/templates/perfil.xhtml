@@ -15,9 +15,10 @@
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfil" 
-                             update=":idFormCenter:idDtPerfil, :idFormTop:growl"
+                             update="idPanelPerfil,:idFormCenter:idDtPerfil, :idFormTop:growl"
                              action="#{perfilView.btGravaPerfil}"/>
-            <p:commandButton value="#{msgs['node.cancel']}" />
+            <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfil" update="idPanelPerfil,:idFormCenter:idDtPerfil"
+                             action="#{perfilView.btCancelarPeril}"/>
         </f:facet>
     </p:panel>
     
@@ -25,7 +26,8 @@
         <h:panelGrid id="idGridPerfilAcesso" columns="10">
             <h:outputText value="Módulo:"/>
             <h:selectOneMenu id="idmoduloAcesso" >
-                <f:selectItems var="modulo" />
+                <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}" 
+                               itemValue="#{perfilAcesso.modInCodigo}" />
             </h:selectOneMenu>
             <p:selectBooleanCheckbox />
             <h:outputText value="Incluir"/>
@@ -41,31 +43,35 @@
             <p:commandButton value="#{msgs['node.cancel']}" />
         </f:facet>
     </p:panel>
-    
-    <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
-                 selectionMode="single" rowKey="#{codPerfil.perInCodigo}" >
-        <f:facet name="header">
-            <h:outputText value="#{msgs['template.profile']}" />
-        </f:facet>
-        <p:column headerText="Descrição">
-            <h:outputText value="#{codPerfil.perStDescricao}"/>
-        </p:column>
-        <p:column headerText="Ativo">
-            <h:outputText value="#{codPerfil.perChAtivo}"/>
-        </p:column>
-        <p:column headerText="Alt. Senha Usuários">
-            <h:outputText value="#{codPerfil.perChAlteraSenha}"/>
-        </p:column>
-        <f:facet name="footer">
-            <p:commandButton value="#{msgs['node.include']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
-                             action="#{perfilView.btIncluirPerfil}"/>
-            <p:commandButton value="#{msgs['template.change']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
-                             action="#{perfilView.btAlterarPerfil}"/>
-            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" />
-            <p:commandButton value="Visualizar" process="idDtPerfil" update =":idFormCenter:idPanelPerfilAcesso, :idFormTop:growl"
-                             action="#{perfilView.btVisualizar}"/>
-        </f:facet>
-    </p:dataTable>
+
+    <p:panel id="idPanelPerfilTable" header="Cadastro de Perfil" visible="#{not perfilView.bEditPerfil}">
+        <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
+                     selectionMode="single" rowKey="#{codPerfil.perInCodigo}" >
+            <f:facet name="header">
+                <h:outputText value="#{msgs['template.profile']}" />
+            </f:facet>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{codPerfil.perStDescricao}"/>
+            </p:column>
+            <p:column headerText="Ativo">
+                <h:outputText value="#{codPerfil.perChAtivo}"/>
+            </p:column>
+            <p:column headerText="Alt. Senha Usuários">
+                <h:outputText value="#{codPerfil.perChAlteraSenha}"/>
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
+                                 action="#{perfilView.btIncluirPerfil}"/>
+                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
+                                 action="#{perfilView.btAlterarPerfil}"/>
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfil" update=":idFormTop:growl, idDtPerfil"
+                                 action="#{perfilView.btExcluirPerfil}"/>
+                <p:commandButton value="Visualizar" process="idDtPerfil, :idFormCenter:idPanelPerfilTable" 
+                                 update =":idFormCenter:idPanelPerfilAcesso, :idFormTop:growl, :idFormCenter:idPanelPerfilTable"
+                                 action="#{perfilView.btVisualizar}"/>
+            </f:facet>
+        </p:dataTable>
+    </p:panel>    
 
     <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="#{perfilView.bVerAcesso}">
         <p:dataTable id="idDtPerfilAcesso" var="codPerfilAcesso" value="#{perfilView.listPerfilAcesso}" selection="#{perfilView.lnPerfilacesso}"
@@ -74,7 +80,6 @@
                 <h:outputText value="Tipo de Acesso" />
             </f:facet>
             <p:column headerText="Módulo">
-                <!--<h:outputText value="#{codPerfilAcesso.lnPerfilacessoPK.modInCodigo}"/>-->
                 <h:outputText value="#{perfilView.buscaDescModulo(codPerfilAcesso.lnPerfilacessoPK.modInCodigo)}"/>
             </p:column>
             <p:column headerText="Incluir">
@@ -90,10 +95,12 @@
                 <h:outputText value="#{codPerfilAcesso.pacChPesquisar}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="#{msgs['node.include']}" />
+                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" update=":idFormCenter:idPanelPerfilAcessoEdit"
+                                 action="#{perfilView.btIncluirAcesso}"/>
                 <p:commandButton value="#{msgs['template.change']}" />
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" />
-                <p:commandButton value="Fechar" process=":idFormCenter:idPanelPerfilAcesso" update=":idFormCenter:idPanelPerfilAcesso"
+                <p:commandButton value="Fechar" process=":idFormCenter:idPanelPerfilAcesso" 
+                                 update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil"
                                  action="#{perfilView.btFechar}"/>
             </f:facet>
         </p:dataTable>

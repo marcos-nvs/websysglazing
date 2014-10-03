@@ -391,7 +391,7 @@ public class Postgress implements Serializable{
     }
 
     public static Integer getLnPeriflNextId() {
-        return new Integer(getIdByNextValueStringSQL("select seq_perfil.nextval from dual"));
+        return new Integer(getIdByNextValueStringSQL("select nextval('seq_perfil');"));
     }
 
     
@@ -419,7 +419,6 @@ public class Postgress implements Serializable{
         return strResult;
 
     }
-    
     
     /**
      *

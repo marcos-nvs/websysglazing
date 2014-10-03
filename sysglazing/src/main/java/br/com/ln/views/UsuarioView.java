@@ -189,10 +189,11 @@ public class UsuarioView implements Serializable{
     public void btExcluir() {
 
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
-
             if (lnUsuario != null) {
                 Postgress.deleteObject(lnUsuario);
                 listUsuario = Postgress.getListObject(LnUsuario.class);
+                mensagem = "Usuário excluído com sucesso!!!!.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
             } else {
                 mensagem = "Por favor, escolha um Usuário.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
@@ -280,5 +281,10 @@ public class UsuarioView implements Serializable{
     
     public void btCancelarSenha(){
         this.bPerSenha = false;
+    }
+    
+    public boolean verificaExclusaoUusario(){
+        
+        return false;
     }
 }
