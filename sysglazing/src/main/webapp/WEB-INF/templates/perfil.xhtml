@@ -29,18 +29,22 @@
                 <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}" 
                                itemValue="#{perfilAcesso.modInCodigo}" />
             </h:selectOneMenu>
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" />
             <h:outputText value="Incluir"/>
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}" />
             <h:outputText value="Alterar"/>
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}" />
             <h:outputText value="Excluir"/>
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}" />
             <h:outputText value="Pesquisar"/>
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" />
-            <p:commandButton value="#{msgs['node.cancel']}" />
+            <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfilAcessoEdit"
+                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
+                             action="#{perfilView.btGravarAcesso}"/>
+            <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfilAcessoEdit" 
+                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
+                             action="#{perfilView.btCancelarAcesso}"/>
         </f:facet>
     </p:panel>
 

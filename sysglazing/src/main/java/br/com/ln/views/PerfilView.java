@@ -32,13 +32,18 @@ public class PerfilView implements Serializable{
     private LnPerfil lnPerfil;
     private LnPerfilacesso lnPerfilacesso;
     private boolean bVerAcesso;
-    private boolean bEditPerfil;
-    private boolean bEditAcesso;
+    private boolean bEditPerfil=false;
+    private boolean bEditAcesso=false;
     private boolean bAtivo;
     private boolean bAltSenhaUsuario;
+    private boolean bIncluirAcesso;
+    private boolean bAlterarAcesso;
+    private boolean bExcluirAcesso;
+    private boolean bPesquisarAcesso;
     private String mensagem;
     private String sTipoFuncaoPerfil;
     private String sTipoFuncaoAcesso;
+    
 
     public PerfilView() {
         listPerfil = Postgress.getListObject(LnPerfil.class);
@@ -123,6 +128,38 @@ public class PerfilView implements Serializable{
 
     public void setListModulo(List<LnModulo> listModulo) {
         this.listModulo = listModulo;
+    }
+
+    public boolean isbIncluirAcesso() {
+        return bIncluirAcesso;
+    }
+
+    public void setbIncluirAcesso(boolean bIncluirAcesso) {
+        this.bIncluirAcesso = bIncluirAcesso;
+    }
+
+    public boolean isbAlterarAcesso() {
+        return bAlterarAcesso;
+    }
+
+    public void setbAlterarAcesso(boolean bAlterarAcesso) {
+        this.bAlterarAcesso = bAlterarAcesso;
+    }
+
+    public boolean isbExcluirAcesso() {
+        return bExcluirAcesso;
+    }
+
+    public void setbExcluirAcesso(boolean bExcluirAcesso) {
+        this.bExcluirAcesso = bExcluirAcesso;
+    }
+
+    public boolean isbPesquisarAcesso() {
+        return bPesquisarAcesso;
+    }
+
+    public void setbPesquisarAcesso(boolean bPesquisarAcesso) {
+        this.bPesquisarAcesso = bPesquisarAcesso;
     }
     
     public String buscaDescModulo(Integer modInCodigo){
@@ -247,10 +284,52 @@ public class PerfilView implements Serializable{
     public void btIncluirAcesso(){
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             this.bEditAcesso = true;
-            this.sTipoFuncaoAcesso = "S";
+            this.sTipoFuncaoAcesso = "I";
+            lnPerfilacesso = new LnPerfilacesso();
         } else {
             mensagem = "Usuário sem permissão de inclusão.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
+    }
+    
+    public void btCancelarAcesso(){
+        this.bEditAcesso = false;
+        this.sTipoFuncaoAcesso = "";
+    }
+    
+    public void btGravarAcesso(){
+        
+        if (bIncluirAcesso){
+            lnPerfilacesso.setPacChIncluir('S');
+        } else {
+            lnPerfilacesso.setPacChIncluir('N');
+        }
+        
+        if (bAlterarAcesso){
+            lnPerfilacesso.setPacChAlterar('S');
+        } else {
+            lnPerfilacesso.setPacChAlterar('N');
+        }
+        
+        if (bExcluirAcesso){
+            lnPerfilacesso.setPacChExcluir('S');
+        } else {
+            lnPerfilacesso.setPacChExcluir('N');
+        }
+        
+        if (bPesquisarAcesso){
+            lnPerfilacesso.setPacChPesquisar('S');
+        } else {
+            lnPerfilacesso.setPacChPesquisar('N');
+        }
+        
+        if (sTipoFuncaoAcesso.equals("I")) {
+            
+            System.out.println("Acesso : " + lnPerfilacesso.toString());
+            
+            lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
+            Postgress.saveObject(lnPerfilacesso);
+        }
+
     }
 }
