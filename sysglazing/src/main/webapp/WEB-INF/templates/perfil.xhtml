@@ -22,10 +22,10 @@
         </f:facet>
     </p:panel>
     
-    <p:panel id="idPanelPerfilAcessoEdit" header="Definição do Perfil" visible="false">
+    <p:panel id="idPanelPerfilAcessoEdit" header="Definição do Perfil" visible="#{perfilView.bEditAcesso}">
         <h:panelGrid id="idGridPerfilAcesso" columns="10">
             <h:outputText value="Módulo:"/>
-            <h:selectOneMenu id="idmoduloAcesso" >
+            <h:selectOneMenu id="idmoduloAcesso" value="#{perfilView.modInCodigo}" >
                 <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}" 
                                itemValue="#{perfilAcesso.modInCodigo}" />
             </h:selectOneMenu>
@@ -41,14 +41,14 @@
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfilAcessoEdit"
                              update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
-                             action="#{perfilView.btSalvarPerfil}"/>
+                             action="#{perfilView.btSalvarAcesso}"/>
             <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfilAcessoEdit" 
                              update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
-                             />
+                             action="#{perfilView.btCancelarAcesso}"/>
         </f:facet>
     </p:panel>
 
-    <p:panel id="idPanelPerfilTable" header="Cadastro de Perfil">
+    <p:panel id="idPanelPerfilTable" header="Cadastro de Perfil" visible="#{!perfilView.bVerAcesso}">
         <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
                      selectionMode="single" rowKey="#{codPerfil.perInCodigo}" >
             <p:column headerText="Descrição">
@@ -74,7 +74,7 @@
         </p:dataTable>
     </p:panel>    
 
-    <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="false">
+    <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="#{perfilView.bVerAcesso}">
         <p:dataTable id="idDtPerfilAcesso" var="codPerfilAcesso" value="#{perfilView.listPerfilAcesso}" selection="#{perfilView.lnPerfilacesso}"
                      selectionMode="single" rowKey="#{codPerfilAcesso.lnPerfilacessoPK.perInCodigo}">
             <f:facet name="header">
@@ -96,13 +96,18 @@
                 <h:outputText value="#{codPerfilAcesso.pacChPesquisar}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" update=":idFormCenter:idPanelPerfilAcessoEdit"
-                                 />
-                <p:commandButton value="#{msgs['template.change']}" />
-                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" />
+                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" 
+                                 update=":idFormCenter:idPanelPerfilAcessoEdit,:idFormTop:growl"
+                                 action="#{perfilView.btIncluirAcesso}"/>
+                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfilAcesso" 
+                                 update=":idFormCenter:idPanelPerfilAcessoEdit, :idFormTop:growl"
+                                 action="#{perfilView.btAlterarAcesso}"/>
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfilAcesso" 
+                                 update=":idFormTop:growl, idDtPerfilAcesso"
+                                 action="#{perfilView.btExcluirAcesso}"/>
                 <p:commandButton value="Fechar" process=":idFormCenter:idPanelPerfilAcesso" 
                                  update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil"
-                                 />
+                                 action="#{perfilView.btFecharAcesso}"/>
             </f:facet>
         </p:dataTable>
     </p:panel>
