@@ -136,8 +136,6 @@ public class GlaAccess implements Serializable{
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
-                        
-                        
                     }
                 } 
             } else {

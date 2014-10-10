@@ -21,19 +21,18 @@ import javax.faces.context.FacesContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "perfilView")
-public class PerfilView implements Serializable{
-    
+public class PerfilView implements Serializable {
+
     private List<LnPerfil> listPerfil;
     private List<LnPerfilacesso> listPerfilAcesso;
     private List<LnModulo> listModulo;
     private LnPerfil lnPerfil;
     private LnPerfilacesso lnPerfilacesso;
     private boolean bVerAcesso;
-    private boolean bEditPerfil=false;
-    private boolean bEditAcesso=false;
+    private boolean bEditPerfil = false;
+    private boolean bEditAcesso = false;
     private boolean bAtivo;
     private boolean bAltSenhaUsuario;
     private boolean bIncluirAcesso;
@@ -43,7 +42,6 @@ public class PerfilView implements Serializable{
     private String mensagem;
     private String sTipoFuncaoPerfil;
     private String sTipoFuncaoAcesso;
-    
 
     public PerfilView() {
         listPerfil = Postgress.getListObject(LnPerfil.class);
@@ -161,175 +159,108 @@ public class PerfilView implements Serializable{
     public void setbPesquisarAcesso(boolean bPesquisarAcesso) {
         this.bPesquisarAcesso = bPesquisarAcesso;
     }
-    
-    public String buscaDescModulo(Integer modInCodigo){
+
+    public String buscaDescModulo(Integer modInCodigo) {
         return VarComuns.mapModulo.get(modInCodigo);
     }
-    
+
     public void btIncluirPerfil() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             this.bEditPerfil = true;
-            this.bAtivo = false;
-            this.bAltSenhaUsuario = false;
-            lnPerfil = new LnPerfil();
             this.sTipoFuncaoPerfil = "I";
+            lnPerfil = new LnPerfil();
         } else {
-            mensagem = "Usuário sem permissão de inclusão.";
+            mensagem = "Perfil sem permissão de inclusão.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
-    
-    public void btAlterarPerfil(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+
+    public void btAlterarPerfil() {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnPerfil != null) {
                 this.bEditPerfil = true;
+                this.sTipoFuncaoPerfil = "A";
                 this.bAtivo = lnPerfil.getPerChAtivo().equals('S');
                 this.bAltSenhaUsuario = lnPerfil.getPerChAlteraSenha().equals('S');
-                this.sTipoFuncaoPerfil = "A";
             } else {
-                mensagem = "Por favor, escolha um perfil.";
+                mensagem = "Por favor, escolha um perfil para alterar.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }
         } else {
-            mensagem = "Usuário sem permissão de alteração.";
+            mensagem = "Perfil sem permissão de alteracao.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
-    
-    public void btExcluirPerfil(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
-            if (lnPerfil != null){
+
+    public void btExcluirPerfil() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (lnPerfil != null) {
                 Postgress.deleteObject(lnPerfil);
                 listPerfil = Postgress.getListObject(LnPerfil.class);
-                mensagem = "Perfil excluído com sucesso!!!.";
+                mensagem = "Perfil excluído com sucesso !!!!.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             } else {
-                mensagem = "Por favor, escolha um perfil.";
+                mensagem = "Por favor, escolha um perfil para excluir.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-            }
+            }            
         } else{
-            mensagem = "Usuário sem permissão de exclusão.";
+            mensagem = "Perfil sem permissão de excluir.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
-    
-    public void btVisualizar(){
-        
-        if (lnPerfil != null) {
-            this.bVerAcesso = true;
-            this.bEditPerfil = true;
-            listPerfilAcesso = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
-        } else {
-        mensagem = "Por favor, escolha o perfil que deseja visualizar";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-        }
+
+    public void btVisualizar() {
     }
-    
-    public void btFechar(){
-        this.bVerAcesso = false;
-        this.bEditPerfil = false;
-    }
-    
-    public void btGravaPerfil(){
-        
-        if (bAtivo){
-            lnPerfil.setPerChAtivo('S');
-        } else {
-            lnPerfil.setPerChAtivo('N');
-        }
-        
-        if (bAltSenhaUsuario){
-            lnPerfil.setPerChAlteraSenha('S');
-        } else {
-            lnPerfil.setPerChAlteraSenha('N');
-        }
-        
-        if (sTipoFuncaoPerfil.equals("I")){
-            if (novoPerfil()){
-                this.bEditPerfil = false;
+
+    public void btSalvarPerfil() {
+        if (lnPerfil != null){
+            if (bAtivo){
+                lnPerfil.setPerChAtivo('S');
+            } else {
+                lnPerfil.setPerChAtivo('N');
+            }
+            if (bAltSenhaUsuario){
+                lnPerfil.setPerChAlteraSenha('S');
+            } else{
+                lnPerfil.setPerChAlteraSenha('N');
+            }
+            
+            if (sTipoFuncaoPerfil.equals("I")){
+                novoPerfil();
+            } else {
                 this.sTipoFuncaoPerfil = "";
-                mensagem = "Perfil criado com sucesso!!!";
+                this.bEditPerfil = false;
+                Postgress.saveOrUpdateObject(lnPerfil);
+                listPerfil = Postgress.getListObject(LnPerfil.class);
+                mensagem = "Perfil alterado com sucesso !!!!.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }
-        } else {
-            this.bEditPerfil = false;
-            this.sTipoFuncaoPerfil = " ";
-            mensagem = "Perfil alterado com sucesso!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-            Postgress.saveOrUpdateObject(lnPerfil);
         }
     }
     
-    public void btCancelarPeril(){
+    private void novoPerfil(){
+        
+        LnPerfil lnNovoPerfil = Postgress.getPerfilperStDesc(lnPerfil.getPerStDescricao());
+        
+        if (lnNovoPerfil != null) {
+            mensagem = "Perfil já Cadastrado.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+        } else {
+            Integer id = Postgress.getLnPeriflNextId();
+            lnPerfil.setPerInCodigo(id);
+            Postgress.saveObject(lnPerfil);
+            this.sTipoFuncaoPerfil = "";
+            this.bEditPerfil = false;
+            listPerfil = Postgress.getListObject(LnPerfil.class);
+            mensagem = "Perfil cadastrado com sucesso !!!!.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+        }
+    }
+
+    public void btCancelarPerfil() {
         this.bEditPerfil = false;
         this.sTipoFuncaoPerfil = "";
+        lnPerfil = null;
     }
-    
-    private boolean novoPerfil(){
-        
-        LnPerfil LnPerfilNovo = Postgress.getPerfilperStDesc(lnPerfil.getPerStDescricao());
-        
-        if (LnPerfilNovo != null){
-            mensagem = "Perfil já existe!!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-            return false;
-        } else {
-            lnPerfil.setPerInCodigo(Postgress.getLnPeriflNextId());
-            Postgress.saveObject(lnPerfil);
-            listPerfil = Postgress.getListObject(LnPerfil.class);
-            return true;
-        }
-    }
-    
-    public void btIncluirAcesso(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
-            this.bEditAcesso = true;
-            this.sTipoFuncaoAcesso = "I";
-            lnPerfilacesso = new LnPerfilacesso();
-        } else {
-            mensagem = "Usuário sem permissão de inclusão.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-        }
-    }
-    
-    public void btCancelarAcesso(){
-        this.bEditAcesso = false;
-        this.sTipoFuncaoAcesso = "";
-    }
-    
-    public void btGravarAcesso(){
-        
-        if (bIncluirAcesso){
-            lnPerfilacesso.setPacChIncluir('S');
-        } else {
-            lnPerfilacesso.setPacChIncluir('N');
-        }
-        
-        if (bAlterarAcesso){
-            lnPerfilacesso.setPacChAlterar('S');
-        } else {
-            lnPerfilacesso.setPacChAlterar('N');
-        }
-        
-        if (bExcluirAcesso){
-            lnPerfilacesso.setPacChExcluir('S');
-        } else {
-            lnPerfilacesso.setPacChExcluir('N');
-        }
-        
-        if (bPesquisarAcesso){
-            lnPerfilacesso.setPacChPesquisar('S');
-        } else {
-            lnPerfilacesso.setPacChPesquisar('N');
-        }
-        
-        if (sTipoFuncaoAcesso.equals("I")) {
-            
-            System.out.println("Acesso : " + lnPerfilacesso.toString());
-            
-            lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-            Postgress.saveObject(lnPerfilacesso);
-        }
 
-    }
 }

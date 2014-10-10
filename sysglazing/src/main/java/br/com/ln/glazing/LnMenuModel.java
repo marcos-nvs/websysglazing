@@ -77,7 +77,6 @@ public class LnMenuModel implements Serializable {
 
                 if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
-//                    item.setId("idMenuUsuario" + Integer.toString(lnModulo.getModInCodigo()));
                     item.setTitle(lnModulo.getModStDescricao());
                     item.setCommand("#{lnMenuModel.menuActionClick}");
                     item.setUpdate(":idLayoutCenter");
@@ -102,7 +101,6 @@ public class LnMenuModel implements Serializable {
             List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.getListObject(LnPerfilacesso.class);
 
             for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {
-
                 String Key = Integer.toString(perfilAcesso.getLnPerfilacessoPK().getModInCodigo());
                 if (!mapPerfilUsuario.containsKey(Key)) {
                     mapPerfilUsuario.put(Key, perfilAcesso);
