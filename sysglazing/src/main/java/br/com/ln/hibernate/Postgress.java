@@ -6,12 +6,14 @@
 package br.com.ln.hibernate;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
+//import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.hibernate.Query;
@@ -21,16 +23,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
-//import java.util.Date;
-//import java.util.Iterator;
-//import java.util.Map;
-//import org.hibernate.Criteria;
-//import org.hibernate.criterion.Disjunction;
-//import org.hibernate.criterion.Expression;
-//import org.hibernate.criterion.Order;
-//import org.hibernate.criterion.Property;
-//import org.hibernate.criterion.Restrictions;
-//import org.hibernate.jdbc.Work;
 
 /**
  *
@@ -41,7 +33,7 @@ public class Postgress implements Serializable{
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
     /**
-     * Pesquisa de usuario e senha para validação.
+     * Pesquisa de usuario e senha para validaÃ§Ã£o.
      * @param usuStCodigo
      * @param strDbName
      * @return 
@@ -54,6 +46,7 @@ public class Postgress implements Serializable{
         LnUsuario lnUsuario = null;
         
         try{
+            System.out.println("varcomnuns : " + VarComuns.strDbName);
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
@@ -67,7 +60,7 @@ public class Postgress implements Serializable{
             if (l != null && l.size() > 0){
                 lnUsuario = (LnUsuario) l.get(0);
             } else {
-                System.out.println("Usuário não encontrado !!!!!!!!!!!!!!!!");
+                System.out.println("UsuÃ¡rio nÃ£o encontrado !!!!!!!!!!!!!!!!");
             }
         }catch(HibernateException ex){
             System.out.println("Hibernate Exception : " + ex.getMessage());
@@ -99,7 +92,7 @@ public class Postgress implements Serializable{
             if (l != null && l.size() > 0){
                 lnUsuario = (LnUsuario) l.get(0);
             } else {
-                System.out.println("Usuário não encontrado !!!!!!!!!!!!!!!!");
+                System.out.println("UsuÃ¡rio nÃ£o encontrado !!!!!!!!!!!!!!!!");
             }
         }catch(HibernateException ex){
             System.out.println("Hibernate Exception : " + ex.getMessage());
@@ -394,6 +387,9 @@ public class Postgress implements Serializable{
         return new Integer(getIdByNextValueStringSQL("select nextval('seq_perfil');"));
     }
 
+    public static Integer getLnHistoricoNextId() {
+        return new Integer(getIdByNextValueStringSQL("select nextval('seq_historico');"));
+    }
     
     public static String getIdByNextValueStringSQL(String strSql) {
 
@@ -419,6 +415,50 @@ public class Postgress implements Serializable{
         return strResult;
 
     }
+    
+    public static boolean getVerificaHistorico(String usuStCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List lnHis = null;
+        boolean retorno = false;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.createSQLQuery("select count(*) qtde from ln_historico where usu_st_codigo = :usuStCodigo");
+            query.setString("usuStCodigo", usuStCodigo);
+            lnHis = query.list();
+            tx.commit();
+
+            if (lnHis != null && lnHis.isEmpty()){
+                
+                for (int i = 0; i < lnHis.size(); i++) {
+                    Object[] tupla = (Object[]) lnHis.get(i);
+                    
+                    Integer qtde = (Integer) tupla[0];
+                    
+                    if (qtde == 0){
+                        retorno = true;
+                    } else {
+                        retorno = false;
+                    }
+                }
+            }
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return retorno;
+    }
+    
+    public static List<LnHistorico> getListHistorico(String modStCodigo){
+        return null;
+    }
+    
     
     /**
      *

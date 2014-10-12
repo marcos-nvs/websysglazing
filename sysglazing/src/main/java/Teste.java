@@ -1,9 +1,11 @@
 
+import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import br.com.ln.hibernate.SessionFactoryDbName;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
@@ -106,6 +108,6 @@ public class Teste {
 //            
 //            System.out.println("Perfil Acesso : " + lnPerfilacesso.toString());
 //        }
-        
+
     }
 }

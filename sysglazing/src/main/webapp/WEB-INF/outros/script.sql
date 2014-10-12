@@ -242,7 +242,7 @@ CREATE TABLE ln_historico
 (
   his_in_codigo integer NOT NULL,
   mod_in_codigo integer NOT NULL, -- Modulo de onde originou a transação
-  his_dt_data date NOT NULL, -- Data da transação
+  his_dt_data timestamp without time zone NOT NULL, -- Data da transação
   usu_st_codigo character varying(30) NOT NULL, -- Usuario que gerou a transação
   his_st_descricao character varying(50), -- Descrição da transação.
   CONSTRAINT pk_historico PRIMARY KEY (his_in_codigo)
@@ -258,6 +258,7 @@ COMMENT ON COLUMN ln_historico.mod_in_codigo IS 'Modulo de onde originou a trans
 COMMENT ON COLUMN ln_historico.his_dt_data IS 'Data da transação';
 COMMENT ON COLUMN ln_historico.usu_st_codigo IS 'Usuario que gerou a transação';
 COMMENT ON COLUMN ln_historico.his_st_descricao IS 'Descrição da transação.';
+
 
 -- Sequence: seq_historico
 

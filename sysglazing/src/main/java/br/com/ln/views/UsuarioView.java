@@ -6,6 +6,7 @@
 package br.com.ln.views;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
@@ -187,13 +188,20 @@ public class UsuarioView implements Serializable{
     }
     
     public void btExcluir() {
-
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnUsuario != null) {
-                Postgress.deleteObject(lnUsuario);
-                listUsuario = Postgress.getListObject(LnUsuario.class);
-                mensagem = "Usuário excluído com sucesso!!!!.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                if (Postgress.getVerificaHistorico(lnUsuario.getUsuStCodigo())) {
+                    LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                            Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+                    Postgress.deleteObject(lnUsuario);
+                    listUsuario = Postgress.getListObject(LnUsuario.class);
+                    Postgress.saveObject(lnHistorico);
+                    mensagem = "Usuário excluído com sucesso!!!!.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                } else {
+                    mensagem = "Usuário não pode ser excluído por ter historico. Você pode desativar.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                }
             } else {
                 mensagem = "Por favor, escolha um Usuário.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
@@ -229,6 +237,9 @@ public class UsuarioView implements Serializable{
             novoUsuario();
         } else {
             Postgress.saveOrUpdateObject(lnUsuario);
+            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteração do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+            Postgress.saveObject(lnHistorico);
         }
         
         listUsuario = Postgress.getListObject(LnUsuario.class);
@@ -249,6 +260,9 @@ public class UsuarioView implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         } else {
             Postgress.saveObject(lnUsuario);
+            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+            Postgress.saveObject(lnHistorico);
         }
     }
     
@@ -271,6 +285,9 @@ public class UsuarioView implements Serializable{
         if (novaSenha.equals(repeteSenha)) {
             this.bPerSenha = false;
             Postgress.saveOrUpdateObject(lnUsuario);
+            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteração do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+            Postgress.saveObject(lnHistorico);
             mensagem = "Senha alterada com sucesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
         } else {
@@ -281,10 +298,5 @@ public class UsuarioView implements Serializable{
     
     public void btCancelarSenha(){
         this.bPerSenha = false;
-    }
-    
-    public boolean verificaExclusaoUusario(){
-        
-        return false;
     }
 }

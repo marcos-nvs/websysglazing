@@ -9,6 +9,7 @@ package br.com.ln.views;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.glazing.LnMenuModel;
 import br.com.ln.hibernate.Postgress;
@@ -136,6 +137,8 @@ public class GlaAccess implements Serializable{
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
+                        LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), new Integer("0"), Postgress.getDateFromDB(), usuStCodigo, "Acesso ao Sistema");
+                        Postgress.saveObject(lnHistorico);
                     }
                 } 
             } else {

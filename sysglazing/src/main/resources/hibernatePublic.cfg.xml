@@ -20,6 +20,7 @@
     <mapping class="br.com.ln.entity.LnPerfil"/>
     <mapping class="br.com.ln.entity.LnPerfilacesso"/>
     <mapping class="br.com.ln.entity.LnUsuario"/>
+    <mapping class="br.com.ln.entity.LnHistorico"/>
     
   </session-factory>
 </hibernate-configuration>
