@@ -233,3 +233,41 @@ COMMENT ON COLUMN ln_perfilacesso.pac_ch_pesquisar IS 'Define a função';
 insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,1,'S','S','S','S')
 insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,2,'S','S','S','S')
 insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,3,'S','S','S','S')
+
+-- Table: ln_historico
+
+-- DROP TABLE ln_historico;
+
+CREATE TABLE ln_historico
+(
+  his_in_codigo integer NOT NULL,
+  mod_in_codigo integer NOT NULL, -- Modulo de onde originou a transação
+  his_dt_data date NOT NULL, -- Data da transação
+  usu_st_codigo character varying(30) NOT NULL, -- Usuario que gerou a transação
+  his_st_descricao character varying(50), -- Descrição da transação.
+  CONSTRAINT pk_historico PRIMARY KEY (his_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_historico
+  OWNER TO postgres;
+COMMENT ON TABLE ln_historico
+  IS 'Rastreabilidade e Historico de todas as transações do sistema';
+COMMENT ON COLUMN ln_historico.mod_in_codigo IS 'Modulo de onde originou a transação';
+COMMENT ON COLUMN ln_historico.his_dt_data IS 'Data da transação';
+COMMENT ON COLUMN ln_historico.usu_st_codigo IS 'Usuario que gerou a transação';
+COMMENT ON COLUMN ln_historico.his_st_descricao IS 'Descrição da transação.';
+
+-- Sequence: seq_historico
+
+-- DROP SEQUENCE seq_historico;
+
+CREATE SEQUENCE seq_historico
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_historico
+  OWNER TO postgres;
