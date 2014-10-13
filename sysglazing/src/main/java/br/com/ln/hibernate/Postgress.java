@@ -46,7 +46,6 @@ public class Postgress implements Serializable{
         LnUsuario lnUsuario = null;
         
         try{
-            System.out.println("varcomnuns : " + VarComuns.strDbName);
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
@@ -60,7 +59,7 @@ public class Postgress implements Serializable{
             if (l != null && l.size() > 0){
                 lnUsuario = (LnUsuario) l.get(0);
             } else {
-                System.out.println("UsuÃ¡rio nÃ£o encontrado !!!!!!!!!!!!!!!!");
+                lnUsuario = null;
             }
         }catch(HibernateException ex){
             System.out.println("Hibernate Exception : " + ex.getMessage());
@@ -438,13 +437,15 @@ public class Postgress implements Serializable{
                     Object[] tupla = (Object[]) lnHis.get(i);
                     
                     Integer qtde = (Integer) tupla[0];
-                    
+
                     if (qtde == 0){
                         retorno = true;
                     } else {
                         retorno = false;
                     }
                 }
+            } else {
+                retorno = true;
             }
         } finally {
             if (session != null && session.isOpen()){

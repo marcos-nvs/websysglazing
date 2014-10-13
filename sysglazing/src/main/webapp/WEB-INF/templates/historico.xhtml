@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <p:dataTable id="idDtHistorico" var="historico" value="#{historicoView.listHistorico}">
+<!--        <f:facet name="header">
+            <h:outputText value="#{msgs['template.user']}"/>
+        </f:facet>
+        <p:column headerText="#{msgs['template.user']}">
+            <h:outputText value="#{codUsuario.usuStCodigo}"/>
+        </p:column>
+        <p:column headerText="#{msgs['page.tree.employee.name.label']}">
+            <h:outputText value="#{codUsuario.usuStNome}"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.email']}">
+            <h:outputText value="#{codUsuario.usuStEmail}"/>
+        </p:column>
+        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+            <h:outputText value="#{codUsuario.usuChAtivo}"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.user.changes.password']}">
+            <h:outputText value="#{codUsuario.usuChAlterasenha}"/>
+        </p:column>
+        <p:column headerText="#{msgs['password expires']}">
+            <h:outputText value="#{codUsuario.usuChExpirasenha}"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.Registration.Date']}">
+            <h:outputText value="#{codUsuario.usuDtCadastro}"/>
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btIncluir}"/>
+            <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btAlterar}"/>
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
+                             action="#{usuarioView.btExcluir()}"/>
+            <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
+                             update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
+                             action="#{usuarioView.btAltSenha}"/>
+            <p:commandButton value="#{msgs['node.history']}"/>
+        </f:facet>-->
+    </p:dataTable>
+</ui:composition>

@@ -28,7 +28,6 @@ public class UsuarioView implements Serializable{
     
     private List<LnUsuario> listUsuario;
     private LnUsuario lnUsuario;
-//    private LnPerfilacesso lnPerfilAcesso;
     private List<LnPerfil> listPerfil;
     private boolean bTelaCadastro;
     private boolean bAtivo;
@@ -145,8 +144,8 @@ public class UsuarioView implements Serializable{
             this.sTipoFuncao = "I";
             this.bMostraSenha = true;
         } else {
-            mensagem = "Usuário sem permissão de inclusão.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            mensagem = "Usuario sem permissao de inclusao.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
 
@@ -178,12 +177,12 @@ public class UsuarioView implements Serializable{
                 }
 
             } else {
-                mensagem = "Por favor, escolha um Usuário.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                mensagem = "Por favor, escolha um Usuario.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-            mensagem = "Usuário sem permissão de Alteração.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            mensagem = "Usuario sem permissao de Alteracao.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
     
@@ -192,23 +191,23 @@ public class UsuarioView implements Serializable{
             if (lnUsuario != null) {
                 if (Postgress.getVerificaHistorico(lnUsuario.getUsuStCodigo())) {
                     LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                            Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+                            Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Exclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
                     Postgress.deleteObject(lnUsuario);
                     listUsuario = Postgress.getListObject(LnUsuario.class);
                     Postgress.saveObject(lnHistorico);
-                    mensagem = "Usuário excluído com sucesso!!!!.";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                    mensagem = "Usuario excluido com sucesso!!!!.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 } else {
-                    mensagem = "Usuário não pode ser excluído por ter historico. Você pode desativar.";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                    mensagem = "Usuario nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 }
             } else {
-                mensagem = "Por favor, escolha um Usuário.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                mensagem = "Por favor, escolha um Usuario.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-                mensagem = "Usuário sem permissão de Exclusão.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                mensagem = "Usuario sem permissao de Exclusao.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
     
@@ -238,13 +237,13 @@ public class UsuarioView implements Serializable{
         } else {
             Postgress.saveOrUpdateObject(lnUsuario);
             LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteração do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
             Postgress.saveObject(lnHistorico);
         }
         
         listUsuario = Postgress.getListObject(LnUsuario.class);
-        mensagem = "Usuário gravado com sucesso!!!!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+        mensagem = "Usuario gravado com sucesso!!!!";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
     }
     
     public void btCancelar(){
@@ -256,12 +255,12 @@ public class UsuarioView implements Serializable{
         LnUsuario lnNovoUsuario = Postgress.getUsuario(lnUsuario.getUsuStCodigo());
         
         if (lnNovoUsuario != null){
-            mensagem = "Usuário já Cadastrado.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            mensagem = "Usuario Cadastrado.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
             Postgress.saveObject(lnUsuario);
             LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Inclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
             Postgress.saveObject(lnHistorico);
         }
     }
@@ -271,12 +270,12 @@ public class UsuarioView implements Serializable{
             if (lnUsuario != null){
                 this.bPerSenha = true;
             } else {
-                mensagem = "Por favor, escolha um Usuário .";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+                mensagem = "Por favor, escolha um Usuario .";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-            mensagem = "Usuário sem permissão para alterar a senha de outro usuário.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            mensagem = "Usuario sem permissao para alterar a senha de outro usuario.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
     
@@ -286,13 +285,13 @@ public class UsuarioView implements Serializable{
             this.bPerSenha = false;
             Postgress.saveOrUpdateObject(lnUsuario);
             LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteração do usuário : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
+                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
             Postgress.saveObject(lnHistorico);
             mensagem = "Senha alterada com sucesso.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
-            mensagem = "Senhas não conferem.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário", mensagem));
+            mensagem = "Senhas nao conferem.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
     
