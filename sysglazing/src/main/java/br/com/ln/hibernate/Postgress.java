@@ -91,7 +91,7 @@ public class Postgress implements Serializable{
             if (l != null && l.size() > 0){
                 lnUsuario = (LnUsuario) l.get(0);
             } else {
-                System.out.println("UsuÃ¡rio nÃ£o encontrado !!!!!!!!!!!!!!!!");
+                lnUsuario = null;
             }
         }catch(HibernateException ex){
             System.out.println("Hibernate Exception : " + ex.getMessage());

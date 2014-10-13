@@ -244,7 +244,7 @@ CREATE TABLE ln_historico
   mod_in_codigo integer NOT NULL, -- Modulo de onde originou a transação
   his_dt_data timestamp without time zone NOT NULL, -- Data da transação
   usu_st_codigo character varying(30) NOT NULL, -- Usuario que gerou a transação
-  his_st_descricao character varying(50), -- Descrição da transação.
+  his_st_descricao character varying(200), -- Descrição da transação.
   CONSTRAINT pk_historico PRIMARY KEY (his_in_codigo)
 )
 WITH (

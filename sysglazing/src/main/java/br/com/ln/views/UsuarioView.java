@@ -5,8 +5,8 @@
  */
 package br.com.ln.views;
 
+import br.com.ln.comum.Historico;
 import br.com.ln.comum.VarComuns;
-import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
@@ -40,10 +40,12 @@ public class UsuarioView implements Serializable{
     private String mensagem;
     private String novaSenha;
     private String repeteSenha;
+    private final Historico historico;
 
     public UsuarioView() {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
         this.listPerfil = Postgress.getListPerfilAtivo('S');
+        historico = new Historico();
     }
 
     public List<LnUsuario> getListUsuario() {
@@ -190,11 +192,9 @@ public class UsuarioView implements Serializable{
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnUsuario != null) {
                 if (Postgress.getVerificaHistorico(lnUsuario.getUsuStCodigo())) {
-                    LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                            Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Exclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
                     Postgress.deleteObject(lnUsuario);
+                    this.historico.gravaHistorico("Exclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
                     listUsuario = Postgress.getListObject(LnUsuario.class);
-                    Postgress.saveObject(lnHistorico);
                     mensagem = "Usuario excluido com sucesso!!!!.";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 } else {
@@ -236,9 +236,7 @@ public class UsuarioView implements Serializable{
             novoUsuario();
         } else {
             Postgress.saveOrUpdateObject(lnUsuario);
-            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
-            Postgress.saveObject(lnHistorico);
+            this.historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
         }
         
         listUsuario = Postgress.getListObject(LnUsuario.class);
@@ -255,13 +253,11 @@ public class UsuarioView implements Serializable{
         LnUsuario lnNovoUsuario = Postgress.getUsuario(lnUsuario.getUsuStCodigo());
         
         if (lnNovoUsuario != null){
-            mensagem = "Usuario Cadastrado.";
+            mensagem = "Usuario ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
             Postgress.saveObject(lnUsuario);
-            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Inclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
-            Postgress.saveObject(lnHistorico);
+            this.historico.gravaHistorico("Inclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
         }
     }
     
@@ -284,9 +280,7 @@ public class UsuarioView implements Serializable{
         if (novaSenha.equals(repeteSenha)) {
             this.bPerSenha = false;
             Postgress.saveOrUpdateObject(lnUsuario);
-            LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                      Postgress.getDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), "Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
-            Postgress.saveObject(lnHistorico);
+            historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
             mensagem = "Senha alterada com sucesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {

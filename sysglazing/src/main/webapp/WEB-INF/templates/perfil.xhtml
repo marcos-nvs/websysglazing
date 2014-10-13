@@ -4,14 +4,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <p:panel id="idPanelPerfil" header="Cadastro de Perfil" visible="#{perfilView.bEditPerfil}">
+    <p:panel id="idPanelPerfil" header="#{msgs['node.cadastro.nivel']}" visible="#{perfilView.bEditPerfil}">
         <h:panelGrid id="idGridPerfil" columns="6">
-            <h:outputText value="Descrição:"/>
+            <h:outputText value="#{msgs['tabbedHeadings.description']}:"/>
             <h:inputText value="#{perfilView.lnPerfil.perStDescricao}" maxlength="50" size="60" rendered="true"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAtivo}" rendered="true" />
             <h:outputText value="Ativo"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAltSenhaUsuario}" rendered="true"/>
-            <h:outputText value="Altera Senha de Usuários"/>
+            <h:outputText value="#{msgs['node.change.password']}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfil" 
@@ -30,13 +30,13 @@
                                itemValue="#{perfilAcesso.modInCodigo}" />
             </h:selectOneMenu>
             <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" />
-            <h:outputText value="Incluir"/>
+            <h:outputText value="#{msgs['node.include']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}" />
-            <h:outputText value="Alterar"/>
+            <h:outputText value="#{msgs['template.change']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}" />
-            <h:outputText value="Excluir"/>
+            <h:outputText value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}" />
-            <h:outputText value="Pesquisar"/>
+            <h:outputText value="#{msgs['template.search']}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfilAcessoEdit"
@@ -48,7 +48,7 @@
         </f:facet>
     </p:panel>
 
-    <p:panel id="idPanelPerfilTable" header="Cadastro de Perfil" visible="#{!perfilView.bVerAcesso}">
+    <p:panel id="idPanelPerfilTable" header="#{msgs['node.cadastro.nivel']}" visible="#{!perfilView.bVerAcesso}">
         <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
                      selectionMode="single" rowKey="#{codPerfil.perInCodigo}" >
             <p:column headerText="Descrição">
@@ -105,8 +105,9 @@
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfilAcesso" 
                                  update=":idFormTop:growl, idDtPerfilAcesso"
                                  action="#{perfilView.btExcluirAcesso}"/>
-                <p:commandButton value="Fechar" process=":idFormCenter:idPanelPerfilAcesso" 
-                                 update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil"
+                <p:commandButton value="#{msgs['page.panelPopup.closeText']}" process=":idFormCenter:idPanelPerfilAcesso" 
+                                 update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil,
+                                         :idFormCenter:idPanelPerfilAcessoEdit"
                                  action="#{perfilView.btFecharAcesso}"/>
             </f:facet>
         </p:dataTable>

@@ -180,7 +180,7 @@ public class PerfilView implements Serializable {
             this.sTipoFuncaoPerfil = "I";
             lnPerfil = new LnPerfil();
         } else {
-            mensagem = "Usuário sem permissão de inclusão.";
+            mensagem = "Usuario sem permissao de inclusao.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
@@ -197,7 +197,7 @@ public class PerfilView implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }
         } else {
-            mensagem = "Usuário sem permissão de alteracao.";
+            mensagem = "Usuario sem permissao de alteracao.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
@@ -207,14 +207,14 @@ public class PerfilView implements Serializable {
             if (lnPerfil != null) {
                 Postgress.deleteObject(lnPerfil);
                 listPerfil = Postgress.getListObject(LnPerfil.class);
-                mensagem = "Perfil excluído com sucesso !!!!.";
+                mensagem = "Perfil excluido com sucesso !!!!.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             } else {
                 mensagem = "Por favor, escolha um perfil para excluir.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }            
         } else{
-            mensagem = "Usuário sem permissão de excluir.";
+            mensagem = "Usuario sem permissao de excluir.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
@@ -260,7 +260,7 @@ public class PerfilView implements Serializable {
         LnPerfil lnNovoPerfil = Postgress.getPerfilperStDesc(lnPerfil.getPerStDescricao());
         
         if (lnNovoPerfil != null) {
-            mensagem = "Perfil já Cadastrado.";
+            mensagem = "Perfil ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         } else {
             Integer id = Postgress.getLnPeriflNextId();
@@ -285,7 +285,7 @@ public class PerfilView implements Serializable {
             this.bEditAcesso = true;
             this.sTipoFuncaoAcesso = "I";
         } else {
-            mensagem = "Usuário sem acesso para incluir perfil de acesso.";
+            mensagem = "Usuario sem acesso para incluir perfil de acesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
@@ -306,7 +306,7 @@ public class PerfilView implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }
         } else {
-            mensagem = "Usuário sem acesso para alterar perfil de acesso.";
+            mensagem = "Usuario sem acesso para alterar perfil de acesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
@@ -321,13 +321,15 @@ public class PerfilView implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             }
         } else {
-            mensagem = "Usuário sem acesso para excluir perfil de acesso.";
+            mensagem = "Usuario sem acesso para excluir perfil de acesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
     
     public void btFecharAcesso(){
         this.bVerAcesso = false;
+        this.bEditAcesso = false;
+        this.sTipoFuncaoAcesso = "";
     }
     
     public void btSalvarAcesso(){
@@ -373,7 +375,7 @@ public class PerfilView implements Serializable {
         LnPerfilacesso perfilNovo = Postgress.getPerfilAcesso(lnPerfil.getPerInCodigo(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
         
         if (perfilNovo != null){
-            mensagem = "Modulo de acesso já Cadastrado.";
+            mensagem = "Modulo de acesso ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         } else {
             Postgress.saveObject(lnPerfilacesso);

@@ -6,9 +6,11 @@
 
 package br.com.ln.comum;
 
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +35,6 @@ public class VarComuns implements Serializable{
         Locale locale = Locale.getDefault();
         return locale.toString();
     }
-    
+
     
 }
