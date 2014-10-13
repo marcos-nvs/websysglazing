@@ -92,7 +92,7 @@
             <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
                              update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
                              action="#{usuarioView.btAltSenha}"/>
-            <p:commandButton value="#{msgs['node.history']}"/>
+            <p:commandButton value="#{msgs['node.history']}" oncomplete="PF('historico').show()"/>
         </f:facet>
     </p:dataTable>
 </ui:composition>
