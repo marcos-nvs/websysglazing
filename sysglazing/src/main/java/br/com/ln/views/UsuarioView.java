@@ -256,6 +256,8 @@ public class UsuarioView implements Serializable{
             mensagem = "Usuario ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
+            lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB());
+            lnUsuario.setUsuDtExpiracao(Postgress.getDateFromDB());
             Postgress.saveObject(lnUsuario);
             this.historico.gravaHistorico("Inclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - "+ lnUsuario.getUsuStNome());
         }

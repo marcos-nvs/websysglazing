@@ -11,6 +11,7 @@ import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnPerfilacessoPK;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.List;
@@ -208,11 +209,24 @@ public class PerfilView implements Serializable {
     public void btExcluirPerfil() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnPerfil != null) {
-                Postgress.deleteObject(lnPerfil);
-                listPerfil = Postgress.getListObject(LnPerfil.class);
-                mensagem = "Perfil excluido com sucesso !!!!.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-                historico.gravaHistorico("Exclusao do Perfil : " + lnPerfil.getPerStDescricao());
+                List<LnUsuario> listLnUsuario = Postgress.getUsuarioPerfil(lnPerfil.getPerInCodigo());
+                System.out.println("ln : " + lnPerfil.getPerStDescricao() + " - listusuario : " + listLnUsuario.size());
+                List<LnPerfilacesso> listPerfilacessos = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+                if (listPerfilacessos != null) {
+                    mensagem = "Perfil não pode ser excluido, existem itens de acesso cadastrado.!!!!!!!!";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+                } else {
+                    if (listLnUsuario != null && !listLnUsuario.isEmpty()) {
+                        mensagem = "Este Perfil está sendo utilizado, não pode ser excluido!!!!!!.";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+                    } else {
+                        Postgress.deleteObject(lnPerfil);
+                        listPerfil = Postgress.getListObject(LnPerfil.class);
+                        mensagem = "Perfil excluido com sucesso !!!!.";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+                        historico.gravaHistorico("Exclusao do Perfil : " + lnPerfil.getPerStDescricao());
+                    }
+                }
             } else {
                 mensagem = "Por favor, escolha um perfil para excluir.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));

@@ -460,6 +460,29 @@ public class Postgress implements Serializable{
         return null;
     }
     
+    public static List<LnUsuario> getUsuarioPerfil(Integer perInCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnUsuario> listUsuario = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnUsuario.findByPerInCodigo");
+            query.setInteger("perInCodigo", perInCodigo);
+            listUsuario = query.list();
+            tx.commit();
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listUsuario;
+    }
+    
     /**
      *
      * @param clazz
