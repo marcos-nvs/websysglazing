@@ -418,8 +418,8 @@ public class Postgress implements Serializable{
     public static boolean getVerificaHistorico(String usuStCodigo){
         
         Session session = null;
-        Transaction tx = null;
-        List lnHis = null;
+        Transaction tx;
+        List lnHis;
         boolean retorno = false;
         
         try{
@@ -459,7 +459,6 @@ public class Postgress implements Serializable{
     public static List<LnHistorico> getListHistorico(String modStCodigo){
         return null;
     }
-    
     
     /**
      *
