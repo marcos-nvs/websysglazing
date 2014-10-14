@@ -456,8 +456,32 @@ public class Postgress implements Serializable{
         return retorno;
     }
     
-    public static List<LnHistorico> getListHistorico(String modStCodigo){
-        return null;
+    public static List<LnHistorico> getListHistorico(Integer modInCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnHistorico> listHistorico = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query;
+            
+            if (modInCodigo != null) {
+                query = session.getNamedQuery("LnHistorico.findByModInCodigo");
+                query.setInteger("modInCodigo", modInCodigo);
+            } else {
+                query = session.getNamedQuery("LnHistorico.findAll");
+            }
+            listHistorico = query.list();
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listHistorico;
     }
     
     public static List<LnUsuario> getUsuarioPerfil(Integer perInCodigo){

@@ -45,3 +45,4 @@ public class BeanVar implements Serializable{
     }
     
 }
+    

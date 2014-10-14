@@ -5,13 +5,16 @@
  */
 package br.com.ln.views;
 
+import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.Historico;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -41,13 +44,14 @@ public class UsuarioView implements Serializable{
     private String novaSenha;
     private String repeteSenha;
     private final Historico historico;
+    private BeanVar beanVar;
 
     public UsuarioView() {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
         this.listPerfil = Postgress.getListPerfilAtivo('S');
         historico = new Historico();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
-
     public List<LnUsuario> getListUsuario() {
         return listUsuario;
     }
