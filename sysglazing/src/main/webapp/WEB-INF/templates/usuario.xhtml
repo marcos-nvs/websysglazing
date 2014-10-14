@@ -55,7 +55,8 @@
             <p:commandButton id="idBtCancelarSenha" value="#{msgs['node.cancel']}" process="idPanelSenha" 
                              update="idPanelSenha, :idFormCenter:idDtUsuario, :idFormTop:growl"
                              action="#{usuarioView.btCancelarSenha}"/>
-        </f:facet></p:panel>
+        </f:facet>
+    </p:panel>
     <p:dataTable id="idDtUsuario" var="codUsuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}"
                  selectionMode="single" rowKey="#{codUsuario.usuStCodigo}">
         <f:facet name="header">
@@ -92,10 +93,16 @@
             <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
                              update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
                              action="#{usuarioView.btAltSenha}"/>
-<!--            <p:commandButton value="#{msgs['node.history']}" process="idDtUsuario,:idFormCenter" update=":idFormCenter"
-                             action="#{usuarioView.btHistorico}"/>-->
+            <p:commandButton value="#{msgs['node.history']}"/>
         </f:facet>
     </p:dataTable>
-    
-    
+
+    <p:dataTable>
+        <f:facet name="header">
+            <h:outputText value="#{msgs['node.history']}"/>
+        </f:facet>
+        <f:facet name="footer">
+            <p:commandButton value="#{msgs['page.panelPopup.closeText']}"/>
+        </f:facet>
+    </p:dataTable>
 </ui:composition>

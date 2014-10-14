@@ -296,4 +296,6 @@ public class UsuarioView implements Serializable{
     public void btCancelarSenha(){
         this.bPerSenha = false;
     }
+    
+    public void btHistorico(){}
 }
