@@ -44,13 +44,11 @@ public class UsuarioView implements Serializable{
     private String novaSenha;
     private String repeteSenha;
     private final Historico historico;
-    private BeanVar beanVar;
 
     public UsuarioView() {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
         this.listPerfil = Postgress.getListPerfilAtivo('S');
         historico = new Historico();
-        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
     public List<LnUsuario> getListUsuario() {
         return listUsuario;
