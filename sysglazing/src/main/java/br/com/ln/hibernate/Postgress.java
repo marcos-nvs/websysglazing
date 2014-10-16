@@ -419,33 +419,25 @@ public class Postgress implements Serializable{
         
         Session session = null;
         Transaction tx;
-        List lnHis;
+        List<LnHistorico> listHis;
         boolean retorno = false;
         
         try{
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.createSQLQuery("select count(*) qtde from ln_historico where usu_st_codigo = :usuStCodigo");
+            Query query = session.getNamedQuery("LnHistorico.findByUsuStCodigo");
             query.setString("usuStCodigo", usuStCodigo);
-            lnHis = query.list();
+            
+            listHis = query.list();
             tx.commit();
 
-            if (lnHis != null && lnHis.isEmpty()){
-                
-                for (int i = 0; i < lnHis.size(); i++) {
-                    Object[] tupla = (Object[]) lnHis.get(i);
-                    
-                    Integer qtde = (Integer) tupla[0];
-
-                    if (qtde == 0){
-                        retorno = true;
-                    } else {
-                        retorno = false;
-                    }
-                }
+            System.out.println("lishis : " + listHis.size());
+            
+            if (listHis != null && !listHis.isEmpty()) {
+                retorno = listHis.size() == 0;
             } else {
-                retorno = true;
+                retorno = false;
             }
         } finally {
             if (session != null && session.isOpen()){

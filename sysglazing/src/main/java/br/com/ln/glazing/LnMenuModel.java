@@ -141,7 +141,7 @@ public class LnMenuModel implements Serializable {
     
     public DefaultSubMenu itemAll(){
         
-        DefaultSubMenu subMenu = new DefaultSubMenu("Diversos");
+        DefaultSubMenu subMenu = new DefaultSubMenu("");
         subMenu.setRendered(true);
         DefaultMenuItem item = new DefaultMenuItem("Histórico");
         item.setCommand("#{lnMenuModel.menuActionClick}");
@@ -154,10 +154,10 @@ public class LnMenuModel implements Serializable {
         
         item = new DefaultMenuItem("Sair");
         item.setCommand("#{glazingView.logout()}");
-//        item.setUpdate("@this, inputUser, inputPassword");
-//        item.setProcess("@this, inputUser, inputPassword");
         item.setAjax(false);
-//        item.setIcon("ui-icon-folder-open");
+        item.setPartialSubmit(false);
+        item.setProcess(":idFormTop:idPanelTopLogin, :idFormTop:inputUser, :idFormTop:inputPassword");
+        item.setUpdate(":idFormTop:idPanelTopLogin, :idFormTop:inputUser, :idFormTop:inputPassword");
         subMenu.addElement(item);
         subMenu.setRendered(true);
         

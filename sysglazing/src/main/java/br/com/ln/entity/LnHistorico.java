@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnHistorico.findByHisDtData", query = "SELECT l FROM LnHistorico l WHERE l.hisDtData = :hisDtData"),
     @NamedQuery(name = "LnHistorico.findByUsuStCodigo", query = "SELECT l FROM LnHistorico l WHERE l.usuStCodigo = :usuStCodigo"),
     @NamedQuery(name = "LnHistorico.findByHisStDescricao", query = "SELECT l FROM LnHistorico l WHERE l.hisStDescricao = :hisStDescricao")})
+
 public class LnHistorico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

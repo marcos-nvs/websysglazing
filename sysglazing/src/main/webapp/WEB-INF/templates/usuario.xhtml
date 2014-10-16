@@ -89,11 +89,18 @@
             <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
                              action="#{usuarioView.btAlterar}"/>
             <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
-                             action="#{usuarioView.btExcluir()}"/>
+                             actionListener="#{usuarioView.btExcluir}">
+                <p:confirm header="Confirmação" message="Tem certeza da exclusão deste usuário?" icon="ui-icon-alert" />
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
             <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
                              update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
                              action="#{usuarioView.btAltSenha}"/>
-            <p:commandButton value="#{msgs['node.history']}"/>
+            <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog"
+                             onclick="PF('historico').show()"/>
         </f:facet>
     </p:dataTable>
 </ui:composition>
