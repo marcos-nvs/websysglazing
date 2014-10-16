@@ -16,6 +16,11 @@
         <h:body id="idBoby"
                 style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;">
             <h:outputText value="#{defineCaminho.retorno}" style="left: -400px"/>
+            <h:form id="idFormDialog">
+                <ui:insert id="idInsertDialog">
+                    <ui:include src="WEB-INF/templates/historico.xhtml"/>
+                </ui:insert>
+            </h:form>
             <p:layout fullPage="true">
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true">
                     <h:form id="idFormTop">
@@ -37,9 +42,6 @@
                                 </h:panelGrid>
                                 <h:panelGrid id="idGridLogado" columns="2" rendered="#{not empty glazingView.lnUsuario}">
                                     <h:outputText id="idTextUserlogado" value="Usuário : #{glazingView.lnUsuario.usuStNome}"/>
-                                    <p:commandButton id="idButtonLogout" value="#{msgs['node.logout']}" icon="ui-icon-check" ajax="false"
-                                                     partialSubmit="false" process="@this, inputUser, inputPassword" action ="#{glazingView.logout()}"
-                                                     update="@this, inputUser, inputPassword"/>
                                 </h:panelGrid>
                             </p:panel>
                         </h:panelGrid>

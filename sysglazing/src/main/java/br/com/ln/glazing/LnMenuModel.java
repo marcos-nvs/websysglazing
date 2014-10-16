@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -82,14 +81,16 @@ public class LnMenuModel implements Serializable {
                     item.setUpdate(":idLayoutCenter");
                     item.setProcess(":idLayoutCenter");
                     item.setAjax(false);
-                    item.setIcon("ui-icon-folder-open");
+//                    item.setIcon("ui-icon-folder-open");
                     subMenu.addElement(item);
                     subMenu.setRendered(true);
                     subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
                 }
             }
+            
             model.addElement(subMenu);
         }
+        model.addElement(itemAll());
     }
 
 
@@ -137,4 +138,29 @@ public class LnMenuModel implements Serializable {
             }
         }
     }
+    
+    public DefaultSubMenu itemAll(){
+        
+        DefaultSubMenu subMenu = new DefaultSubMenu("Diversos");
+        subMenu.setRendered(true);
+        DefaultMenuItem item = new DefaultMenuItem("Histórico");
+        item.setCommand("#{lnMenuModel.menuActionClick}");
+//        item.setUpdate(":idLayoutCenter");
+//        item.setProcess(":idLayoutCenter");
+        item.setAjax(false);
+//        item.setIcon("ui-icon-folder-open");
+        subMenu.addElement(item);
+        subMenu.setRendered(true);
+        
+        item = new DefaultMenuItem("Sair");
+        item.setCommand("#{glazingView.logout()}");
+//        item.setUpdate("@this, inputUser, inputPassword");
+//        item.setProcess("@this, inputUser, inputPassword");
+        item.setAjax(false);
+//        item.setIcon("ui-icon-folder-open");
+        subMenu.addElement(item);
+        subMenu.setRendered(true);
+        
+        return subMenu;
+    } 
 }
