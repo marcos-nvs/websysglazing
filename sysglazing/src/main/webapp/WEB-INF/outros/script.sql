@@ -272,3 +272,78 @@ CREATE SEQUENCE seq_historico
   CACHE 1;
 ALTER TABLE seq_historico
   OWNER TO postgres;
+
+
+-- Table: ln_cliente
+
+-- DROP TABLE ln_cliente;
+
+CREATE TABLE ln_cliente
+(
+  cli_in_codigo integer NOT NULL, -- codigo ID do cliente
+  cli_st_cpf character varying(11), -- CPF para cliente pessoa
+  cli_st_cnpj character varying(14), -- CNPJ para Empresa
+  cli_st_rg character varying(10), -- RG do cliente
+  cli_st_ie character varying(10), -- Inscrição Estadual
+  cli_st_nome character varying(60) NOT NULL, -- Nome ou Razão social do cliente
+  cli_st_email character varying(60),
+  CONSTRAINT pk_cliente PRIMARY KEY (cli_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_cliente
+  OWNER TO postgres;
+COMMENT ON TABLE ln_cliente
+  IS 'Cadastro de Cliente';
+COMMENT ON COLUMN ln_cliente.cli_in_codigo IS 'codigo ID do cliente';
+COMMENT ON COLUMN ln_cliente.cli_st_cpf IS 'CPF para cliente pessoa';
+COMMENT ON COLUMN ln_cliente.cli_st_cnpj IS 'CNPJ para Empresa';
+COMMENT ON COLUMN ln_cliente.cli_st_rg IS 'RG do cliente';
+COMMENT ON COLUMN ln_cliente.cli_st_ie IS 'Inscrição Estadual';
+COMMENT ON COLUMN ln_cliente.cli_st_nome IS 'Nome ou Razão social do cliente';
+
+-- Sequence: seq_cliente
+
+-- DROP SEQUENCE seq_cliente;
+
+CREATE SEQUENCE seq_cliente
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_cliente
+  OWNER TO postgres;
+
+-- Table: ln_endereco
+
+-- DROP TABLE ln_endereco;
+
+CREATE TABLE ln_endereco
+(
+  cli_in_codigo integer NOT NULL, -- Código do Cliente
+  end_in_codigo integer NOT NULL, -- Endereço dos clientes
+  end_st_tipo character varying(20) NOT NULL, -- Tipo comercial...
+  end_st_logradouro character varying(60) NOT NULL, -- Endereço
+  end_st_numero character varying(6) NOT NULL,
+  end_st_bairro character varying(40) NOT NULL,
+  end_st_cidade character varying(50) NOT NULL,
+  end_st_estado character varying(2) NOT NULL,
+  end_st_cep character varying(8) NOT NULL
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_endereco
+  OWNER TO postgres;
+COMMENT ON TABLE ln_endereco
+  IS 'Endereço dos Clientes';
+COMMENT ON COLUMN ln_endereco.cli_in_codigo IS 'Código do Cliente';
+COMMENT ON COLUMN ln_endereco.end_in_codigo IS 'Endereço dos clientes';
+COMMENT ON COLUMN ln_endereco.end_st_tipo IS 'Tipo comercial
+Tipo Entrega
+';
+COMMENT ON COLUMN ln_endereco.end_st_logradouro IS 'Endereço ';
+
+
