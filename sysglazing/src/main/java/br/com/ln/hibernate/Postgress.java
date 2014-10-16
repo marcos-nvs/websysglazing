@@ -434,7 +434,7 @@ public class Postgress implements Serializable{
 
             System.out.println("lishis : " + listHis.size());
             
-            if (listHis != null && !listHis.isEmpty()) {
+            if (listHis != null) {
                 retorno = listHis.size() == 0;
             } else {
                 retorno = false;
