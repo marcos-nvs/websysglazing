@@ -66,10 +66,18 @@
                 <p:commandButton value="#{msgs['template.change']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
                                  action="#{perfilView.btAlterarPerfil}"/>
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfil" update=":idFormTop:growl, idDtPerfil"
-                                 action="#{perfilView.btExcluirPerfil}"/>
+                                 actionListener="#{perfilView.btExcluirPerfil}">
+                    <p:confirm header="Confirmação" message="Confirma a exclusão deste perfil?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
                 <p:commandButton value="Visualizar" process="idDtPerfil, :idFormCenter:idPanelPerfilTable" 
                                  update =":idFormCenter:idPanelPerfilAcesso, :idFormTop:growl, :idFormCenter:idPanelPerfilTable"
                                  action="#{perfilView.btVisualizar}"/>
+                <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog"
+                                 onclick="PF('historico').show()"/>
             </f:facet>
         </p:dataTable>
     </p:panel>    
@@ -104,7 +112,13 @@
                                  action="#{perfilView.btAlterarAcesso}"/>
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfilAcesso" 
                                  update=":idFormTop:growl, idDtPerfilAcesso"
-                                 action="#{perfilView.btExcluirAcesso}"/>
+                                 action="#{perfilView.btExcluirAcesso}">
+                    <p:confirm header="Confirmação" message="Confirma a exclusão deste acesso?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
                 <p:commandButton value="#{msgs['page.panelPopup.closeText']}" process=":idFormCenter:idPanelPerfilAcesso" 
                                  update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil,
                                          :idFormCenter:idPanelPerfilAcessoEdit"

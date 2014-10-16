@@ -90,7 +90,7 @@
                              action="#{usuarioView.btAlterar}"/>
             <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
                              actionListener="#{usuarioView.btExcluir}">
-                <p:confirm header="Confirmação" message="Tem certeza da exclusão deste usuário?" icon="ui-icon-alert" />
+                <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert" />
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
