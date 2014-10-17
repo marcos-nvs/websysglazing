@@ -130,8 +130,8 @@ public class GlaAccess implements Serializable{
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
                         lnUsuario = null;
-                        mensagem = "Usuário ou Senha Inválido";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
+                        mensagem = "Usuario ou senha invalido";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
                     } else {
                         VarComuns.lnUsusario = lnUsuario;
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
@@ -142,8 +142,8 @@ public class GlaAccess implements Serializable{
                     }
                 } 
             } else {
-                mensagem = "Usuário ou senha em Branco.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário e Senha", mensagem));
+                mensagem = "Usuario ou senha em Branco.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
             }
         }
     }
