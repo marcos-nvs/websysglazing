@@ -330,7 +330,8 @@ CREATE TABLE ln_endereco
   end_st_bairro character varying(40) NOT NULL,
   end_st_cidade character varying(50) NOT NULL,
   end_st_estado character varying(2) NOT NULL,
-  end_st_cep character varying(8) NOT NULL
+  end_st_cep character varying(8) NOT NULL,
+  CONSTRAINT pk_endereco PRIMARY KEY (cli_in_codigo, end_in_codigo)
 )
 WITH (
   OIDS=FALSE
@@ -346,4 +347,56 @@ Tipo Entrega
 ';
 COMMENT ON COLUMN ln_endereco.end_st_logradouro IS 'Endereço ';
 
+-- Sequence: seq_endereco
+
+-- DROP SEQUENCE seq_endereco;
+
+CREATE SEQUENCE seq_endereco
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_endereco
+  OWNER TO postgres;
+
+
+-- Table: ln_telefone
+
+-- DROP TABLE ln_telefone;
+
+CREATE TABLE ln_telefone
+(
+  cli_in_codigo integer NOT NULL, -- identificação do cliente
+  tel_in_codigo integer NOT NULL, -- Sequencia do telefone
+  tel_st_tipo character varying(20) NOT NULL, -- Tipo de telefone (residencial, vivo, claro, oi, tim
+  tel_st_ddd character varying(3) NOT NULL, -- DDD
+  tel_st_telefone character varying(10) NOT NULL, -- Telefone
+  CONSTRAINT pk_telefone PRIMARY KEY (cli_in_codigo, tel_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_telefone
+  OWNER TO postgres;
+COMMENT ON TABLE ln_telefone
+  IS 'Cadastro de telefone';
+COMMENT ON COLUMN ln_telefone.cli_in_codigo IS 'identificação do cliente';
+COMMENT ON COLUMN ln_telefone.tel_in_codigo IS 'Sequencia do telefone';
+COMMENT ON COLUMN ln_telefone.tel_st_tipo IS 'Tipo de telefone (residencial, vivo, claro, oi, tim';
+COMMENT ON COLUMN ln_telefone.tel_st_ddd IS 'DDD';
+COMMENT ON COLUMN ln_telefone.tel_st_telefone IS 'Telefone';
+
+-- Sequence: seq_telefone
+
+-- DROP SEQUENCE seq_telefone;
+
+CREATE SEQUENCE seq_telefone
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_telefone
+  OWNER TO postgres;
 
