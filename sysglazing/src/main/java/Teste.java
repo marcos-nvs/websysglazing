@@ -1,5 +1,7 @@
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnCliente;
+import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
@@ -108,6 +110,11 @@ public class Teste {
 //            
 //            System.out.println("Perfil Acesso : " + lnPerfilacesso.toString());
 //        }
+        
+        
+        VarComuns.strDbName = "Public";
+        List<LnCliente> listCliente = Postgress.getListObject(LnCliente.class);
+//        List<LnMenu> listmenu = Postgress.getListObject(LnMenu.class);
 
     }
 }

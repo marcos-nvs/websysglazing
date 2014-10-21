@@ -322,8 +322,8 @@ ALTER TABLE seq_cliente
 
 CREATE TABLE ln_endereco
 (
-  cli_in_codigo integer NOT NULL, -- Código do Cliente
-  end_in_codigo integer NOT NULL, -- Endereço dos clientes
+  end_in_codigo integer NOT NULL, -- Código do Endereco
+  cli_in_codigo integer NOT NULL, -- código do cliente
   end_st_tipo character varying(20) NOT NULL, -- Tipo comercial...
   end_st_logradouro character varying(60) NOT NULL, -- Endereço
   end_st_numero character varying(6) NOT NULL,
@@ -331,7 +331,7 @@ CREATE TABLE ln_endereco
   end_st_cidade character varying(50) NOT NULL,
   end_st_estado character varying(2) NOT NULL,
   end_st_cep character varying(8) NOT NULL,
-  CONSTRAINT pk_endereco PRIMARY KEY (cli_in_codigo, end_in_codigo)
+  CONSTRAINT pk_endereco PRIMARY KEY (end_in_codigo)
 )
 WITH (
   OIDS=FALSE
@@ -340,8 +340,8 @@ ALTER TABLE ln_endereco
   OWNER TO postgres;
 COMMENT ON TABLE ln_endereco
   IS 'Endereço dos Clientes';
-COMMENT ON COLUMN ln_endereco.cli_in_codigo IS 'Código do Cliente';
-COMMENT ON COLUMN ln_endereco.end_in_codigo IS 'Endereço dos clientes';
+COMMENT ON COLUMN ln_endereco.end_in_codigo IS 'Código do Endereco';
+COMMENT ON COLUMN ln_endereco.cli_in_codigo IS 'código do cliente';
 COMMENT ON COLUMN ln_endereco.end_st_tipo IS 'Tipo comercial
 Tipo Entrega
 ';
@@ -360,19 +360,18 @@ CREATE SEQUENCE seq_endereco
 ALTER TABLE seq_endereco
   OWNER TO postgres;
 
-
 -- Table: ln_telefone
 
 -- DROP TABLE ln_telefone;
 
 CREATE TABLE ln_telefone
 (
-  cli_in_codigo integer NOT NULL, -- identificação do cliente
-  tel_in_codigo integer NOT NULL, -- Sequencia do telefone
+  tel_in_codigo integer NOT NULL, -- código do telefone
+  cli_in_codigo integer NOT NULL, -- Codigo cliente
   tel_st_tipo character varying(20) NOT NULL, -- Tipo de telefone (residencial, vivo, claro, oi, tim
   tel_st_ddd character varying(3) NOT NULL, -- DDD
   tel_st_telefone character varying(10) NOT NULL, -- Telefone
-  CONSTRAINT pk_telefone PRIMARY KEY (cli_in_codigo, tel_in_codigo)
+  CONSTRAINT pk_telefone PRIMARY KEY (tel_in_codigo)
 )
 WITH (
   OIDS=FALSE
@@ -381,8 +380,8 @@ ALTER TABLE ln_telefone
   OWNER TO postgres;
 COMMENT ON TABLE ln_telefone
   IS 'Cadastro de telefone';
-COMMENT ON COLUMN ln_telefone.cli_in_codigo IS 'identificação do cliente';
-COMMENT ON COLUMN ln_telefone.tel_in_codigo IS 'Sequencia do telefone';
+COMMENT ON COLUMN ln_telefone.tel_in_codigo IS 'código do telefone';
+COMMENT ON COLUMN ln_telefone.cli_in_codigo IS 'Codigo cliente';
 COMMENT ON COLUMN ln_telefone.tel_st_tipo IS 'Tipo de telefone (residencial, vivo, claro, oi, tim';
 COMMENT ON COLUMN ln_telefone.tel_st_ddd IS 'DDD';
 COMMENT ON COLUMN ln_telefone.tel_st_telefone IS 'Telefone';
@@ -399,4 +398,3 @@ CREATE SEQUENCE seq_telefone
   CACHE 1;
 ALTER TABLE seq_telefone
   OWNER TO postgres;
-

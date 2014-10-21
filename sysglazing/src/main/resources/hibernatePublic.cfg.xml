@@ -21,6 +21,10 @@
     <mapping class="br.com.ln.entity.LnPerfilacesso"/>
     <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnHistorico"/>
+    <mapping class="br.com.ln.entity.LnCliente"/>
+    <mapping class="br.com.ln.entity.LnEndereco"/>
+    <mapping class="br.com.ln.entity.LnTelefone"/>
+    
     
   </session-factory>
 </hibernate-configuration>

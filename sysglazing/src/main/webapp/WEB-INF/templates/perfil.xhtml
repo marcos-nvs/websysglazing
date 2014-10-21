@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <p:panel id="idPanelPerfil" header="#{msgs['node.cadastro.nivel']}" visible="#{perfilView.bEditPerfil}">
+    <p:panel id="idPanelPerfil" header="#{msgs['node.cadastro.nivel']}" visible="#{perfilView.bEditPerfil}" style="border-color: transparent">
         <h:panelGrid id="idGridPerfil" columns="6">
             <h:outputText value="#{msgs['tabbedHeadings.description']}:"/>
             <h:inputText value="#{perfilView.lnPerfil.perStDescricao}" maxlength="50" size="60" rendered="true"/>
@@ -22,7 +22,7 @@
         </f:facet>
     </p:panel>
     
-    <p:panel id="idPanelPerfilAcessoEdit" header="Definição do Perfil" visible="#{perfilView.bEditAcesso}">
+    <p:panel id="idPanelPerfilAcessoEdit" header="Definição do Perfil" visible="#{perfilView.bEditAcesso}" style="border-color: transparent">
         <h:panelGrid id="idGridPerfilAcesso" columns="10">
             <h:outputText value="Módulo:"/>
             <h:selectOneMenu id="idmoduloAcesso" value="#{perfilView.modInCodigo}" >
@@ -48,9 +48,14 @@
         </f:facet>
     </p:panel>
 
-    <p:panel id="idPanelPerfilTable" header="#{msgs['node.cadastro.nivel']}" visible="#{!perfilView.bVerAcesso}">
+    <p:panel id="idPanelPerfilTable" visible="#{!perfilView.bVerAcesso}" style="border-color: transparent">
         <p:dataTable id="idDtPerfil" var="codPerfil" value="#{perfilView.listPerfil}" selection="#{perfilView.lnPerfil}"
                      selectionMode="single" rowKey="#{codPerfil.perInCodigo}" >
+            
+            <f:facet name="header">
+                <h:outputText value="#{msgs['node.cadastro.nivel']}"/>
+            </f:facet>
+            
             <p:column headerText="Descrição">
                 <h:outputText value="#{codPerfil.perStDescricao}"/>
             </p:column>
@@ -82,7 +87,8 @@
         </p:dataTable>
     </p:panel>    
 
-    <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="#{perfilView.bVerAcesso}">
+    <p:panel id="idPanelPerfilAcesso" header="#{perfilView.lnPerfil.perStDescricao}" visible="#{perfilView.bVerAcesso}" 
+             style="border-color: transparent">
         <p:dataTable id="idDtPerfilAcesso" var="codPerfilAcesso" value="#{perfilView.listPerfilAcesso}" selection="#{perfilView.lnPerfilacesso}"
                      selectionMode="single" rowKey="#{codPerfilAcesso.lnPerfilacessoPK.perInCodigo}">
             <f:facet name="header">

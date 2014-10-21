@@ -4,5 +4,103 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <h:outputText value="Cadastro de Cliente"/>
+    <p:panel id="idPanelCadCliente" header="#{msgs['node.client.registre']}" visible="#{clienteView.bTelaCadastro}" style="border-color: transparent">
+        <h:panelGrid columns="2">
+            <h:outputText value="Escolha o tipo de Cliente:"/>
+            <p:selectOneRadio >
+                <f:selectItem itemLabel="Pessoa Física" itemValue="S"/>
+                <f:selectItem itemLabel="Pessoa Jurídica" itemValue="S"/>
+            </p:selectOneRadio>
+        </h:panelGrid>
+
+        <p:panel id="idPanelFisica" style="border-color: transparent">
+            <p:fieldset legend="Pessoa Física">
+                <h:panelGrid id="idFisica" columns="4">
+                    <h:outputText value="CPF"/>
+                    <h:inputText />
+                    <h:outputText value="RG"/>
+                    <h:inputText />
+                </h:panelGrid>
+                <h:panelGrid id="idFisica1" columns="4">
+                    <h:outputText value="Nome"/>
+                    <h:inputText size="60" />
+                    <h:outputText value="e-mail"/>
+                    <h:inputText size="60"/>
+                </h:panelGrid>
+            </p:fieldset>
+        </p:panel>
+
+        <p:panel id="idPanelJuridica" style="border-color: transparent">
+            <p:fieldset legend="Pessoa Jurídica">
+                <h:panelGrid id="idJuridica" columns="4">
+                    <h:outputText value="CNPJ"/>
+                    <h:inputText />
+                    <h:outputText value="IE"/>
+                    <h:inputText />
+                </h:panelGrid>
+                <h:panelGrid id="idJuridica1" columns="4">
+                    <h:outputText value="Razão Social"/>
+                    <h:inputText size="60" />
+                    <h:outputText value="e-mail"/>
+                    <h:inputText size="60"/>
+                    <h:outputText value="Contato"/>
+                    <h:inputText size="60"/>
+                </h:panelGrid>
+            </p:fieldset>
+        </p:panel>
+
+        <p:panel id="idPanelEndereco" style="border-color: transparent">
+            <p:fieldset legend="Endereço">
+                <h:panelGrid columns="4">
+                    <h:outputText value="Endereço"/>
+                    <h:inputText size="60"/>
+                    <h:outputText value="Nro"/>
+                    <h:inputText size="20"/>
+                </h:panelGrid>
+                <h:panelGrid columns="4">
+                    <h:outputText value="Bairro"/>
+                    <h:inputText size="40" />
+                    <h:outputText value="Cidade"/>
+                    <h:inputText size="40"/>
+                    <h:outputText value="CEP"/>
+                    <h:inputText size="20"/>
+                </h:panelGrid>
+            </p:fieldset>
+        </p:panel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Gravar"/>
+            <p:commandButton value="Cancelar"/>
+        </f:facet>
+    </p:panel>
+
+
+    <p:panel id="idPanelCliente" style="border-color: transparent" visible="#{not clienteView.bTelaCadastro}">
+        <p:dataTable id="idDtCliente" var="tbCliente" value="#{clienteView.listCliente}" selection="#{clienteView.lnCliente}"
+                     selectionMode="single" rowKey="#{tbCliente.cliInCodigo}">
+            <f:facet name="header">
+                <h:outputText value="#{msgs['node.client.registre']}"/>
+            </f:facet>
+
+            <p:column headerText="#{msgs['node.code.client']}">
+                <h:outputText value="#{tbCliente.cliInCodigo}"/>
+            </p:column>
+            <p:column headerText="#{msgs['node.name.client']}">
+                <h:outputText value="#{tbCliente.cliStNome}"/>
+            </p:column>
+            <p:column headerText="E-mail">
+                <h:outputText value="#{tbCliente.cliStEmail}"/>
+            </p:column>
+
+            <f:facet name="footer">
+                <p:commandButton value="#{msgs['node.include']}" process=":idFormCenter:idPanelCliente" 
+                                 update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
+                                 onclick="#{clienteView.btIncluir()}"/>
+                <p:commandButton value="#{msgs['template.change']}"/>
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
+                <p:commandButton value="#{msgs['node.view']}"/>
+                <p:commandButton value="#{msgs['node.history']}"/>
+            </f:facet>
+        </p:dataTable>
+    </p:panel>
 </ui:composition>

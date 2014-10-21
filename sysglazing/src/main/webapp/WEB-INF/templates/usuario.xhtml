@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    <p:panel id="idPanelCadUsuario" header="#{msgs['template.user.register']}" visible="#{usuarioView.bTelaCadastro}">
+    <p:panel id="idPanelCadUsuario" header="#{msgs['template.user.register']}" visible="#{usuarioView.bTelaCadastro}"
+             style="border-color: transparent">
         <h:panelGrid id="idgridUsuario" columns="1" >
             <h:panelGrid columns="10">
                 <h:outputText value="#{msgs['template.user']}:" />
@@ -40,7 +41,7 @@
             </f:facet>
         </h:panelGrid>
     </p:panel>
-    <p:panel id="idPanelSenha" header="#{msgs['node.change.password']}" visible="#{usuarioView.bPerSenha}">
+    <p:panel id="idPanelSenha" header="#{msgs['node.change.password']}" visible="#{usuarioView.bPerSenha}" style="border-color: transparent">
         <h:outputText value="#{msgs['template.user']}: #{usuarioView.lnUsuario.usuStNome}"/>
         <h:panelGrid columns="2">
             <h:outputText value="Entre com a nova senha :"/>
