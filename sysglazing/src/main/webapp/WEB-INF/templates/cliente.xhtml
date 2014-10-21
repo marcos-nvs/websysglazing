@@ -1,9 +1,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
     <p:panel id="idPanelCadCliente" header="#{msgs['node.client.registre']}" visible="#{clienteView.bTelaCadastro}" style="border-color: transparent">
         <h:panelGrid columns="2">
             <h:outputText value="Escolha o tipo de Cliente:"/>
@@ -14,59 +14,57 @@
         </h:panelGrid>
 
         <p:panel id="idPanelFisica" style="border-color: transparent">
-            <p:fieldset legend="Pessoa Física">
-                <h:panelGrid id="idFisica" columns="4">
+            <h:panelGrid columns="2">
+                <h:panelGrid id="idFisica" columns="2"   >
                     <h:outputText value="CPF"/>
                     <h:inputText />
-                    <h:outputText value="RG"/>
-                    <h:inputText />
-                </h:panelGrid>
-                <h:panelGrid id="idFisica1" columns="4">
                     <h:outputText value="Nome"/>
                     <h:inputText size="60" />
+                </h:panelGrid>
+                <h:panelGrid id="idFisica1" columns="2">
+                    <h:outputText value="RG"/>
+                    <h:inputText />
                     <h:outputText value="e-mail"/>
                     <h:inputText size="60"/>
                 </h:panelGrid>
-            </p:fieldset>
+            </h:panelGrid>
         </p:panel>
 
-        <p:panel id="idPanelJuridica" style="border-color: transparent">
-            <p:fieldset legend="Pessoa Jurídica">
-                <h:panelGrid id="idJuridica" columns="4">
-                    <h:outputText value="CNPJ"/>
-                    <h:inputText />
-                    <h:outputText value="IE"/>
-                    <h:inputText />
-                </h:panelGrid>
-                <h:panelGrid id="idJuridica1" columns="4">
-                    <h:outputText value="Razão Social"/>
-                    <h:inputText size="60" />
-                    <h:outputText value="e-mail"/>
-                    <h:inputText size="60"/>
-                    <h:outputText value="Contato"/>
-                    <h:inputText size="60"/>
-                </h:panelGrid>
-            </p:fieldset>
+<!--        <p:panel id="idPanelJuridica" style="border-color: transparent" visible="false">
+            <h:panelGrid id="idJuridica" columns="4">
+                <h:outputText value="CNPJ"/>
+                <h:inputText />
+                <h:outputText value="IE"/>
+                <h:inputText />
+            </h:panelGrid>
+            <h:panelGrid id="idJuridica1" columns="4">
+                <h:outputText value="Razão Social"/>
+                <h:inputText size="60" />
+                <h:outputText value="e-mail"/>
+                <h:inputText size="60"/>
+                <h:outputText value="Contato"/>
+                <h:inputText size="60"/>
+            </h:panelGrid>
         </p:panel>
 
         <p:panel id="idPanelEndereco" style="border-color: transparent">
-            <p:fieldset legend="Endereço">
-                <h:panelGrid columns="4">
-                    <h:outputText value="Endereço"/>
-                    <h:inputText size="60"/>
-                    <h:outputText value="Nro"/>
-                    <h:inputText size="20"/>
-                </h:panelGrid>
-                <h:panelGrid columns="4">
-                    <h:outputText value="Bairro"/>
-                    <h:inputText size="40" />
-                    <h:outputText value="Cidade"/>
-                    <h:inputText size="40"/>
-                    <h:outputText value="CEP"/>
-                    <h:inputText size="20"/>
-                </h:panelGrid>
-            </p:fieldset>
-        </p:panel>
+            <h:panelGrid columns="4">
+                <h:outputText value="Endereço"/>
+                <h:inputText size="60"/>
+                <h:outputText value="Nro"/>
+                <h:inputText size="20"/>
+            </h:panelGrid>
+            <h:panelGrid columns="8">
+                <h:outputText value="Bairro"/>
+                <h:inputText size="40" />
+                <h:outputText value="Cidade"/>
+                <h:inputText size="40"/>
+                <h:outputText value="Estado"/>
+                <h:inputText size="40"/>
+                <h:outputText value="CEP"/>
+                <h:inputText size="20"/>
+            </h:panelGrid>
+        </p:panel>-->
 
         <f:facet name="footer">
             <p:commandButton value="Gravar"/>

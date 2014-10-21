@@ -57,12 +57,12 @@ public class ClienteView implements Serializable{
     }
     
     public void btIncluir(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
-            bTelaCadastro = true;
-        } else {
-            mensagem = "Usuario nao tem permissao para incluir cliente";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
-        }
+//        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+//            bTelaCadastro = true;
+//        } else {
+//            mensagem = "Usuario nao tem permissao para incluir cliente";
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+//        }
     }
     public void btAlterar(){}
     public void btExluir(){}
