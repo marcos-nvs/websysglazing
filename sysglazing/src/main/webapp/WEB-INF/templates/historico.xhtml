@@ -8,19 +8,19 @@
               style="background-color: #FFFFFF" width="1200" >
         <p:dataTable id="idDtHistorico" var="idHistorico" value="#{historicoView.listHistorico}" paginator="true" rows="10">
             <f:facet name="header">
-                <h:outputText value="#{msgs['node.history']}"/>
+                <p:outputLabel value="#{msgs['node.history']}"/>
             </f:facet>
             <p:column headerText="#{msgs['node.module']}">
-                <h:outputText value="#{historicoView.buscaDescModulo(idHistorico.modInCodigo)}"/>
+                <p:outputLabel value="#{historicoView.buscaDescModulo(idHistorico.modInCodigo)}"/>
             </p:column>
             <p:column headerText="#{msgs['template.user']}">
-                <h:outputText value="#{idHistorico.usuStCodigo}"/>
+                <p:outputLabel value="#{idHistorico.usuStCodigo}"/>
             </p:column>
             <p:column headerText="#{msgs['node.date.transaction']}">
-                <h:outputText value="#{idHistorico.hisDtData}"/>
+                <p:outputLabel value="#{idHistorico.hisDtData}"/>
             </p:column>
             <p:column headerText="#{msgs['tabbedHeadings.description']}">
-                <h:outputText value="#{idHistorico.hisStDescricao}"/>
+                <p:outputLabel value="#{idHistorico.hisStDescricao}"/>
             </p:column>
             <f:facet name="footer">
                 <p:commandButton value="#{msgs['page.panelPopup.closeText']}" onclick="PF('historico').hide()" />

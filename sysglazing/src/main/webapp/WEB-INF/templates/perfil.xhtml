@@ -6,12 +6,12 @@
     
     <p:panel id="idPanelPerfil" header="#{msgs['node.cadastro.nivel']}" visible="#{perfilView.bEditPerfil}" style="border-color: transparent">
         <h:panelGrid id="idGridPerfil" columns="6">
-            <h:outputText value="#{msgs['tabbedHeadings.description']}:"/>
-            <h:inputText value="#{perfilView.lnPerfil.perStDescricao}" maxlength="50" size="60" rendered="true"/>
+            <p:outputLabel value="#{msgs['tabbedHeadings.description']}:"/>
+            <p:inputText value="#{perfilView.lnPerfil.perStDescricao}" maxlength="50" size="60" rendered="true"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAtivo}" rendered="true" />
-            <h:outputText value="Ativo"/>
+            <p:outputLabel value="Ativo"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAltSenhaUsuario}" rendered="true"/>
-            <h:outputText value="#{msgs['node.change.password']}"/>
+            <p:outputLabel value="#{msgs['node.change.password']}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfil" 
@@ -24,19 +24,19 @@
     
     <p:panel id="idPanelPerfilAcessoEdit" header="Definição do Perfil" visible="#{perfilView.bEditAcesso}" style="border-color: transparent">
         <h:panelGrid id="idGridPerfilAcesso" columns="10">
-            <h:outputText value="Módulo:"/>
-            <h:selectOneMenu id="idmoduloAcesso" value="#{perfilView.modInCodigo}" >
+            <p:outputLabel value="Módulo:"/>
+            <p:selectOneMenu id="idmoduloAcesso" value="#{perfilView.modInCodigo}">
                 <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}" 
                                itemValue="#{perfilAcesso.modInCodigo}" />
-            </h:selectOneMenu>
+            </p:selectOneMenu>
             <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" />
-            <h:outputText value="#{msgs['node.include']}"/>
+            <p:outputLabel value="#{msgs['node.include']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}" />
-            <h:outputText value="#{msgs['template.change']}"/>
+            <p:outputLabel value="#{msgs['template.change']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}" />
-            <h:outputText value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
+            <p:outputLabel value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}" />
-            <h:outputText value="#{msgs['template.search']}"/>
+            <p:outputLabel value="#{msgs['template.search']}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfilAcessoEdit"
@@ -57,13 +57,13 @@
             </f:facet>
             
             <p:column headerText="Descrição">
-                <h:outputText value="#{codPerfil.perStDescricao}"/>
+                <p:outputLabel value="#{codPerfil.perStDescricao}"/>
             </p:column>
             <p:column headerText="Ativo">
-                <h:outputText value="#{codPerfil.perChAtivo}"/>
+                <p:outputLabel value="#{codPerfil.perChAtivo}"/>
             </p:column>
             <p:column headerText="Alt. Senha Usuários">
-                <h:outputText value="#{codPerfil.perChAlteraSenha}"/>
+                <p:outputLabel value="#{codPerfil.perChAlteraSenha}"/>
             </p:column>
             <f:facet name="footer">
                 <p:commandButton value="#{msgs['node.include']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
@@ -92,22 +92,22 @@
         <p:dataTable id="idDtPerfilAcesso" var="codPerfilAcesso" value="#{perfilView.listPerfilAcesso}" selection="#{perfilView.lnPerfilacesso}"
                      selectionMode="single" rowKey="#{codPerfilAcesso.lnPerfilacessoPK.perInCodigo}">
             <f:facet name="header">
-                <h:outputText value="Tipo de Acesso" />
+                <p:outputLabel value="Tipo de Acesso" />
             </f:facet>
             <p:column headerText="Módulo">
-                <h:outputText value="#{perfilView.buscaDescModulo(codPerfilAcesso.lnPerfilacessoPK.modInCodigo)}"/>
+                <p:outputLabel value="#{perfilView.buscaDescModulo(codPerfilAcesso.lnPerfilacessoPK.modInCodigo)}"/>
             </p:column>
             <p:column headerText="Incluir">
-                <h:outputText value="#{codPerfilAcesso.pacChIncluir}"/>
+                <p:outputLabel value="#{codPerfilAcesso.pacChIncluir}"/>
             </p:column>
             <p:column headerText="Alterar">
-                <h:outputText value="#{codPerfilAcesso.pacChAlterar}"/>
+                <p:outputLabel value="#{codPerfilAcesso.pacChAlterar}"/>
             </p:column>
             <p:column headerText="Excluir">
-                <h:outputText value="#{codPerfilAcesso.pacChExcluir}"/>
+                <p:outputLabel value="#{codPerfilAcesso.pacChExcluir}"/>
             </p:column>
             <p:column headerText="Pesquisar">
-                <h:outputText value="#{codPerfilAcesso.pacChPesquisar}"/>
+                <p:outputLabel value="#{codPerfilAcesso.pacChPesquisar}"/>
             </p:column>
             <f:facet name="footer">
                 <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" 

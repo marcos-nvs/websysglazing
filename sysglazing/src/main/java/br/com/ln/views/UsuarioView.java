@@ -47,6 +47,7 @@ public class UsuarioView implements Serializable {
         this.listUsuario = Postgress.getListObject(LnUsuario.class);
         this.listPerfil = Postgress.getListPerfilAtivo('S');
         historico = new Historico();
+        lnUsuario = new LnUsuario();
     }
 
     public List<LnUsuario> getListUsuario() {

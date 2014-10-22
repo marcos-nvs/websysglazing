@@ -5,33 +5,33 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     
     <p:panel id="idPanelCadUsuario" header="#{msgs['template.user.register']}" visible="#{usuarioView.bTelaCadastro}"
-             style="border-color: transparent">
+             style="border-color: transparent;">
         <h:panelGrid id="idgridUsuario" columns="1" >
             <h:panelGrid columns="10">
-                <h:outputText value="#{msgs['template.user']}:" />
-                <h:inputText id="idUsuStCodigo" value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
-                <h:outputText value="#{msgs['page.textFields.password']}:" rendered="#{usuarioView.bMostraSenha}"/>
-                <h:inputSecret id="idUsuStSenha" value="#{usuarioView.lnUsuario.usuStSenha}" rendered="#{usuarioView.bMostraSenha}" 
+                <p:outputLabel value="#{msgs['template.user']}:" />
+                <p:inputText id="idUsuStCodigo" value="#{usuarioView.lnUsuario.usuStCodigo}" maxlength="20" size="20"/>
+                <p:outputLabel value="#{msgs['page.textFields.password']}:" rendered="#{usuarioView.bMostraSenha}"/>
+                <p:password id="idUsuStSenha" value="#{usuarioView.lnUsuario.usuStSenha}" rendered="#{usuarioView.bMostraSenha}" 
                                maxlength="40" size="20"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" />
-                <h:outputText id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
+                <p:outputLabel id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" />
-                <h:outputText id="idUsuChAlteraSenha" value="#{msgs['node.user.changes.password']}"/>
+                <p:outputLabel id="idUsuChAlteraSenha" value="#{msgs['node.user.changes.password']}"/>
                 <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" />
-                <h:outputText id="idUsuChExpiraSenha" value="#{msgs['password expires']}"/>
+                <p:outputLabel id="idUsuChExpiraSenha" value="#{msgs['password expires']}"/>
             </h:panelGrid>
-            <h:panelGrid columns="4">
-                <h:outputText value="#{msgs['page.tree.employee.name.label']}:"/>
-                <h:inputText id="idUsuStUsuario" value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
-                <h:outputText value="#{msgs['node.email']}:"/>
-                <h:inputText id="idUsuStEmaiil" value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
+            <h:panelGrid columns="4" style="margin-left: 10px;">
+                <p:outputLabel value="#{msgs['page.tree.employee.name.label']}:"/>
+                <p:inputText id="idUsuStUsuario" value="#{usuarioView.lnUsuario.usuStNome}" maxlength="40" size="60"/>
+                <p:outputLabel value="#{msgs['node.email']}:"/>
+                <p:inputText id="idUsuStEmaiil" value="#{usuarioView.lnUsuario.usuStEmail}" maxlength="40" size="60"/>
             </h:panelGrid>
-            <h:panelGrid columns="4">
-                <h:outputText value="#{msgs['template.profile']}:"/>
-                <h:selectOneMenu id="idperfil" value="#{usuarioView.lnUsuario.perInCodigo}">
-                    <f:selectItems value="#{usuarioView.listPerfil}" var="perfil" itemLabel="#{perfil.perStDescricao}" 
-                                   itemValue="#{perfil.perInCodigo}" />
-                </h:selectOneMenu>
+            <h:panelGrid columns="4" style="margin-left: 12px;">
+                <p:outputLabel value="#{msgs['template.profile']}:"/>
+                <p:selectOneMenu id="idperfil" value="#{usuarioView.lnUsuario.perInCodigo}">
+                    <f:selectItems var="perfil" value="#{usuarioView.listPerfil}" itemLabel="#{perfil.perStDescricao}"
+                                   itemValue="#{perfil.perInCodigo}"/>
+                </p:selectOneMenu>
             </h:panelGrid>
             <f:facet name="footer">
                 <p:commandButton id="idBtGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelCadUsuario" 
@@ -44,10 +44,10 @@
     <p:panel id="idPanelSenha" header="#{msgs['node.change.password']}" visible="#{usuarioView.bPerSenha}" style="border-color: transparent">
         <h:outputText value="#{msgs['template.user']}: #{usuarioView.lnUsuario.usuStNome}"/>
         <h:panelGrid columns="2">
-            <h:outputText value="Entre com a nova senha :"/>
-            <h:inputSecret value="#{usuarioView.novaSenha}"/>
-            <h:outputText value="Repita a nova senha    :"/>
-            <h:inputSecret value="#{usuarioView.repeteSenha}"/>
+            <p:outputLabel value="Entre com a nova senha :"/>
+            <p:password value="#{usuarioView.novaSenha}"/>
+            <p:outputLabel value="Repita a nova senha    :"/>
+            <p:password value="#{usuarioView.repeteSenha}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton id="idBtGravarSenha" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelSenha"
@@ -61,28 +61,28 @@
     <p:dataTable id="idDtUsuario" var="codUsuario" value="#{usuarioView.listUsuario}" selection="#{usuarioView.lnUsuario}"
                  selectionMode="single" rowKey="#{codUsuario.usuStCodigo}">
         <f:facet name="header">
-            <h:outputText value="#{msgs['template.user']}"/>
+            <p:outputLabel value="#{msgs['template.user']}"/>
         </f:facet>
         <p:column headerText="#{msgs['template.user']}">
-            <h:outputText value="#{codUsuario.usuStCodigo}"/>
+            <p:outputLabel value="#{codUsuario.usuStCodigo}"/>
         </p:column>
         <p:column headerText="#{msgs['page.tree.employee.name.label']}">
-            <h:outputText value="#{codUsuario.usuStNome}"/>
+            <p:outputLabel value="#{codUsuario.usuStNome}"/>
         </p:column>
         <p:column headerText="#{msgs['node.email']}">
-            <h:outputText value="#{codUsuario.usuStEmail}"/>
+            <p:outputLabel value="#{codUsuario.usuStEmail}"/>
         </p:column>
         <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
-            <h:outputText value="#{codUsuario.usuChAtivo}"/>
+            <p:outputLabel value="#{codUsuario.usuChAtivo}"/>
         </p:column>
         <p:column headerText="#{msgs['node.user.changes.password']}">
-            <h:outputText value="#{codUsuario.usuChAlterasenha}"/>
+            <p:outputLabel value="#{codUsuario.usuChAlterasenha}"/>
         </p:column>
         <p:column headerText="#{msgs['password expires']}">
-            <h:outputText value="#{codUsuario.usuChExpirasenha}"/>
+            <p:outputLabel value="#{codUsuario.usuChExpirasenha}"/>
         </p:column>
         <p:column headerText="#{msgs['node.Registration.Date']}">
-            <h:outputText value="#{codUsuario.usuDtCadastro}"/>
+            <p:outputLabel value="#{codUsuario.usuDtCadastro}"/>
         </p:column>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
