@@ -25,6 +25,9 @@ public class ClienteView implements Serializable{
     
     private List<LnCliente> listCliente;
     private LnCliente lnCliente;
+    private String sTipoPessoa = "1";
+    private boolean bPessoaFisica = true;
+    private boolean bPessaoJuridica;
     private boolean bTelaCadastro; 
     private String mensagem;
 
@@ -55,18 +58,46 @@ public class ClienteView implements Serializable{
     public void setbTelaCadastro(boolean bTelaCadastro) {
         this.bTelaCadastro = bTelaCadastro;
     }
+
+    public String getsTipoPessoa() {
+        return sTipoPessoa;
+    }
+
+    public void setsTipoPessoa(String sTipoPessoa) {
+        this.sTipoPessoa = sTipoPessoa;
+    }
+
+    public boolean isbPessoaFisica() {
+        return bPessoaFisica;
+    }
+
+    public void setbPessoaFisica(boolean bPessoaFisica) {
+        this.bPessoaFisica = bPessoaFisica;
+    }
+
+    public boolean isbPessaoJuridica() {
+        return bPessaoJuridica;
+    }
+
+    public void setbPessaoJuridica(boolean bPessaoJuridica) {
+        this.bPessaoJuridica = bPessaoJuridica;
+    }
     
     public void btIncluir(){
-//        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
-//            bTelaCadastro = true;
-//        } else {
-//            mensagem = "Usuario nao tem permissao para incluir cliente";
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
-//        }
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+            bTelaCadastro = true;
+        } else {
+            mensagem = "Usuario nao tem permissao para incluir cliente";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
     public void btAlterar(){}
     public void btExluir(){}
     public void btVisualiar(){}
     public void btHistorico(){}
+    public void btGrava(){}
+    public void btCancelar(){}
+    public void btEndereco(){}
+    public void btTelefone(){}
     
 }

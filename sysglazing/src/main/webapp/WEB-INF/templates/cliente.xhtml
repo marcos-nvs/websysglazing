@@ -7,64 +7,83 @@
     <p:panel id="idPanelCadCliente" header="#{msgs['node.client.registre']}" visible="#{clienteView.bTelaCadastro}" style="border-color: transparent">
         <h:panelGrid columns="2">
             <h:outputText value="Escolha o tipo de Cliente:"/>
-            <p:selectOneRadio >
-                <f:selectItem itemLabel="Pessoa Física" itemValue="S"/>
-                <f:selectItem itemLabel="Pessoa Jurídica" itemValue="S"/>
+            <p:selectOneRadio value="#{clienteView.sTipoPessoa}">
+                <f:selectItem itemLabel="Pessoa Fisica" itemValue="1" />
+                <f:selectItem itemLabel="Pessoa Juridica" itemValue="2"/>
             </p:selectOneRadio>
         </h:panelGrid>
 
-        <p:panel id="idPanelFisica" style="border-color: transparent">
-            <h:panelGrid columns="2">
-                <h:panelGrid id="idFisica" columns="2"   >
-                    <h:outputText value="CPF"/>
-                    <h:inputText />
-                    <h:outputText value="Nome"/>
-                    <h:inputText size="60" />
-                </h:panelGrid>
-                <h:panelGrid id="idFisica1" columns="2">
-                    <h:outputText value="RG"/>
-                    <h:inputText />
-                    <h:outputText value="e-mail"/>
-                    <h:inputText size="60"/>
-                </h:panelGrid>
+        <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
+            <h:panelGrid id="idFisica" columns="4" style="margin-left: 42px;" >
+                <p:outputLabel value="CPF" />
+                <p:inputMask mask="999.999.999-99" size="10" />
+                <p:outputLabel value="RG"/>
+                <p:inputText />
+            </h:panelGrid>
+            <h:panelGrid id="idFisica1" columns="4" style="margin-left: 35px;">
+                <p:outputLabel value="Nome"/>
+                <p:inputText size="60" />
+                <p:outputLabel value="e-mail"/>
+                <p:inputText size="60" style="width: 80%;"/>
             </h:panelGrid>
         </p:panel>
 
-<!--        <p:panel id="idPanelJuridica" style="border-color: transparent" visible="false">
-            <h:panelGrid id="idJuridica" columns="4">
-                <h:outputText value="CNPJ"/>
-                <h:inputText />
-                <h:outputText value="IE"/>
-                <h:inputText />
+        <p:panel id="idPanelJuridica" style="border-color: transparent" visible="true">
+            <h:panelGrid id="idJuridica" columns="4" style="margin-left: 35px;">
+                <p:outputLabel value="CNPJ"/>
+                <p:inputMask mask="99.999.999/9999-99" size="13"/>
+                <p:outputLabel value="Inscr. Estadual"/>
+                <p:inputText />
             </h:panelGrid>
             <h:panelGrid id="idJuridica1" columns="4">
-                <h:outputText value="Razão Social"/>
-                <h:inputText size="60" />
-                <h:outputText value="e-mail"/>
-                <h:inputText size="60"/>
-                <h:outputText value="Contato"/>
-                <h:inputText size="60"/>
+                <p:outputLabel value="Razao Social"/>
+                <p:inputText size="60" />
+                <p:outputLabel value="e-mail"/>
+                <p:inputText size="55"/>
+                <p:outputLabel value="Contato"/>
+                <p:inputText size="60"/>
             </h:panelGrid>
         </p:panel>
 
         <p:panel id="idPanelEndereco" style="border-color: transparent">
-            <h:panelGrid columns="4">
-                <h:outputText value="Endereço"/>
-                <h:inputText size="60"/>
+            <h:panelGrid columns="6" style="margin-left: 17px;">
+                <h:outputText value="Endereco"/>
+                <p:inputText size="55"/>
                 <h:outputText value="Nro"/>
-                <h:inputText size="20"/>
+                <p:inputText size="20"/>
+                <h:outputText value="Complemento"/>
+                <p:inputText size="35"/>
             </h:panelGrid>
-            <h:panelGrid columns="8">
+            <h:panelGrid columns="6" style="margin-left: 33px;">
                 <h:outputText value="Bairro"/>
-                <h:inputText size="40" />
+                <p:inputText size="30" />
                 <h:outputText value="Cidade"/>
-                <h:inputText size="40"/>
+                <p:inputText size="40"/>
                 <h:outputText value="Estado"/>
-                <h:inputText size="40"/>
+                <p:inputText size="20"/>
                 <h:outputText value="CEP"/>
-                <h:inputText size="20"/>
+                <p:inputMask mask="99999-999" size="8"/>
             </h:panelGrid>
-        </p:panel>-->
+            <f:facet name="footer">
+                <p:commandButton value="+ Endereco"/>
+                <h:outputText value="Qtde : "/>
+            </f:facet>
+        </p:panel>
+
+        <p:panel id="idPanelTelefone" style="border-color: transparent">
+            <h:panelGrid columns="6" style="margin-left: 40px;">
+                <h:outputText value="Tipo"/>
+                <p:inputText size="30"/>
+                <h:outputText value="DDD"/>
+                <p:inputText size="5"/>
+                <h:outputText value="Telefone"/>
+                <p:inputText size="30" />
+            </h:panelGrid>
+            <f:facet name="footer">
+                <p:commandButton value="+ Telefone"/>
+                <h:outputText value="Qtde : "/>
+            </f:facet>
+        </p:panel>
 
         <f:facet name="footer">
             <p:commandButton value="Gravar"/>
