@@ -177,7 +177,8 @@ public class LnEndereco implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnEndereco[ endInCodigo=" + endInCodigo + " ]";
+        return "LnEndereco{" + "endInCodigo=" + endInCodigo + ", cliInCodigo=" + cliInCodigo + ", endStTipo=" + endStTipo + ", endStLogradouro=" + endStLogradouro + ", endStNumero=" + endStNumero + ", endStBairro=" + endStBairro + ", endStCidade=" + endStCidade + ", endStEstado=" + endStEstado + ", endStCep=" + endStCep + '}';
     }
+
     
 }

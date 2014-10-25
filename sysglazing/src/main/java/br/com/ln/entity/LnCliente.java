@@ -6,7 +6,9 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -57,13 +59,6 @@ public class LnCliente implements Serializable {
     @Column(name = "cli_st_email")
     private String cliStEmail;
 
-    @OneToMany(mappedBy = "cliInCodigo", targetEntity = LnEndereco.class, fetch = FetchType.EAGER)
-    private Set<LnEndereco> listEnderecos = new HashSet<>();
-    
-    @OneToMany(mappedBy = "cliInCodigo", targetEntity = LnTelefone.class, fetch = FetchType.EAGER)
-    private Set<LnTelefone> listTelefones = new HashSet<>();
-
-    
     public LnCliente() {
     }
 

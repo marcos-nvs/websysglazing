@@ -6,6 +6,7 @@
 package br.com.ln.hibernate;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
@@ -497,6 +498,30 @@ public class Postgress implements Serializable{
             }
         }
         return listUsuario;
+    }
+    
+    public static List<LnEndereco> getListEnderecoCliente(Integer cliInCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnEndereco> listEnderecos = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnEndereco.findByCliInCodigo");
+            query.setInteger("cliInCodigo", cliInCodigo);
+            listEnderecos = query.list();
+            tx.commit();
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listEnderecos;
     }
     
     /**

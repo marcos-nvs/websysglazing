@@ -418,6 +418,7 @@ img.right {
     background: transparent;
     color: #4f4f4f;
 }
+
 .ui-layout-north {
     z-index:20 !important;
     overflow:visible !important;

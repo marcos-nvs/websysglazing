@@ -4,31 +4,34 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:panel id="idPanelCadCliente" header="#{msgs['node.client.registre']}" visible="#{clienteView.bTelaCadastro}" style="border-color: transparent">
-        <h:panelGrid columns="2">
+    <p:panel id="idPanelCadCliente" header="#{msgs['node.client.registre']}" visible="#{clienteView.bTelaCadastro}" 
+             style="border-color: transparent">
+        <h:panelGrid columns="3">
             <h:outputText value="Escolha o tipo de Cliente:"/>
             <p:selectOneRadio value="#{clienteView.sTipoPessoa}">
                 <f:selectItem itemLabel="Pessoa Fisica" itemValue="1" />
                 <f:selectItem itemLabel="Pessoa Juridica" itemValue="2"/>
             </p:selectOneRadio>
+            <p:commandButton value="Trocar"  action="#{clienteView.trocaTipoPessoa()}" process="idPanelCadCliente" 
+                             update=":idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica" />
         </h:panelGrid>
 
         <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
-            <h:panelGrid id="idFisica" columns="4" style="margin-left: 42px;" >
+            <h:panelGrid id="idFisica" columns="4" style="margin-left: 7px;" >
                 <p:outputLabel value="CPF" />
-                <p:inputMask mask="999.999.999-99" size="10" />
+                <p:inputMask value="#{clienteView.lnCliente.cliStCpf}" mask="999.999.999-99" size="10" />
                 <p:outputLabel value="RG"/>
-                <p:inputText />
+                <p:inputText value="#{clienteView.lnCliente.cliStRg}" />
             </h:panelGrid>
-            <h:panelGrid id="idFisica1" columns="4" style="margin-left: 35px;">
+            <h:panelGrid id="idFisica1" columns="4">
                 <p:outputLabel value="Nome"/>
-                <p:inputText size="60" />
+                <p:inputText value="#{clienteView.lnCliente.cliStNome}" size="60" />
                 <p:outputLabel value="e-mail"/>
-                <p:inputText size="60" style="width: 80%;"/>
+                <p:inputText value="#{clienteView.lnCliente.cliStEmail}" size="60" style="width: 80%;"/>
             </h:panelGrid>
         </p:panel>
 
-        <p:panel id="idPanelJuridica" style="border-color: transparent" visible="true">
+        <p:panel id="idPanelJuridica" style="border-color: transparent" visible="#{clienteView.bPessoaJuridica}">
             <h:panelGrid id="idJuridica" columns="4" style="margin-left: 35px;">
                 <p:outputLabel value="CNPJ"/>
                 <p:inputMask mask="99.999.999/9999-99" size="13"/>
@@ -45,46 +48,79 @@
             </h:panelGrid>
         </p:panel>
 
-        <p:panel id="idPanelEndereco" style="border-color: transparent">
-            <h:panelGrid columns="6" style="margin-left: 17px;">
-                <h:outputText value="Endereco"/>
-                <p:inputText size="55"/>
-                <h:outputText value="Nro"/>
-                <p:inputText size="20"/>
-                <h:outputText value="Complemento"/>
-                <p:inputText size="35"/>
-            </h:panelGrid>
-            <h:panelGrid columns="6" style="margin-left: 33px;">
-                <h:outputText value="Bairro"/>
-                <p:inputText size="30" />
-                <h:outputText value="Cidade"/>
-                <p:inputText size="40"/>
-                <h:outputText value="Estado"/>
-                <p:inputText size="20"/>
-                <h:outputText value="CEP"/>
-                <p:inputMask mask="99999-999" size="8"/>
-            </h:panelGrid>
-            <f:facet name="footer">
-                <p:commandButton value="+ Endereco"/>
-                <h:outputText value="Qtde : "/>
-            </f:facet>
+        <p:panel id="idPanelEndereco" style="border: 0px;">
+            <p:dataTable id="idDtEndereco" var="dtEndereco" value="#{clienteView.listEnderecos}">
+                <f:facet name="header">
+                    <p:outputLabel value="Endereco"/>
+                </f:facet>
+                <p:column headerText="Tipo End." width="8%">
+                    <p:outputLabel value="#{clienteView.descTipoEndereco(dtEndereco.endStTipo)}"/>
+                </p:column>
+                <p:column headerText="Endereco" width="35%">
+                    <p:outputLabel value="#{dtEndereco.endStLogradouro}"/>
+                </p:column>
+                <p:column headerText="Nro" width="8%">
+                    <p:outputLabel value="#{dtEndereco.endStNumero}"/>
+                </p:column>
+                <p:column headerText="Bairro" width="15%">
+                    <p:outputLabel value="#{dtEndereco.endStBairro}"/>
+                </p:column>
+                <p:column headerText="Cidade" width="15%">
+                    <p:outputLabel value="#{dtEndereco.endStCidade}"/>
+                </p:column>
+                <p:column headerText="Estado" width="8%">
+                    <p:outputLabel value="#{dtEndereco.endStEstado}"/>
+                </p:column>
+                <p:column headerText="CEP" width="10%">
+                    <p:outputLabel value="#{dtEndereco.endStCep}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Incluir" oncomplete="PF('endereco').show()" action="#{clienteView.btIncluiEnd()}"
+                                     process="idDtEndereco" update=":idFormDialog"/>
+                    <p:commandButton value="Alterar" />
+                    <p:commandButton value="Excluir" />
+                </f:facet>
+            </p:dataTable>
         </p:panel>
 
-        <p:panel id="idPanelTelefone" style="border-color: transparent">
-            <h:panelGrid columns="6" style="margin-left: 40px;">
-                <h:outputText value="Tipo"/>
-                <p:inputText size="30"/>
-                <h:outputText value="DDD"/>
-                <p:inputText size="5"/>
-                <h:outputText value="Telefone"/>
-                <p:inputText size="30" />
-            </h:panelGrid>
-            <f:facet name="footer">
-                <p:commandButton value="+ Telefone"/>
-                <h:outputText value="Qtde : "/>
-            </f:facet>
-        </p:panel>
+        <h:panelGrid columns="2">
+            <p:panel id="idDtTelefone" style="border: 0px;position: relative; width: 400px;" >
+                <p:dataTable >
+                    <f:facet name="header">
+                        <p:outputLabel value="Telefone"/>
+                    </f:facet>
+                    <p:column headerText="Tipo" width="100">
+                        <p:outputLabel/>
+                    </p:column>
+                    <p:column headerText="DDD" width="50">
+                        <p:outputLabel/>
+                    </p:column>
+                    <p:column headerText="Telefone" width="100">
+                        <p:outputLabel/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+            <p:panel id="idPanelTelefone" style="border-color: transparent">
+                <h:panelGrid columns="6" style="margin-left: 40px;">
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneMenu>
+                        <f:selectItem itemLabel="Residêncial" itemValue="1"/>
+                        <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                        <f:selectItem itemLabel="Celular" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="DDD"/>
+                    <p:inputText size="5"/>
+                    <p:outputLabel value="Telefone"/>
+                    <p:inputText size="30" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Incluir"/>
+                        <p:commandButton value="Alterar"/>
+                        <p:commandButton value="Excluir"/>
+                    </f:facet>
+                </h:panelGrid>
+            </p:panel>
 
+        </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="Gravar"/>
             <p:commandButton value="Cancelar"/>
@@ -96,17 +132,17 @@
         <p:dataTable id="idDtCliente" var="tbCliente" value="#{clienteView.listCliente}" selection="#{clienteView.lnCliente}"
                      selectionMode="single" rowKey="#{tbCliente.cliInCodigo}">
             <f:facet name="header">
-                <h:outputText value="#{msgs['node.client.registre']}"/>
+                <p:outputLabel value="#{msgs['node.client.registre']}"/>
             </f:facet>
 
             <p:column headerText="#{msgs['node.code.client']}">
-                <h:outputText value="#{tbCliente.cliInCodigo}"/>
+                <p:outputLabel value="#{tbCliente.cliInCodigo}"/>
             </p:column>
             <p:column headerText="#{msgs['node.name.client']}">
-                <h:outputText value="#{tbCliente.cliStNome}"/>
+                <p:outputLabel value="#{tbCliente.cliStNome}"/>
             </p:column>
             <p:column headerText="E-mail">
-                <h:outputText value="#{tbCliente.cliStEmail}"/>
+                <p:outputLabel value="#{tbCliente.cliStEmail}"/>
             </p:column>
 
             <f:facet name="footer">
@@ -120,4 +156,42 @@
             </f:facet>
         </p:dataTable>
     </p:panel>
-</ui:composition>
+
+    <h:form id="idFormDialog">
+        <p:dialog id="idDialogEndereco" header="Inclusao de Endereco" widgetVar="endereco" showEffect="fade" hideEffect="fade" width="1000" height="120"
+                  style="background-color: #ffffff" closable="false" resizable="false">
+            <h:panelGrid columns="5" style="margin-left: 17px;">
+                <p:outputLabel value="Tipo End."/>
+                <p:selectOneMenu value="#{clienteView.lnEndereco.endStTipo}">
+                    <f:selectItem itemLabel="Residêncial" itemValue="1"/>
+                    <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                    <f:selectItem itemLabel="Entrega" itemValue="3"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="CEP"/>
+                <p:inputMask value="#{clienteView.lnEndereco.endStCep}" mask="99999-999" size="8"/>
+                <p:commandButton value="Pesquisar" action="#{clienteView.btPesquisaCEP()}" update=":idFormDialog"/>
+            </h:panelGrid>
+            <h:panelGrid columns="6" style="margin-left: 17px;">
+                <p:outputLabel value="Endereco"/>
+                <p:inputText value="#{clienteView.lnEndereco.endStLogradouro}" size="55"/>
+                <p:outputLabel value="Nro"/>
+                <p:inputText value="#{clienteView.lnEndereco.endStNumero}" size="20"/>
+                <p:outputLabel value="Complemento"/>
+                <p:inputText  size="35"/>
+            </h:panelGrid>
+            <h:panelGrid columns="6" style="margin-left: 33px;">
+                <p:outputLabel value="Bairro"/>
+                <p:inputText value="#{clienteView.lnEndereco.endStBairro}" size="30" />
+                <p:outputLabel value="Cidade"/>
+                <p:inputText value="#{clienteView.lnEndereco.endStCidade}" size="40"/>
+                <p:outputLabel value="Estado"/>
+                <p:inputText value="#{clienteView.lnEndereco.endStEstado}" size="20"/>
+            </h:panelGrid>
+            <f:facet name="footer">
+                <p:commandButton value="Incluir" process="idDialogEndereco" update=":idFormCenter:idPanelEndereco"
+                                 actionListener="#{clienteView.btListaEndereco()}"/>
+                <p:commandButton value="Fechar" onclick="PF('endereco').hide()"/>
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</ui:composition> 
