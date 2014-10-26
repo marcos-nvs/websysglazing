@@ -175,7 +175,7 @@ public class ClienteView implements Serializable{
             EnderecoCep endereco = new EnderecoCep();
             Correios correio = new Correios();
             System.out.println("cep : " + lnEndereco.getEndStCep().replaceAll("-", ""));
-            endereco = correio.entregaEnderco(lnEndereco.getEndStCep().replaceAll("-", ""));
+            endereco = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
             
             if (endereco != null){
                 lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() +" " +endereco.getLogradouro());

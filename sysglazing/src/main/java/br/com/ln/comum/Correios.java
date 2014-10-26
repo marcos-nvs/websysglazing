@@ -24,25 +24,28 @@ public class Correios {
     private static final String URL = "http://correiosapi.apphb.com/cep/";
 
     public Correios() {
-        ClientConfig config = new DefaultClientConfig();
+        ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
         client = Client.create(config);
         webResoure = client.resource(URL);
     }
     
     public String getConsultaEnderecoByCep(String cep){
         String sJson = webResoure.path(cep)
-                .type(javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE)
+                .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                 .get(String.class);
         return sJson;
     }
 
-    public EnderecoCep entregaEnderco(String cep) {
-
+    public EnderecoCep entregaEndereco(String cep) {
         EnderecoCep endereco = null;
         String sEnd = getConsultaEnderecoByCep(cep);
         Gson gson = new Gson();
         endereco = gson.fromJson(sEnd, EnderecoCep.class);
+        close();
         return endereco;
     }
    
+    public void close() {
+        client.destroy();
+    }
 }

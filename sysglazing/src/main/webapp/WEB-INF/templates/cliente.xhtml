@@ -157,9 +157,9 @@
         </p:dataTable>
     </p:panel>
 
-    <p:dialog id="idDialogEndereco" appendTo="@(Body)" header="Inclusao de Endereco" widgetVar="endereco" showEffect="fade" hideEffect="fade" width="1000" height="120"
-              style="background-color: #ffffff" closable="false" resizable="false">
-        <h:form id="idFormDialog">
+    <h:form id="idFormDialog">
+        <p:dialog id="idDialogEndereco" header="Inclusao de Endereco" widgetVar="endereco" showEffect="fade" hideEffect="fade" width="1000" height="100"
+                  style="background-color: #ffffff" closable="false" resizable="false">
             <h:panelGrid id="idPanelTipoEnd" columns="5" style="margin-left: 17px;">
                 <p:outputLabel value="Tipo End."/>
                 <p:selectOneMenu value="#{clienteView.lnEndereco.endStTipo}">
@@ -169,8 +169,8 @@
                 </p:selectOneMenu>
                 <p:outputLabel value="CEP"/>
                 <p:inputMask value="#{clienteView.lnEndereco.endStCep}" mask="99999-999" size="8"/>
-                <p:commandButton value="Pesquisar" update="idPanelEnd"
-                                 action="#{clienteView.btPesquisaCEP()}" ajax="true"/>
+                <p:commandButton value="Pesquisar" update="idPanelEnd, idPanelEndCompl"
+                                 action="#{clienteView.btPesquisaCEP()}" ajax="true" />
             </h:panelGrid>
             <h:panelGrid id="idPanelEnd" columns="6" style="margin-left: 17px;">
                 <p:outputLabel value="Endereco"/>
@@ -189,10 +189,11 @@
                 <p:inputText value="#{clienteView.lnEndereco.endStEstado}" size="20"/>
             </h:panelGrid>
             <f:facet name="footer">
-                <p:commandButton value="Incluir" process="idDialogEndereco" update=":idFormCenter:idPanelEndereco"
+                <p:commandButton value="Incluir" process="idFormDialog:idDialogEndereco" 
+                                 update=":idFormCenter:idPanelEndereco, idPanelEnd, idPanelEndCompl"
                                  action="#{clienteView.btListaEndereco()}"/>
                 <p:commandButton value="Fechar" onclick="PF('endereco').hide()"/>
             </f:facet>
-        </h:form>
-    </p:dialog>
+        </p:dialog>
+    </h:form>
 </ui:composition> 
