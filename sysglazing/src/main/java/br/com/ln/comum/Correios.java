@@ -9,8 +9,8 @@ import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import java.io.UnsupportedEncodingException;
+//import com.sun.jersey.api.client.config.DefaultClientConfig;
+//import java.io.UnsupportedEncodingException;
 
 /**
  *

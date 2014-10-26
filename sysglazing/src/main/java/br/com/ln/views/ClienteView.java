@@ -35,13 +35,14 @@ public class ClienteView implements Serializable{
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
     private String sTipoPessoa = "1";
-    private boolean bPessoaFisica = true;
+    private boolean bPessoaFisica;
     private boolean bPessoaJuridica;
     private boolean bTelaCadastro; 
     private String mensagem;
 
     public ClienteView() {
-        listCliente = Postgress.getListObject(LnCliente.class);
+        this.listCliente = Postgress.getListObject(LnCliente.class);
+        this.lnCliente = new LnCliente();
     }
 
     public List<LnCliente> getListCliente() {
@@ -126,10 +127,11 @@ public class ClienteView implements Serializable{
     
     public void btIncluir(){
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
-            lnCliente = new LnCliente();
-            listEnderecos = new ArrayList<>();
-            listTelefones = new ArrayList<>();
-            bTelaCadastro = true;
+            this.lnCliente = new LnCliente();
+            this.listEnderecos = new ArrayList<>();
+            this.listTelefones = new ArrayList<>();
+            this.bTelaCadastro = true;
+            this.bPessoaFisica = true;
         } else {
             mensagem = "Usuario nao tem permissao para incluir cliente";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -143,19 +145,19 @@ public class ClienteView implements Serializable{
     public void btCancelar(){}
     
     public void btIncluiEnd(){
-        lnEndereco = new LnEndereco();
+        this.lnEndereco = new LnEndereco();
     }
     
     public void btListaEndereco(){
-        listEnderecos.add(lnEndereco);
-        lnEndereco = new LnEndereco();
+        this.listEnderecos.add(lnEndereco);
+        this.lnEndereco = new LnEndereco();
     }
     
     public void btTelefone(){}
 
     public void trocaTipoPessoa(){
-        bPessoaFisica = sTipoPessoa.equals("1");
-        bPessoaJuridica = sTipoPessoa.equals("2");
+        this.bPessoaFisica = sTipoPessoa.equals("1");
+        this.bPessoaJuridica = sTipoPessoa.equals("2");
     }
     
     public String descTipoEndereco(String sTipoEndereco){
@@ -174,16 +176,13 @@ public class ClienteView implements Serializable{
         if (lnEndereco.getEndStCep() != null){
             EnderecoCep endereco = new EnderecoCep();
             Correios correio = new Correios();
-            System.out.println("cep : " + lnEndereco.getEndStCep().replaceAll("-", ""));
-            endereco = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
+            endereco = correio.entregaEndereco(this.lnEndereco.getEndStCep().replaceAll("-", ""));
             
             if (endereco != null){
-                lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() +" " +endereco.getLogradouro());
-                lnEndereco.setEndStBairro(endereco.getBairro());
-                lnEndereco.setEndStCidade(endereco.getCidade());
-                lnEndereco.setEndStEstado(endereco.getEstado());
-                
-                System.out.println("Endereco retornado : " + lnEndereco.toString());
+                this.lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() +" " +endereco.getLogradouro());
+                this.lnEndereco.setEndStBairro(endereco.getBairro());
+                this.lnEndereco.setEndStCidade(endereco.getCidade());
+                this.lnEndereco.setEndStEstado(endereco.getEstado());
             } else {
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
