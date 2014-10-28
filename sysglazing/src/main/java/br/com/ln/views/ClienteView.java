@@ -25,9 +25,9 @@ import javax.faces.context.FacesContext;
  * @author Marcos Naves
  */
 @SessionScoped
-@ManagedBean(name="clienteView")
-public class ClienteView implements Serializable{
-    
+@ManagedBean(name = "clienteView")
+public class ClienteView implements Serializable {
+
     private List<LnCliente> listCliente;
     private List<LnEndereco> listEnderecos;
     private List<LnTelefone> listTelefones;
@@ -35,14 +35,19 @@ public class ClienteView implements Serializable{
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
     private String sTipoPessoa = "1";
-    private boolean bPessoaFisica;
+    private String sTipoFuncao;
+    private boolean bPessoaFisica = true;
     private boolean bPessoaJuridica;
-    private boolean bTelaCadastro; 
+    private boolean bTelaCadastro;
     private String mensagem;
 
     public ClienteView() {
-        this.listCliente = Postgress.getListObject(LnCliente.class);
-        this.lnCliente = new LnCliente();
+        listCliente = Postgress.getListObject(LnCliente.class);
+        listEnderecos = Postgress.getListObject(LnEndereco.class);
+        listTelefones = Postgress.getListObject(LnTelefone.class);
+        lnCliente = new LnCliente();
+        lnEndereco = new LnEndereco();
+        lnTelefone = new LnTelefone();
     }
 
     public List<LnCliente> getListCliente() {
@@ -124,72 +129,174 @@ public class ClienteView implements Serializable{
     public void setListTelefones(List<LnTelefone> listTelefones) {
         this.listTelefones = listTelefones;
     }
-    
-    public void btIncluir(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
-            this.lnCliente = new LnCliente();
-            this.listEnderecos = new ArrayList<>();
-            this.listTelefones = new ArrayList<>();
-            this.bTelaCadastro = true;
-            this.bPessoaFisica = true;
+
+    public void btIncluir() {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            lnCliente = new LnCliente();
+            listEnderecos = new ArrayList<>();
+            listTelefones = new ArrayList<>();
+            bTelaCadastro = true;
+            sTipoFuncao = "I";
         } else {
             mensagem = "Usuario nao tem permissao para incluir cliente";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
-    public void btAlterar(){}
-    public void btExluir(){}
-    public void btVisualiar(){}
-    public void btHistorico(){}
-    public void btGrava(){}
-    public void btCancelar(){}
-    
-    public void btIncluiEnd(){
-        this.lnEndereco = new LnEndereco();
-    }
-    
-    public void btListaEndereco(){
-        this.listEnderecos.add(lnEndereco);
-        this.lnEndereco = new LnEndereco();
-    }
-    
-    public void btTelefone(){}
 
-    public void trocaTipoPessoa(){
-        this.bPessoaFisica = sTipoPessoa.equals("1");
-        this.bPessoaJuridica = sTipoPessoa.equals("2");
+    public void btAlterar() {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
+            bTelaCadastro = true;
+            sTipoFuncao = "A";
+        } else {
+            mensagem = "Usuario nao tem permissao para alterar cliente";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
-    
-    public String descTipoEndereco(String sTipoEndereco){
-        if (sTipoEndereco.equals("1")){
+
+    public void btExluir() {
+    }
+
+    public void btVisualiar() {
+    }
+
+    public void btHistorico() {
+    }
+
+    public void btGrava() {
+
+//        if (validaCliente()) {
+//            if (sTipoFuncao.equals("I")) {
+//                novoCliente();
+//            }
+//        }
+        mensagem = "Teste de gravacao";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+    }
+
+    public void btCancelar() {
+    }
+
+    public void btIncluiEnd() {
+        lnEndereco = new LnEndereco();
+    }
+
+    public void btListaEndereco() {
+        listEnderecos.add(lnEndereco);
+        lnEndereco = new LnEndereco();
+    }
+
+    public void btTelefone() {
+    }
+
+    public void trocaTipoPessoa() {
+        bPessoaFisica = sTipoPessoa.equals("1");
+        bPessoaJuridica = sTipoPessoa.equals("2");
+    }
+
+    public String descTipoEndereco(String sTipoEndereco) {
+        if (sTipoEndereco.equals("1")) {
             return "Residêncial";
-        } else if (sTipoEndereco.equals("2")){
+        } else if (sTipoEndereco.equals("2")) {
             return "Comercial";
-        } else if (sTipoEndereco.equals("3")){
+        } else if (sTipoEndereco.equals("3")) {
             return "Entrega";
-        } else{
+        } else {
             return "";
         }
     }
-    
-    public void btPesquisaCEP(){
-        if (lnEndereco.getEndStCep() != null){
+
+    public void btPesquisaCEP() {
+        if (lnEndereco.getEndStCep() != null) {
             EnderecoCep endereco = new EnderecoCep();
             Correios correio = new Correios();
-            endereco = correio.entregaEndereco(this.lnEndereco.getEndStCep().replaceAll("-", ""));
-            
-            if (endereco != null){
-                this.lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() +" " +endereco.getLogradouro());
-                this.lnEndereco.setEndStBairro(endereco.getBairro());
-                this.lnEndereco.setEndStCidade(endereco.getCidade());
-                this.lnEndereco.setEndStEstado(endereco.getEstado());
+            endereco = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
+            correio.close();
+            if (endereco != null) {
+                lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() + " " + endereco.getLogradouro());
+                lnEndereco.setEndStBairro(endereco.getBairro());
+                lnEndereco.setEndStCidade(endereco.getCidade());
+                lnEndereco.setEndStEstado(endereco.getEstado());
             } else {
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
             }
-        } else{
+        } else {
             mensagem = "Cep em branco, por favor entre com o CEP!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
+    }
+
+    private void novoCliente() {
+
+        if (verificaCliente()) {
+            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
+
+            if (listEnderecos != null && listEnderecos.size() > 0) {
+
+                for (LnEndereco endereco : listEnderecos) {
+                    endereco.setCliInCodigo(lnCliente.getCliInCodigo());
+                }
+                Postgress.saveObject(listEnderecos);
+            } else {
+                mensagem = "Cliente nao possui endereco!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cliente", mensagem));
+            }
+
+            if (listTelefones != null && listTelefones.size() > 0) {
+
+                for (LnTelefone telefone : listTelefones) {
+                    telefone.setCliInCodigo(lnCliente.getCliInCodigo());
+                }
+
+                Postgress.saveObject(listTelefones);
+            } else {
+                mensagem = "Cliente nao possui telefone!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cliente", mensagem));
+            }
+            Postgress.saveObject(lnCliente);
+            mensagem = "Cliente gravado com sucesso!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
+
+    private boolean validaCliente() {
+
+        boolean validado = true;
+
+        if (lnCliente == null) {
+            validado = false;
+            mensagem = "Para gravar o Cliente precisa preencher as informacoes!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
+        }
+
+//        System.out.println("this.Cliente : " + this.lnCliente.toString());
+//        System.out.println("Cliente : " + lnCliente.toString());
+//        if (this.lnCliente.getCliStNome() == null || this.lnCliente.getCliStNome().isEmpty()) {
+//            validado = false;
+//            mensagem = "Por favor preencha o nome do Cliente!!!";
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
+//        }
+        return validado;
+    }
+
+    private boolean verificaCliente() {
+
+        LnCliente lnNovoCliente;
+
+        if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().isEmpty()) {
+            lnNovoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            return lnNovoCliente == null;
+        } else {
+            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().isEmpty()) {
+                lnNovoCliente = Postgress.getClienteCnpj(lnCliente.getCliStCnpj());
+                return lnNovoCliente == null;
+            } else {
+                if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().isEmpty()) {
+                    lnNovoCliente = Postgress.getClienteNome(lnCliente.getCliStNome());
+                    return lnNovoCliente == null;
+                }
+            }
+        }
+        return false;
     }
 }

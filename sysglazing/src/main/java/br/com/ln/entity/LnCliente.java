@@ -149,7 +149,8 @@ public class LnCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnCliente[ cliInCodigo=" + cliInCodigo + " ]";
+        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStCpf=" + cliStCpf + ", cliStCnpj=" + cliStCnpj + ", cliStRg=" + cliStRg + ", cliStIe=" + cliStIe + ", cliStNome=" + cliStNome + ", cliStEmail=" + cliStEmail + '}';
     }
-    
+
+   
 }

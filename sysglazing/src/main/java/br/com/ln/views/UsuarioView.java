@@ -216,36 +216,38 @@ public class UsuarioView implements Serializable {
     }
 
     public void btGravar() {
-        this.bTelaCadastro = false;
+        if (validaUsuario()) {
+            this.bTelaCadastro = false;
 
-        if (bAtivo) {
-            lnUsuario.setUsuChAtivo('S');
-        } else {
-            lnUsuario.setUsuChAtivo('N');
+            if (bAtivo) {
+                lnUsuario.setUsuChAtivo('S');
+            } else {
+                lnUsuario.setUsuChAtivo('N');
+            }
+
+            if (bAlteraSenha) {
+                lnUsuario.setUsuChAlterasenha('S');
+            } else {
+                lnUsuario.setUsuChAlterasenha('N');
+            }
+
+            if (bExpiraSenha) {
+                lnUsuario.setUsuChExpirasenha('S');
+            } else {
+                lnUsuario.setUsuChExpirasenha('N');
+            }
+
+            if (sTipoFuncao.equals("I")) {
+                novoUsuario();
+            } else {
+                Postgress.saveOrUpdateObject(lnUsuario);
+                this.historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
+            }
+
+            listUsuario = Postgress.getListObject(LnUsuario.class);
+            mensagem = "Usuario gravado com sucesso!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
-
-        if (bAlteraSenha) {
-            lnUsuario.setUsuChAlterasenha('S');
-        } else {
-            lnUsuario.setUsuChAlterasenha('N');
-        }
-
-        if (bExpiraSenha) {
-            lnUsuario.setUsuChExpirasenha('S');
-        } else {
-            lnUsuario.setUsuChExpirasenha('N');
-        }
-
-        if (sTipoFuncao.equals("I")) {
-            novoUsuario();
-        } else {
-            Postgress.saveOrUpdateObject(lnUsuario);
-            this.historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
-        }
-
-        listUsuario = Postgress.getListObject(LnUsuario.class);
-        mensagem = "Usuario gravado com sucesso!!!!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
     }
 
     public void btCancelar() {
@@ -297,6 +299,37 @@ public class UsuarioView implements Serializable {
 
     public void btCancelarSenha() {
         this.bPerSenha = false;
+    }
+
+    private boolean validaUsuario() {
+        
+        boolean validado = true;
+        
+        if (this.lnUsuario == null){
+            validado = false;
+            mensagem = "Por favor preencher as informacoes";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
+        } 
+        
+        if (this.lnUsuario.getUsuStCodigo() == null || this.lnUsuario.getUsuStCodigo().isEmpty()){
+            validado = false;
+            mensagem = "Usuario esta vazio, por favor preencher as informacoes ";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
+        }
+
+        if (this.lnUsuario.getUsuStSenha() == null || this.lnUsuario.getUsuStSenha().isEmpty()){
+            validado = false;
+            mensagem = "Senha esta vazio, por favor preencher as informacoes ";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
+        }
+
+        if (this.lnUsuario.getUsuStNome() == null || this.lnUsuario.getUsuStNome().isEmpty()){
+            validado = false;
+            mensagem = "Nome esta vazio, por favor preencher as informacoes ";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
+        }
+        
+        return validado;
     }
     
 }

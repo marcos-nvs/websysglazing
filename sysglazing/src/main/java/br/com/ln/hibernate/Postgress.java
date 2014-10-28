@@ -6,6 +6,7 @@
 package br.com.ln.hibernate;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnMenu;
@@ -391,6 +392,10 @@ public class Postgress implements Serializable{
         return new Integer(getIdByNextValueStringSQL("select nextval('seq_historico');"));
     }
     
+    public static Integer getLnClienteNextId() {
+        return new Integer(getIdByNextValueStringSQL("select nextval('seq_cliente');"));
+    }
+
     public static String getIdByNextValueStringSQL(String strSql) {
 
         Session session = null;
@@ -522,6 +527,16 @@ public class Postgress implements Serializable{
         }
         
         return listEnderecos;
+    }
+    
+    public static LnCliente getClienteCpf(String cpf){
+        return null;
+    }
+    public static LnCliente getClienteCnpj(String cnpj){
+        return null;
+    }
+    public static LnCliente getClienteNome(String Nome){
+        return null;
     }
     
     /**

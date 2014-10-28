@@ -238,7 +238,7 @@ public class PerfilView implements Serializable {
     }
 
     public void btVisualizar() {
-        if (lnPerfil != null){
+        if (lnPerfil != null) {
             this.bVerAcesso = true;
             listPerfilAcesso = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
         } else {
@@ -248,29 +248,36 @@ public class PerfilView implements Serializable {
     }
 
     public void btSalvarPerfil() {
-        if (lnPerfil != null){
-            if (bAtivo){
-                lnPerfil.setPerChAtivo('S');
-            } else {
-                lnPerfil.setPerChAtivo('N');
+
+        if (lnPerfil.getPerStDescricao() != null && !lnPerfil.getPerStDescricao().isEmpty()) {
+
+            if (lnPerfil != null) {
+                if (bAtivo) {
+                    lnPerfil.setPerChAtivo('S');
+                } else {
+                    lnPerfil.setPerChAtivo('N');
+                }
+                if (bAltSenhaUsuario) {
+                    lnPerfil.setPerChAlteraSenha('S');
+                } else {
+                    lnPerfil.setPerChAlteraSenha('N');
+                }
+
+                if (sTipoFuncaoPerfil.equals("I")) {
+                    novoPerfil();
+                } else {
+                    this.sTipoFuncaoPerfil = "";
+                    this.bEditPerfil = false;
+                    Postgress.saveOrUpdateObject(lnPerfil);
+                    mensagem = "Perfil alterado com sucesso !!!!.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+                    historico.gravaHistorico("Alteracao do perfil : " + lnPerfil.getPerStDescricao());
+                }
+                listPerfil = Postgress.getListObject(LnPerfil.class);
             }
-            if (bAltSenhaUsuario){
-                lnPerfil.setPerChAlteraSenha('S');
-            } else{
-                lnPerfil.setPerChAlteraSenha('N');
-            }
-            
-            if (sTipoFuncaoPerfil.equals("I")){
-                novoPerfil();
-            } else {
-                this.sTipoFuncaoPerfil = "";
-                this.bEditPerfil = false;
-                Postgress.saveOrUpdateObject(lnPerfil);
-                mensagem = "Perfil alterado com sucesso !!!!.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
-                historico.gravaHistorico("Alteracao do perfil : " + lnPerfil.getPerStDescricao());
-            }
-            listPerfil = Postgress.getListObject(LnPerfil.class);
+        } else {
+            mensagem = "Descricao do perfil esta vazio.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Perfil", mensagem));
         }
     }
     
