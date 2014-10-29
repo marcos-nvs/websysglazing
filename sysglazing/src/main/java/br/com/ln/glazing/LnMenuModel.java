@@ -78,10 +78,9 @@ public class LnMenuModel implements Serializable {
                     item = new DefaultMenuItem(lnModulo.getModStDescricao());
                     item.setTitle(lnModulo.getModStDescricao());
                     item.setCommand("#{lnMenuModel.menuActionClick}");
-                    item.setUpdate(":idLayoutCenter");
-                    item.setProcess(":idLayoutCenter");
+                    item.setUpdate(":idFormCenter");
+                    item.setProcess(":idFormCenter");
                     item.setAjax(false);
-//                    item.setIcon("ui-icon-folder-open");
                     subMenu.addElement(item);
                     subMenu.setRendered(true);
                     subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
@@ -122,6 +121,7 @@ public class LnMenuModel implements Serializable {
         
         if (menuActionEvent != null) {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
+            System.out.println("MenuActionEvent");
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
