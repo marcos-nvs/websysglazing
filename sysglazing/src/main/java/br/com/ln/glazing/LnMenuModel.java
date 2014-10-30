@@ -121,7 +121,6 @@ public class LnMenuModel implements Serializable {
         
         if (menuActionEvent != null) {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
-            System.out.println("MenuActionEvent");
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
@@ -153,8 +152,8 @@ public class LnMenuModel implements Serializable {
         item.setCommand("#{glazingView.logout()}");
         item.setAjax(false);
         item.setPartialSubmit(false);
-        item.setProcess(":idFormTop:idPanelTopLogin, :idFormTop:inputUser, :idFormTop:inputPassword");
-        item.setUpdate(":idFormTop:idPanelTopLogin, :idFormTop:inputUser, :idFormTop:inputPassword");
+        item.setProcess(":idFormCenter:idPanelLogin, :idFormCenter:idInUsuario, :idFormCenter:idPassword");
+        item.setUpdate(":idFormCenter:idPanelLogin, :idFormCenter:idInUsuario, :idFormCenter:idPassword");
         subMenu.addElement(item);
         subMenu.setRendered(true);
         

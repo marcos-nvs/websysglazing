@@ -40,13 +40,24 @@ public class ClienteView implements Serializable {
     private boolean bPessoaJuridica;
     private boolean bTelaCadastro;
     private String mensagem;
-    private String sCpf;
-    private String sRg;
-    private String sCnpj;
-    private String sIe;
-    private String sNome;
-    private String sContato;
-    private String sEmail;
+    private String cpf;
+    private String rg;
+    private String cnpj;
+    private String ie;
+    private String nome;
+    private String contato;
+    private String email;
+    private String tipoEndereco;
+    private String endereco;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String estado;
+    private String cep; 
+    private String tipoTelefone;
+    private String ddd;
+    private String numeroTelefone;
 
     public ClienteView() {
         listCliente = Postgress.getListObject(LnCliente.class);
@@ -106,63 +117,149 @@ public class ClienteView implements Serializable {
         this.bPessoaJuridica = bPessoaJuridica;
     }
 
-    public String getsCpf() {
-        return sCpf;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setsCpf(String sCpf) {
-        this.sCpf = sCpf;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getsRg() {
-        return sRg;
+    public String getRg() {
+        return rg;
     }
 
-    public void setsRg(String sRg) {
-        this.sRg = sRg;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public String getsCnpj() {
-        return sCnpj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setsCnpj(String sCnpj) {
-        this.sCnpj = sCnpj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getsIe() {
-        return sIe;
+    public String getIe() {
+        return ie;
     }
 
-    public void setsIe(String sIe) {
-        this.sIe = sIe;
+    public void setIe(String ie) {
+        this.ie = ie;
     }
 
-    public String getsNome() {
-        return sNome;
+    public String getNome() {
+        return nome;
     }
 
-    public void setsNome(String sNome) {
-        this.sNome = sNome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getsContato() {
-        return sContato;
+    public String getContato() {
+        return contato;
     }
 
-    public void setsContato(String sContato) {
-        this.sContato = sContato;
+    public void setContato(String contato) {
+        this.contato = contato;
     }
 
-    public String getsEmail() {
-        return sEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setsEmail(String sEmail) {
-        this.sEmail = sEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    
-    
+
+    public String getTipoEndereco() {
+        return tipoEndereco;
+    }
+
+    public void setTipoEndereco(String tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getTipoTelefone() {
+        return tipoTelefone;
+    }
+
+    public void setTipoTelefone(String tipoTelefone) {
+        this.tipoTelefone = tipoTelefone;
+    }
+
+    public String getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(String ddd) {
+        this.ddd = ddd;
+    }
+
+    public String getNumeroTelefone() {
+        return numeroTelefone;
+    }
+
+    public void setNumeroTelefone(String numeroTelefone) {
+        this.numeroTelefone = numeroTelefone;
+    }
 
     public LnEndereco getLnEndereco() {
         return lnEndereco;
@@ -229,17 +326,6 @@ public class ClienteView implements Serializable {
     }
 
     public void btGrava() {
-
-//        if (validaCliente()) {
-//            if (sTipoFuncao.equals("I")) {
-//                novoCliente();
-//            }
-//        }
-        
-//        System.out.println("Cliente -------> " + lnCliente.toString());
-        
-        mensagem = "Teste de gravacao";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
     }
 
     public void btCancelar() {
@@ -250,11 +336,15 @@ public class ClienteView implements Serializable {
     }
 
     public void btListaEndereco() {
+        lnEndereco = new LnEndereco(null, null, tipoEndereco, endereco, numero, bairro, cidade, estado, cep);
         listEnderecos.add(lnEndereco);
-        lnEndereco = new LnEndereco();
     }
 
-    public void btTelefone() {
+    public void btIncluiTelefone() {
+        System.out.println("telefone");
+        lnTelefone = new LnTelefone(null, null, tipoTelefone, ddd, numeroTelefone);
+        System.out.println("lntelefone : " + lnTelefone.toString());
+        listTelefones.add(lnTelefone);
     }
 
     public void trocaTipoPessoa() {
@@ -275,16 +365,16 @@ public class ClienteView implements Serializable {
     }
 
     public void btPesquisaCEP() {
-        if (lnEndereco.getEndStCep() != null) {
-            EnderecoCep endereco = new EnderecoCep();
+        if (cep != null) {
+            EnderecoCep enderecoCep = new EnderecoCep();
             Correios correio = new Correios();
-            endereco = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
+            enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
             correio.close();
             if (endereco != null) {
-                lnEndereco.setEndStLogradouro(endereco.getTipoDeLogradouro() + " " + endereco.getLogradouro());
-                lnEndereco.setEndStBairro(endereco.getBairro());
-                lnEndereco.setEndStCidade(endereco.getCidade());
-                lnEndereco.setEndStEstado(endereco.getEstado());
+                endereco = enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro();
+                bairro = enderecoCep.getBairro();
+                cidade = enderecoCep.getCidade();
+                estado = enderecoCep.getEstado();
             } else {
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -296,12 +386,9 @@ public class ClienteView implements Serializable {
     }
 
     private void novoCliente() {
-
         if (verificaCliente()) {
 //            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
-
             if (listEnderecos != null && listEnderecos.size() > 0) {
-
                 for (LnEndereco endereco : listEnderecos) {
 //                    endereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 }
@@ -312,7 +399,6 @@ public class ClienteView implements Serializable {
             }
 
             if (listTelefones != null && listTelefones.size() > 0) {
-
                 for (LnTelefone telefone : listTelefones) {
 //                    telefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 }

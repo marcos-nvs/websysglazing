@@ -37,7 +37,7 @@ public class LnTelefone implements Serializable {
     private Integer telInCodigo;
     @Basic(optional = false)
     @Column(name = "cli_in_codigo")
-    private int cliInCodigo;
+    private Integer cliInCodigo;
     @Basic(optional = false)
     @Column(name = "tel_st_tipo")
     private String telStTipo;
@@ -55,7 +55,7 @@ public class LnTelefone implements Serializable {
         this.telInCodigo = telInCodigo;
     }
 
-    public LnTelefone(Integer telInCodigo, int cliInCodigo, String telStTipo, String telStDdd, String telStTelefone) {
+    public LnTelefone(Integer telInCodigo, Integer cliInCodigo, String telStTipo, String telStDdd, String telStTelefone) {
         this.telInCodigo = telInCodigo;
         this.cliInCodigo = cliInCodigo;
         this.telStTipo = telStTipo;
@@ -71,11 +71,11 @@ public class LnTelefone implements Serializable {
         this.telInCodigo = telInCodigo;
     }
 
-    public int getCliInCodigo() {
+    public Integer getCliInCodigo() {
         return cliInCodigo;
     }
 
-    public void setCliInCodigo(int cliInCodigo) {
+    public void setCliInCodigo(Integer cliInCodigo) {
         this.cliInCodigo = cliInCodigo;
     }
 

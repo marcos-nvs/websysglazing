@@ -12,39 +12,39 @@
                 <f:selectItem itemLabel="Pessoa Fisica" itemValue="1" />
                 <f:selectItem itemLabel="Pessoa Juridica" itemValue="2"/>
             </p:selectOneRadio>
-            <p:commandButton value="Trocar"  action="#{clienteView.trocaTipoPessoa()}" process="idPanelCadCliente" 
+            <p:commandButton value="Trocar"  action="#{clienteView.trocaTipoPessoa}" process="idPanelCadCliente" 
                              update=":idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica" />
         </h:panelGrid>
 
         <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
             <h:panelGrid id="idFisica" columns="4" style="margin-left: 7px;" >
                 <p:outputLabel value="CPF" />
-                <p:inputMask value="#{clienteView.sCpf}" mask="999.999.999-99" size="10"/>
+                <p:inputMask value="#{clienteView.cpf}" mask="999.999.999-99" size="10"/>
                 <p:outputLabel value="RG"/>
-                <p:inputText value="#{clienteView.sRg}" />
+                <p:inputText value="#{clienteView.rg}" />
             </h:panelGrid>
             <h:panelGrid id="idFisica1" columns="4">
                 <p:outputLabel value="Nome"/>
-                <p:inputText value="#{clienteView.sNome}" size="60" />
+                <p:inputText value="#{clienteView.nome}" size="60" />
                 <p:outputLabel value="e-mail"/>
-                <p:inputText value="#{clienteView.sEmail}" size="60" style="width: 80%;"/>
+                <p:inputText value="#{clienteView.email}" size="60" style="width: 80%;"/>
             </h:panelGrid>
         </p:panel>
 
         <p:panel id="idPanelJuridica" style="border-color: transparent" visible="#{clienteView.bPessoaJuridica}">
             <h:panelGrid id="idJuridica" columns="4" style="margin-left: 35px;">
                 <p:outputLabel value="CNPJ"/>
-                <p:inputMask mask="99.999.999/9999-99" size="13"/>
+                <p:inputMask value="#{clienteView.cnpj}" mask="99.999.999/9999-99" size="13"/>
                 <p:outputLabel value="Inscr. Estadual"/>
-                <p:inputText />
+                <p:inputText value="#{clienteView.ie}" />
             </h:panelGrid>
             <h:panelGrid id="idJuridica1" columns="4">
                 <p:outputLabel value="Razao Social"/>
-                <p:inputText size="60" />
+                <p:inputText value="#{clienteView.nome}" size="60" />
                 <p:outputLabel value="e-mail"/>
-                <p:inputText size="55"/>
+                <p:inputText value="#{clienteView.email}" size="55"/>
                 <p:outputLabel value="Contato"/>
-                <p:inputText size="60"/>
+                <p:inputText value="#{clienteView.contato}" size="60"/>
             </h:panelGrid>
         </p:panel>
 
@@ -78,7 +78,7 @@
                     <p:commandButton value="Incluir" oncomplete="PF('endereco').show()" 
                                      process="idDtEndereco, :idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica" 
                                      update=":idFormDialog" 
-                                     action="#{clienteView.btIncluiEnd()}"/>
+                                     action="#{clienteView.btIncluiEnd}"/>
                     <p:commandButton value="Alterar" />
                     <p:commandButton value="Excluir" />
                 </f:facet>
@@ -86,36 +86,38 @@
         </p:panel>
 
         <h:panelGrid columns="2">
-            <p:panel id="idDtTelefone" style="border: 0px;position: relative; width: 400px;" >
-                <p:dataTable >
+            <p:panel id="idDtPanelTelefone" style="border: 0px;position: relative; width: 400px;" >
+                <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}" >
                     <f:facet name="header">
                         <p:outputLabel value="Telefone"/>
                     </f:facet>
                     <p:column headerText="Tipo" width="100">
-                        <p:outputLabel/>
+                        <p:outputLabel value="#{dtTelefone.telStTipo}"/>
                     </p:column>
                     <p:column headerText="DDD" width="50">
-                        <p:outputLabel/>
+                        <p:outputLabel value="#{dtTelefone.telStDdd}"/>
                     </p:column>
                     <p:column headerText="Telefone" width="100">
-                        <p:outputLabel/>
+                        <p:outputLabel value="#{dtTelefone.telStTelefone}"/>
                     </p:column>
                 </p:dataTable>
             </p:panel>
             <p:panel id="idPanelTelefone" style="border-color: transparent">
                 <h:panelGrid columns="6" style="margin-left: 40px;">
                     <p:outputLabel value="Tipo"/>
-                    <p:selectOneMenu>
+                    <p:selectOneMenu id="idTipoTelefone" value="#{clienteView.tipoTelefone}">
                         <f:selectItem itemLabel="Residencial" itemValue="1"/>
                         <f:selectItem itemLabel="Comercial" itemValue="2"/>
                         <f:selectItem itemLabel="Celular" itemValue="3"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="DDD"/>
-                    <p:inputText size="5"/>
+                    <p:inputText id="idDDD" value="#{clienteView.ddd}" size="5"/>
                     <p:outputLabel value="Telefone"/>
-                    <p:inputText size="30" />
+                    <p:inputText id="idNroTelefone" value="#{clienteView.numeroTelefone}" size="30" />
                     <f:facet name="footer">
-                        <p:commandButton value="Incluir"/>
+                        <p:commandButton value="Incluir" process="idDtPanelTelefone, idTipoTelefone, idDDD, idNroTelefone" 
+                                         update="idDtPanelTelefone,idTipoTelefone, idDDD, idNroTelefone"
+                                         action="#{clienteView.btIncluiTelefone()}" />
                         <p:commandButton value="Alterar"/>
                         <p:commandButton value="Excluir"/>
                     </f:facet>
@@ -150,7 +152,7 @@
             <f:facet name="footer">
                 <p:commandButton value="#{msgs['node.include']}" process=":idFormCenter:idPanelCliente" 
                                  update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
-                                 action="#{clienteView.btIncluir()}" />
+                                 action="#{clienteView.btIncluir}" />
                 <p:commandButton value="#{msgs['template.change']}"/>
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
                 <p:commandButton value="#{msgs['node.view']}"/>
@@ -163,36 +165,36 @@
               style="background-color: #ffffff" closable="false" resizable="false">
         <h:panelGrid id="idPanelTipoEnd" columns="5" style="margin-left: 17px;">
             <p:outputLabel value="Tipo End."/>
-            <p:selectOneMenu value="#{clienteView.lnEndereco.endStTipo}">
-                <f:selectItem itemLabel="ResidÃªncial" itemValue="1"/>
+            <p:selectOneMenu value="#{clienteView.tipoEndereco}">
+                <f:selectItem itemLabel="Residencial" itemValue="1"/>
                 <f:selectItem itemLabel="Comercial" itemValue="2"/>
                 <f:selectItem itemLabel="Entrega" itemValue="3"/>
             </p:selectOneMenu>
             <p:outputLabel value="CEP"/>
-            <p:inputMask value="#{clienteView.lnEndereco.endStCep}" mask="99999-999" size="8"/>
+            <p:inputMask value="#{clienteView.cep}" mask="99999-999" size="8"/>
             <p:commandButton value="Pesquisar" update="idPanelEnd, idPanelEndCompl"
-                             action="#{clienteView.btPesquisaCEP()}"/>
+                             action="#{clienteView.btPesquisaCEP}"/>
         </h:panelGrid>
         <h:panelGrid id="idPanelEnd" columns="6" style="margin-left: 17px;">
             <p:outputLabel value="Endereco"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStLogradouro}" size="55"/>
+            <p:inputText value="#{clienteView.endereco}" size="55"/>
             <p:outputLabel value="Nro"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStNumero}" size="20"/>
+            <p:inputText value="#{clienteView.numero}" size="20"/>
             <p:outputLabel value="Complemento"/>
             <p:inputText  size="35"/>
         </h:panelGrid>
         <h:panelGrid id="idPanelEndCompl" columns="6" style="margin-left: 33px;">
             <p:outputLabel value="Bairro"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStBairro}" size="30" />
+            <p:inputText value="#{clienteView.bairro}" size="30" />
             <p:outputLabel value="Cidade"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStCidade}" size="40"/>
+            <p:inputText value="#{clienteView.cidade}" size="40"/>
             <p:outputLabel value="Estado"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStEstado}" size="20"/>
+            <p:inputText value="#{clienteView.estado}" size="20"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="Incluir" process="idDialogEndereco" 
                              update=":idFormCenter:idPanelEndereco, idPanelEnd, idPanelEndCompl,idPanelTipoEnd"
-                             action="#{clienteView.btListaEndereco()}"/>
+                             action="#{clienteView.btListaEndereco}"/>
             <p:commandButton value="Fechar" onclick="PF('endereco').hide()"/>
         </f:facet>
     </p:dialog>

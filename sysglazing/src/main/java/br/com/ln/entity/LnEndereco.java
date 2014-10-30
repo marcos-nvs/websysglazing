@@ -41,7 +41,7 @@ public class LnEndereco implements Serializable {
     private Integer endInCodigo;
     @Basic(optional = false)
     @Column(name = "cli_in_codigo")
-    private int cliInCodigo;
+    private Integer cliInCodigo;
     @Basic(optional = false)
     @Column(name = "end_st_tipo")
     private String endStTipo;
@@ -71,7 +71,7 @@ public class LnEndereco implements Serializable {
         this.endInCodigo = endInCodigo;
     }
 
-    public LnEndereco(Integer endInCodigo, int cliInCodigo, String endStTipo, String endStLogradouro, String endStNumero, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
+    public LnEndereco(Integer endInCodigo, Integer cliInCodigo, String endStTipo, String endStLogradouro, String endStNumero, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
         this.endInCodigo = endInCodigo;
         this.cliInCodigo = cliInCodigo;
         this.endStTipo = endStTipo;
@@ -91,11 +91,11 @@ public class LnEndereco implements Serializable {
         this.endInCodigo = endInCodigo;
     }
 
-    public int getCliInCodigo() {
+    public Integer getCliInCodigo() {
         return cliInCodigo;
     }
 
-    public void setCliInCodigo(int cliInCodigo) {
+    public void setCliInCodigo(Integer cliInCodigo) {
         this.cliInCodigo = cliInCodigo;
     }
 
