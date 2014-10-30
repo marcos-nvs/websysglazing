@@ -145,10 +145,7 @@ public class LnMenuModel implements Serializable {
         subMenu.setRendered(true);
         DefaultMenuItem item = new DefaultMenuItem("Histórico");
         item.setCommand("#{lnMenuModel.menuActionClick}");
-//        item.setUpdate(":idLayoutCenter");
-//        item.setProcess(":idLayoutCenter");
         item.setAjax(false);
-//        item.setIcon("ui-icon-folder-open");
         subMenu.addElement(item);
         subMenu.setRendered(true);
         
