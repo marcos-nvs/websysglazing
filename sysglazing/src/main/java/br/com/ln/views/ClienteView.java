@@ -40,6 +40,13 @@ public class ClienteView implements Serializable {
     private boolean bPessoaJuridica;
     private boolean bTelaCadastro;
     private String mensagem;
+    private String sCpf;
+    private String sRg;
+    private String sCnpj;
+    private String sIe;
+    private String sNome;
+    private String sContato;
+    private String sEmail;
 
     public ClienteView() {
         listCliente = Postgress.getListObject(LnCliente.class);
@@ -48,6 +55,7 @@ public class ClienteView implements Serializable {
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
+//        System.out.println("Cliente -------> " + lnCliente.toString());
     }
 
     public List<LnCliente> getListCliente() {
@@ -97,6 +105,64 @@ public class ClienteView implements Serializable {
     public void setbPessosJuridica(boolean bPessoaJuridica) {
         this.bPessoaJuridica = bPessoaJuridica;
     }
+
+    public String getsCpf() {
+        return sCpf;
+    }
+
+    public void setsCpf(String sCpf) {
+        this.sCpf = sCpf;
+    }
+
+    public String getsRg() {
+        return sRg;
+    }
+
+    public void setsRg(String sRg) {
+        this.sRg = sRg;
+    }
+
+    public String getsCnpj() {
+        return sCnpj;
+    }
+
+    public void setsCnpj(String sCnpj) {
+        this.sCnpj = sCnpj;
+    }
+
+    public String getsIe() {
+        return sIe;
+    }
+
+    public void setsIe(String sIe) {
+        this.sIe = sIe;
+    }
+
+    public String getsNome() {
+        return sNome;
+    }
+
+    public void setsNome(String sNome) {
+        this.sNome = sNome;
+    }
+
+    public String getsContato() {
+        return sContato;
+    }
+
+    public void setsContato(String sContato) {
+        this.sContato = sContato;
+    }
+
+    public String getsEmail() {
+        return sEmail;
+    }
+
+    public void setsEmail(String sEmail) {
+        this.sEmail = sEmail;
+    }
+    
+    
 
     public LnEndereco getLnEndereco() {
         return lnEndereco;
@@ -169,6 +235,9 @@ public class ClienteView implements Serializable {
 //                novoCliente();
 //            }
 //        }
+        
+//        System.out.println("Cliente -------> " + lnCliente.toString());
+        
         mensagem = "Teste de gravacao";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
     }
@@ -229,12 +298,12 @@ public class ClienteView implements Serializable {
     private void novoCliente() {
 
         if (verificaCliente()) {
-            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
+//            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
 
             if (listEnderecos != null && listEnderecos.size() > 0) {
 
                 for (LnEndereco endereco : listEnderecos) {
-                    endereco.setCliInCodigo(lnCliente.getCliInCodigo());
+//                    endereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 }
                 Postgress.saveObject(listEnderecos);
             } else {
@@ -245,7 +314,7 @@ public class ClienteView implements Serializable {
             if (listTelefones != null && listTelefones.size() > 0) {
 
                 for (LnTelefone telefone : listTelefones) {
-                    telefone.setCliInCodigo(lnCliente.getCliInCodigo());
+//                    telefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 }
 
                 Postgress.saveObject(listTelefones);
@@ -253,7 +322,7 @@ public class ClienteView implements Serializable {
                 mensagem = "Cliente nao possui telefone!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cliente", mensagem));
             }
-            Postgress.saveObject(lnCliente);
+//            Postgress.saveObject(lnCliente);
             mensagem = "Cliente gravado com sucesso!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
@@ -263,11 +332,11 @@ public class ClienteView implements Serializable {
 
         boolean validado = true;
 
-        if (lnCliente == null) {
-            validado = false;
-            mensagem = "Para gravar o Cliente precisa preencher as informacoes!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
-        }
+//        if (lnCliente == null) {
+//            validado = false;
+//            mensagem = "Para gravar o Cliente precisa preencher as informacoes!!!";
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
+//        }
 
 //        System.out.println("this.Cliente : " + this.lnCliente.toString());
 //        System.out.println("Cliente : " + lnCliente.toString());
@@ -283,20 +352,20 @@ public class ClienteView implements Serializable {
 
         LnCliente lnNovoCliente;
 
-        if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().isEmpty()) {
-            lnNovoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
-            return lnNovoCliente == null;
-        } else {
-            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().isEmpty()) {
-                lnNovoCliente = Postgress.getClienteCnpj(lnCliente.getCliStCnpj());
-                return lnNovoCliente == null;
-            } else {
-                if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().isEmpty()) {
-                    lnNovoCliente = Postgress.getClienteNome(lnCliente.getCliStNome());
-                    return lnNovoCliente == null;
-                }
-            }
-        }
+//        if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().isEmpty()) {
+//            lnNovoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+//            return lnNovoCliente == null;
+//        } else {
+//            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().isEmpty()) {
+//                lnNovoCliente = Postgress.getClienteCnpj(lnCliente.getCliStCnpj());
+//                return lnNovoCliente == null;
+//            } else {
+//                if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().isEmpty()) {
+//                    lnNovoCliente = Postgress.getClienteNome(lnCliente.getCliStNome());
+//                    return lnNovoCliente == null;
+//                }
+//            }
+//        }
         return false;
     }
 }

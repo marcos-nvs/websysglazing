@@ -13,8 +13,6 @@
             <link type="text/css" rel="stylesheet" href="css/default.css" />
             <title>Mille Vidros</title>         
         </h:head>
-        
-                        <!--style="background-image: url('img/bgimg.jpg'); background-repeat: repeat-x;"-->
         <h:body id="idBoby">
             <h:outputText value="#{defineCaminho.retorno}" style="left: -400px"/>
             <h:form id="idFormDialog">
@@ -24,7 +22,7 @@
             </h:form>
 
             <p:layout fullPage="true">
-                <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true" visible="false">
                     <h:form id="idFormTop">
                         <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
                         <h:panelGrid id="idGridTop" columns="2">

@@ -19,15 +19,15 @@
         <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
             <h:panelGrid id="idFisica" columns="4" style="margin-left: 7px;" >
                 <p:outputLabel value="CPF" />
-                <p:inputMask value="#{clienteView.lnCliente.cliStCpf}" mask="999.999.999-99" size="10"/>
+                <p:inputMask value="#{clienteView.sCpf}" mask="999.999.999-99" size="10"/>
                 <p:outputLabel value="RG"/>
-                <p:inputText value="#{clienteView.lnCliente.cliStRg}" />
+                <p:inputText value="#{clienteView.sRg}" />
             </h:panelGrid>
             <h:panelGrid id="idFisica1" columns="4">
                 <p:outputLabel value="Nome"/>
-                <p:inputText value="#{clienteView.lnCliente.cliStNome}" size="60" />
+                <p:inputText value="#{clienteView.sNome}" size="60" />
                 <p:outputLabel value="e-mail"/>
-                <p:inputText value="#{clienteView.lnCliente.cliStEmail}" size="60" style="width: 80%;"/>
+                <p:inputText value="#{clienteView.sEmail}" size="60" style="width: 80%;"/>
             </h:panelGrid>
         </p:panel>
 
@@ -124,7 +124,7 @@
 
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton value="Salvar" action="#{clienteView.btGrava()}"/>
+            <p:commandButton  value="Salvar" action="#{clienteView.btGrava}"/>
             <p:commandButton value="Cancelar"/>
         </f:facet>
     </p:panel>
