@@ -327,6 +327,7 @@ CREATE TABLE ln_endereco
   end_st_tipo character varying(20) NOT NULL, -- Tipo comercial...
   end_st_logradouro character varying(60) NOT NULL, -- Endereço
   end_st_numero character varying(6) NOT NULL,
+  end_st_complemento character varying(30), 
   end_st_bairro character varying(40) NOT NULL,
   end_st_cidade character varying(50) NOT NULL,
   end_st_estado character varying(2) NOT NULL,

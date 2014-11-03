@@ -45,19 +45,9 @@ public class ClienteView implements Serializable {
     private String cnpj;
     private String ie;
     private String nome;
-    private String contato;
     private String email;
-    private String tipoEndereco;
-    private String endereco;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String cidade;
-    private String estado;
-    private String cep; 
-    private String tipoTelefone;
-    private String ddd;
-    private String numeroTelefone;
+    private String contato;
+    
 
     public ClienteView() {
         listCliente = Postgress.getListObject(LnCliente.class);
@@ -66,7 +56,6 @@ public class ClienteView implements Serializable {
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
-//        System.out.println("Cliente -------> " + lnCliente.toString());
     }
 
     public List<LnCliente> getListCliente() {
@@ -117,6 +106,38 @@ public class ClienteView implements Serializable {
         this.bPessoaJuridica = bPessoaJuridica;
     }
 
+    public LnEndereco getLnEndereco() {
+        return lnEndereco;
+    }
+
+    public void setLnEndereco(LnEndereco lnEndereco) {
+        this.lnEndereco = lnEndereco;
+    }
+
+    public LnTelefone getLnTelefone() {
+        return lnTelefone;
+    }
+
+    public void setLnTelefone(LnTelefone lnTelefone) {
+        this.lnTelefone = lnTelefone;
+    }
+
+    public List<LnEndereco> getListEnderecos() {
+        return listEnderecos;
+    }
+
+    public void setListEnderecos(List<LnEndereco> listEnderecos) {
+        this.listEnderecos = listEnderecos;
+    }
+
+    public List<LnTelefone> getListTelefones() {
+        return listTelefones;
+    }
+
+    public void setListTelefones(List<LnTelefone> listTelefones) {
+        this.listTelefones = listTelefones;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -157,14 +178,6 @@ public class ClienteView implements Serializable {
         this.nome = nome;
     }
 
-    public String getContato() {
-        return contato;
-    }
-
-    public void setContato(String contato) {
-        this.contato = contato;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -173,126 +186,14 @@ public class ClienteView implements Serializable {
         this.email = email;
     }
 
-    public String getTipoEndereco() {
-        return tipoEndereco;
+    public String getContato() {
+        return contato;
     }
 
-    public void setTipoEndereco(String tipoEndereco) {
-        this.tipoEndereco = tipoEndereco;
+    public void setContato(String contato) {
+        this.contato = contato;
     }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getTipoTelefone() {
-        return tipoTelefone;
-    }
-
-    public void setTipoTelefone(String tipoTelefone) {
-        this.tipoTelefone = tipoTelefone;
-    }
-
-    public String getDdd() {
-        return ddd;
-    }
-
-    public void setDdd(String ddd) {
-        this.ddd = ddd;
-    }
-
-    public String getNumeroTelefone() {
-        return numeroTelefone;
-    }
-
-    public void setNumeroTelefone(String numeroTelefone) {
-        this.numeroTelefone = numeroTelefone;
-    }
-
-    public LnEndereco getLnEndereco() {
-        return lnEndereco;
-    }
-
-    public void setLnEndereco(LnEndereco lnEndereco) {
-        this.lnEndereco = lnEndereco;
-    }
-
-    public LnTelefone getLnTelefone() {
-        return lnTelefone;
-    }
-
-    public void setLnTelefone(LnTelefone lnTelefone) {
-        this.lnTelefone = lnTelefone;
-    }
-
-    public List<LnEndereco> getListEnderecos() {
-        return listEnderecos;
-    }
-
-    public void setListEnderecos(List<LnEndereco> listEnderecos) {
-        this.listEnderecos = listEnderecos;
-    }
-
-    public List<LnTelefone> getListTelefones() {
-        return listTelefones;
-    }
-
-    public void setListTelefones(List<LnTelefone> listTelefones) {
-        this.listTelefones = listTelefones;
-    }
-
+    
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnCliente = new LnCliente();
@@ -323,9 +224,17 @@ public class ClienteView implements Serializable {
     }
 
     public void btHistorico() {
+        
     }
 
     public void btGrava() {
+        System.out.println("Grava cliente");
+        if (verificaDadoObrigatorio()) {
+            if (sTipoFuncao.equals("I")) {
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
+        }
     }
 
     public void btCancelar() {
@@ -336,15 +245,17 @@ public class ClienteView implements Serializable {
     }
 
     public void btListaEndereco() {
-        lnEndereco = new LnEndereco(null, null, tipoEndereco, endereco, numero, bairro, cidade, estado, cep);
-        listEnderecos.add(lnEndereco);
+        if (lnEndereco != null && verificaEnderecoObrigatorio()) {
+            listEnderecos.add(lnEndereco);
+            lnEndereco = new LnEndereco();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btIncluiTelefone() {
-        System.out.println("telefone");
-        lnTelefone = new LnTelefone(null, null, tipoTelefone, ddd, numeroTelefone);
-        System.out.println("lntelefone : " + lnTelefone.toString());
         listTelefones.add(lnTelefone);
+        lnTelefone = new LnTelefone();
     }
 
     public void trocaTipoPessoa() {
@@ -364,18 +275,30 @@ public class ClienteView implements Serializable {
         }
     }
 
+    public String descTipoTelefone(String sTipoTelefone) {
+        if (sTipoTelefone.equals("1")) {
+            return "Residêncial";
+        } else if (sTipoTelefone.equals("2")) {
+            return "Comercial";
+        } else if (sTipoTelefone.equals("3")) {
+            return "Celular";
+        } else {
+            return "";
+        }
+    }
+
     public void btPesquisaCEP() {
-        if (cep != null) {
+        if (lnEndereco.getEndStCep() != null) {
             EnderecoCep enderecoCep = new EnderecoCep();
             Correios correio = new Correios();
-            enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
+            enderecoCep = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
             correio.close();
-            if (endereco != null) {
-                endereco = enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro();
-                bairro = enderecoCep.getBairro();
-                cidade = enderecoCep.getCidade();
-                estado = enderecoCep.getEstado();
-            } else {
+            if (enderecoCep != null) {
+                lnEndereco.setEndStLogradouro(enderecoCep.getTipoDeLogradouro() +" "+enderecoCep.getLogradouro());
+                lnEndereco.setEndStBairro(enderecoCep.getBairro());
+                lnEndereco.setEndStCidade(enderecoCep.getCidade());
+                lnEndereco.setEndStEstado(enderecoCep.getEstado());
+            }else{
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
             }
@@ -384,74 +307,68 @@ public class ClienteView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
-
-    private void novoCliente() {
-        if (verificaCliente()) {
-//            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
-            if (listEnderecos != null && listEnderecos.size() > 0) {
-                for (LnEndereco endereco : listEnderecos) {
-//                    endereco.setCliInCodigo(lnCliente.getCliInCodigo());
-                }
-                Postgress.saveObject(listEnderecos);
-            } else {
-                mensagem = "Cliente nao possui endereco!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cliente", mensagem));
-            }
-
-            if (listTelefones != null && listTelefones.size() > 0) {
-                for (LnTelefone telefone : listTelefones) {
-//                    telefone.setCliInCodigo(lnCliente.getCliInCodigo());
-                }
-
-                Postgress.saveObject(listTelefones);
-            } else {
-                mensagem = "Cliente nao possui telefone!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cliente", mensagem));
-            }
-//            Postgress.saveObject(lnCliente);
-            mensagem = "Cliente gravado com sucesso!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
-        }
-    }
-
-    private boolean validaCliente() {
-
+    
+    public boolean verificaEnderecoObrigatorio(){
+    
         boolean validado = true;
+        mensagem = "Por favor, preencher os seguintes campos: ";
+    
+        if (lnEndereco.getEndStLogradouro() == null || lnEndereco.getEndStLogradouro().equals("")){
+            mensagem = mensagem + "Endereco - "; 
+            validado = false;
+        }
+        
+        if (lnEndereco.getEndStNumero() == null || lnEndereco.getEndStNumero().equals("")){
+            mensagem = mensagem + "Numero - "; 
+            validado = false;
+        }
 
-//        if (lnCliente == null) {
-//            validado = false;
-//            mensagem = "Para gravar o Cliente precisa preencher as informacoes!!!";
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
-//        }
+        if (lnEndereco.getEndStBairro()== null || lnEndereco.getEndStBairro().equals("")){
+            mensagem = mensagem + "Bairro - "; 
+            validado = false;
+        }
+        
+        if (lnEndereco.getEndStCidade()== null || lnEndereco.getEndStCidade().equals("")){
+            mensagem = mensagem + "Cidade - "; 
+            validado = false;
+        }
 
-//        System.out.println("this.Cliente : " + this.lnCliente.toString());
-//        System.out.println("Cliente : " + lnCliente.toString());
-//        if (this.lnCliente.getCliStNome() == null || this.lnCliente.getCliStNome().isEmpty()) {
-//            validado = false;
-//            mensagem = "Por favor preencha o nome do Cliente!!!";
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
-//        }
+        if (lnEndereco.getEndStEstado()== null || lnEndereco.getEndStEstado().equals("")){
+            mensagem = mensagem + "Estado - "; 
+            validado = false;
+        }
+
+        if (lnEndereco.getEndStCep()== null || lnEndereco.getEndStCep().equals("")){
+            mensagem = mensagem + "CEP "; 
+            validado = false;
+        }
+        
         return validado;
     }
-
-    private boolean verificaCliente() {
-
-        LnCliente lnNovoCliente;
-
-//        if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().isEmpty()) {
-//            lnNovoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
-//            return lnNovoCliente == null;
-//        } else {
-//            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().isEmpty()) {
-//                lnNovoCliente = Postgress.getClienteCnpj(lnCliente.getCliStCnpj());
-//                return lnNovoCliente == null;
-//            } else {
-//                if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().isEmpty()) {
-//                    lnNovoCliente = Postgress.getClienteNome(lnCliente.getCliStNome());
-//                    return lnNovoCliente == null;
-//                }
-//            }
-//        }
-        return false;
+    
+    public boolean verificaDadoObrigatorio(){
+        
+        boolean validado = true;
+        mensagem = "Por favor, preencher os seguintes campos: ";
+        
+        if (nome == null && nome.equals("")){
+            System.out.println("nome em branco");
+            mensagem = mensagem + " "+ "Nome do Cliente em branco,";
+            validado = false;
+        }
+        
+        if (listEnderecos == null || listEnderecos.isEmpty()) {
+            System.out.println("lista de endereço vazia");
+            mensagem = mensagem + " " + "Endereco do cliente em branco,";
+            validado = false;
+        }
+        
+        if (listTelefones == null || listTelefones.isEmpty()){
+            System.out.println("list ade telefone vazia");
+            mensagem = mensagem + " " + "Telefone do cliente em branco";
+            validado = false;
+        }
+            
+        return validado;
     }
 }
