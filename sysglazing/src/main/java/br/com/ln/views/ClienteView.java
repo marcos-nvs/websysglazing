@@ -229,6 +229,7 @@ public class ClienteView implements Serializable {
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             bTelaCadastro = true;
+            
             sTipoFuncao = "A";
         } else {
             mensagem = "Usuario nao tem permissao para alterar cliente";
@@ -400,6 +401,7 @@ public class ClienteView implements Serializable {
             for (LnEndereco lsEndereco : listEnderecos) {
                 lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 lsEndereco.setEndInCodigo(Postgress.getLnEnderecoNextId());
+                lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
                 System.out.println("endereco : " + lsEndereco.toString());
                 Postgress.saveObject(lsEndereco);
             }

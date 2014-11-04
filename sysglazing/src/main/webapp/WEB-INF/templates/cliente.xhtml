@@ -141,15 +141,20 @@
             <f:facet name="header">
                 <p:outputLabel value="#{msgs['node.client.registre']}"/>
             </f:facet>
-
-            <p:column headerText="#{msgs['node.code.client']}">
-                <p:outputLabel value="#{tbCliente.cliInCodigo}"/>
+            <p:column headerText="#{msgs['node.code.client']}" width="10%">
+                <p:outputLabel value="#{tbCliente.cliInCodigo}" />
             </p:column>
-            <p:column headerText="#{msgs['node.name.client']}">
+            <p:column headerText="CPF" width="20%">
+                <p:outputLabel value="#{tbCliente.cliStEmail}" />
+            </p:column>
+            <p:column headerText="CNPJ" width="20%">
+                <p:outputLabel value="#{tbCliente.cliStEmail}" />
+            </p:column>
+            <p:column headerText="#{msgs['node.name.client']}" width="30%">
                 <p:outputLabel value="#{tbCliente.cliStNome}"/>
             </p:column>
-            <p:column headerText="E-mail">
-                <p:outputLabel value="#{tbCliente.cliStEmail}"/>
+            <p:column headerText="E-mail" width="30%">
+                <p:outputLabel value="#{tbCliente.cliStEmail}" />
             </p:column>
 
             <f:facet name="footer">
