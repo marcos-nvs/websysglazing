@@ -50,6 +50,8 @@ public class LnCliente implements Serializable {
     private String cliStNome;
     @Column(name = "cli_st_email")
     private String cliStEmail;
+    @Column(name = "cli_st_contato")
+    private String cliStContato;
 
     public LnCliente() {
     }
@@ -58,6 +60,29 @@ public class LnCliente implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
+    public LnCliente(Integer cliInCodigo, String cliStCpf, String cliStCnpj, String cliStRg, String cliStIe, String cliStNome, String cliStEmail, String cliStContato) {
+        this.cliInCodigo = cliInCodigo;
+        this.cliStCpf = cliStCpf;
+        this.cliStCnpj = cliStCnpj;
+        this.cliStRg = cliStRg;
+        this.cliStIe = cliStIe;
+        this.cliStNome = cliStNome;
+        this.cliStEmail = cliStEmail;
+        this.cliStContato = cliStContato;
+    }
+
+    public LnCliente(String cliStCpf, String cliStCnpj, String cliStRg, String cliStIe, String cliStNome, String cliStEmail, String cliStContato) {
+        this.cliStCpf = cliStCpf;
+        this.cliStCnpj = cliStCnpj;
+        this.cliStRg = cliStRg;
+        this.cliStIe = cliStIe;
+        this.cliStNome = cliStNome;
+        this.cliStEmail = cliStEmail;
+        this.cliStContato = cliStContato;
+    }
+    
+    
+    
     public LnCliente(Integer cliInCodigo, String cliStNome) {
         this.cliInCodigo = cliInCodigo;
         this.cliStNome = cliStNome;
@@ -119,6 +144,14 @@ public class LnCliente implements Serializable {
         this.cliStEmail = cliStEmail;
     }
 
+    public String getCliStContato() {
+        return cliStContato;
+    }
+
+    public void setCliStContato(String cliStContato) {
+        this.cliStContato = cliStContato;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -141,8 +174,7 @@ public class LnCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStCpf=" + cliStCpf + ", cliStCnpj=" + cliStCnpj + ", cliStRg=" + cliStRg + ", cliStIe=" + cliStIe + ", cliStNome=" + cliStNome + ", cliStEmail=" + cliStEmail + '}';
+        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStCpf=" + cliStCpf + ", cliStCnpj=" + cliStCnpj + ", cliStRg=" + cliStRg + ", cliStIe=" + cliStIe + ", cliStNome=" + cliStNome + ", cliStEmail=" + cliStEmail + ", cliStContato=" + cliStContato + '}';
     }
 
-   
 }

@@ -125,7 +125,8 @@ public class LnTelefone implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnTelefone[ telInCodigo=" + telInCodigo + " ]";
+        return "LnTelefone{" + "telInCodigo=" + telInCodigo + ", cliInCodigo=" + cliInCodigo + ", telStTipo=" + telStTipo + ", telStDdd=" + telStDdd + ", telStTelefone=" + telStTelefone + '}';
     }
+
     
 }

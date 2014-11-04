@@ -396,6 +396,14 @@ public class Postgress implements Serializable{
         return new Integer(getIdByNextValueStringSQL("select nextval('seq_cliente');"));
     }
 
+    public static Integer getLnEnderecoNextId() {
+        return new Integer(getIdByNextValueStringSQL("select nextval('seq_endereco');"));
+    }
+
+    public static Integer getLnTelefoneNextId() {
+        return new Integer(getIdByNextValueStringSQL("select nextval('seq_telefone');"));
+    }
+
     public static String getIdByNextValueStringSQL(String strSql) {
 
         Session session = null;

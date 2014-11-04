@@ -19,32 +19,32 @@
         <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
             <h:panelGrid id="idFisica" columns="4" style="margin-left: 7px;" >
                 <p:outputLabel value="CPF" />
-                <p:inputMask value="#{clienteView.cpf}" mask="999.999.999-99" size="10"/>
+                <p:inputMask id="idFisicaCPF" value="#{clienteView.cpf}" mask="999.999.999-99" size="10"/>
                 <p:outputLabel value="RG"/>
-                <p:inputText value="#{clienteView.rg}" />
+                <p:inputText id="idFisciaRG" value="#{clienteView.rg}" maxlength="10" />
             </h:panelGrid>
             <h:panelGrid id="idFisica1" columns="4">
                 <p:outputLabel value="Nome"/>
-                <p:inputText value="#{clienteView.nome}" size="60" />
+                <p:inputText id="idFisicaNome" value="#{clienteView.nomeFisica}" size="60" maxlength="60" />
                 <p:outputLabel value="e-mail"/>
-                <p:inputText value="#{clienteView.email}" size="60" style="width: 80%;"/>
+                <p:inputText id="idFisciaEmail" value="#{clienteView.emailFisica}" size="60" style="width: 80%;" maxlength="60"/>
             </h:panelGrid>
         </p:panel>
 
         <p:panel id="idPanelJuridica" style="border-color: transparent" visible="#{clienteView.bPessoaJuridica}">
             <h:panelGrid id="idJuridica" columns="4" style="margin-left: 35px;">
                 <p:outputLabel value="CNPJ"/>
-                <p:inputMask value="#{clienteView.cnpj}" mask="99.999.999/9999-99" size="13"/>
+                <p:inputMask id="idJuridicaCNPJ" value="#{clienteView.cnpj}" mask="99.999.999/9999-99" size="13"/>
                 <p:outputLabel value="Inscr. Estadual"/>
-                <p:inputText value="#{clienteView.ie}" />
+                <p:inputText id="idJuridicaIE" value="#{clienteView.ie}" maxlength="10" />
             </h:panelGrid>
             <h:panelGrid id="idJuridica1" columns="4">
-                <p:outputLabel value="Razao Social"/>
-                <p:inputText value="#{clienteView.nome}" size="60" />
-                <p:outputLabel value="e-mail"/>
-                <p:inputText value="#{clienteView.email}" size="55"/>
+                <p:outputLabel  value="Razao Social"/>
+                <p:inputText id="idJuridicaNome" value="#{clienteView.nomeJuridica}" size="60" maxlength="60"/>
+                <p:outputLabel  value="e-mail"/>
+                <p:inputText id="idJuridicaEmail" value="#{clienteView.emailFisica}" size="55" maxlength="60"/>
                 <p:outputLabel value="Contato"/>
-                <p:inputText value="" size="60"/>
+                <p:inputText id="idJuridicaContato" value="#{clienteView.contato}" size="60" maxlength="40"/>
             </h:panelGrid>
         </p:panel>
 
@@ -85,7 +85,7 @@
             </p:dataTable>
         </p:panel>
 
-        <h:panelGrid columns="2">
+        <h:panelGrid id="idgridTelefone" columns="2">
             <p:panel id="idDtPanelTelefone" style="border: 0px;position: relative; width: 400px;" >
                 <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}" >
                     <f:facet name="header">
@@ -111,14 +111,16 @@
                         <f:selectItem itemLabel="Celular" itemValue="3"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="DDD"/>
-                    <p:inputText id="idDDD" value="#{clienteView.lnTelefone.telStDdd}" size="5"/>
+                    <p:inputText id="idDDD" value="#{clienteView.lnTelefone.telStDdd}" size="4" maxlength="3"/>
                     <p:outputLabel value="Telefone"/>
-                    <p:inputText id="idNroTelefone" value="#{clienteView.lnTelefone.telStTelefone}" size="30" />
+                    <p:inputText id="idNroTelefone" value="#{clienteView.lnTelefone.telStTelefone}" size="20" maxlength="10" />
                     <f:facet name="footer">
-                        <p:commandButton id="btIncluirTelefone" value="Incluir" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone"
+                        <p:commandButton id="btIncluirTelefone" value="Incluir" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone,idFisicaNome"
                                          update="idDtPanelTelefone, idDDD, idNroTelefone"
                                          action="#{clienteView.btIncluiTelefone}"/>
-                        <p:commandButton id="btAlterarTelefone" value="Alterar" />
+                        <p:commandButton id="btAlterarTelefone" value="Alterar" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone"
+                                         update="idDtPanelTelefone, idDDD, idNroTelefone"
+                                         action="#{clienteView.btIncluiTelefone()}" />
                         <p:commandButton id="btExcluirTelefone" value="Excluir"/>
                     </f:facet>
                 </h:panelGrid>
@@ -126,9 +128,9 @@
 
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtSalvar" value="Salvar" process="idPanelCadCliente"
-                             action="#{clienteView.btGrava()}"/>
-            <p:commandButton id="idbtCanclearCliente" value="Cancelar" action="#{clienteView.btGrava()}"/>
+            <p:commandButton id="idbtSalvar" value="Salvar" process="idPanelCadCliente,idPanelFisica, idPanelJuridica,idPanelEndereco,idgridTelefone"
+                             update=" :idFormTop:growl, idPanelCadCliente, idPanelCliente"
+                             action="#{clienteView.btGrava}"/>
         </f:facet>
     </p:panel>
 
@@ -178,19 +180,19 @@
         </h:panelGrid>
         <h:panelGrid id="idPanelEnd" columns="6" style="margin-left: 17px;">
             <p:outputLabel value="Endereco"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStLogradouro}" size="55"/>
+            <p:inputText value="#{clienteView.lnEndereco.endStLogradouro}" size="55" maxlength="60"/>
             <p:outputLabel value="Nro"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStNumero}" size="10"/>
+            <p:inputText value="#{clienteView.lnEndereco.endStNumero}" size="10" maxlength="6"/>
             <p:outputLabel value="Complemento"/>
-            <p:inputText  size="35"/>
+            <p:inputText value="#{clienteView.lnEndereco.endStComplemento}"  size="35" maxlength="30"/>
         </h:panelGrid>
         <h:panelGrid id="idPanelEndCompl" columns="6" style="margin-left: 33px;">
             <p:outputLabel value="Bairro"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStBairro}" size="30" />
+            <p:inputText value="#{clienteView.lnEndereco.endStBairro}" size="30" maxlength="40" />
             <p:outputLabel value="Cidade"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStCidade}" size="40"/>
+            <p:inputText value="#{clienteView.lnEndereco.endStCidade}" size="40" maxlength="50"/>
             <p:outputLabel value="Estado"/>
-            <p:inputText value="#{clienteView.lnEndereco.endStEstado}" size="20"/>
+            <p:inputText value="#{clienteView.lnEndereco.endStEstado}" size="20" maxlength="2"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="Incluir" process="idDialogEndereco, :idFormCenter:idPanelFisica" 

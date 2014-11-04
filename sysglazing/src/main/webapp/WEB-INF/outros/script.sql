@@ -287,6 +287,7 @@ CREATE TABLE ln_cliente
   cli_st_ie character varying(10), -- Inscrição Estadual
   cli_st_nome character varying(60) NOT NULL, -- Nome ou Razão social do cliente
   cli_st_email character varying(60),
+  cli_st_contato character varying(40),
   CONSTRAINT pk_cliente PRIMARY KEY (cli_in_codigo)
 )
 WITH (

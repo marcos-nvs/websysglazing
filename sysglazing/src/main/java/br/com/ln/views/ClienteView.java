@@ -38,14 +38,16 @@ public class ClienteView implements Serializable {
     private String sTipoFuncao;
     private boolean bPessoaFisica = true;
     private boolean bPessoaJuridica;
-    private boolean bTelaCadastro;
+    private Boolean bTelaCadastro = false;
     private String mensagem;
     private String cpf;
     private String rg;
     private String cnpj;
     private String ie;
-    private String nome;
-    private String email;
+    private String nomeFisica;
+    private String nomeJuridica;
+    private String emailFisica;
+    private String emailJuridica;
     private String contato;
     
 
@@ -74,13 +76,14 @@ public class ClienteView implements Serializable {
         this.lnCliente = lnCliente;
     }
 
-    public boolean isbTelaCadastro() {
+    public Boolean getbTelaCadastro() {
         return bTelaCadastro;
     }
 
-    public void setbTelaCadastro(boolean bTelaCadastro) {
+    public void setbTelaCadastro(Boolean bTelaCadastro) {
         this.bTelaCadastro = bTelaCadastro;
     }
+
 
     public String getsTipoPessoa() {
         return sTipoPessoa;
@@ -170,20 +173,36 @@ public class ClienteView implements Serializable {
         this.ie = ie;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeFisica() {
+        return nomeFisica;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeFisica(String nomeFisica) {
+        this.nomeFisica = nomeFisica;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNomeJuridica() {
+        return nomeJuridica;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNomeJuridica(String nomeJuridica) {
+        this.nomeJuridica = nomeJuridica;
+    }
+
+    public String getEmailFisica() {
+        return emailFisica;
+    }
+
+    public void setEmailFisica(String emailFisica) {
+        this.emailFisica = emailFisica;
+    }
+
+    public String getEmailJuridica() {
+        return emailJuridica;
+    }
+
+    public void setEmailJuridica(String emailJuridica) {
+        this.emailJuridica = emailJuridica;
     }
 
     public String getContato() {
@@ -228,9 +247,10 @@ public class ClienteView implements Serializable {
     }
 
     public void btGrava() {
-        System.out.println("Grava cliente");
         if (verificaDadoObrigatorio()) {
             if (sTipoFuncao.equals("I")) {
+                novoCliente();
+                      
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
@@ -351,7 +371,7 @@ public class ClienteView implements Serializable {
         boolean validado = true;
         mensagem = "Por favor, preencher os seguintes campos: ";
         
-        if (nome == null && nome.equals("")){
+        if (nomeFisica == null && nomeFisica.equals("")){
             System.out.println("nome em branco");
             mensagem = mensagem + " "+ "Nome do Cliente em branco,";
             validado = false;
@@ -371,4 +391,58 @@ public class ClienteView implements Serializable {
             
         return validado;
     }
+
+    private void novoCliente() {
+        defineCliente();
+
+        if (!verificaCliente()) {
+            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
+            for (LnEndereco lsEndereco : listEnderecos) {
+                lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
+                lsEndereco.setEndInCodigo(Postgress.getLnEnderecoNextId());
+                System.out.println("endereco : " + lsEndereco.toString());
+                Postgress.saveObject(lsEndereco);
+            }
+
+            for (LnTelefone lsTelefone : listTelefones) {
+                lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
+                lsTelefone.setTelInCodigo(Postgress.getLnTelefoneNextId());
+                Postgress.saveObject(lsTelefone);
+            }
+            Postgress.saveObject(lnCliente);
+            bTelaCadastro = false;
+            listCliente.add(lnCliente);
+
+            mensagem = "Cliente gravado com sucesso!!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        } else {
+            mensagem = "Cliente ja existe no sistema!!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
+
+    private void defineCliente() {
+
+        if (bPessoaFisica) {
+            lnCliente = new LnCliente(cpf, null, rg, null, nomeFisica, emailFisica, null);
+        }
+
+        if (bPessoaJuridica) {
+            lnCliente = new LnCliente(null, cnpj, null, ie, nomeJuridica, emailJuridica, contato);
+        }
+    }
+
+    private boolean verificaCliente() {
+        LnCliente novoCliente = null;
+        
+        if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().equals("")){
+            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+        } else if(lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().contentEquals("")) {
+            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+        } else if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().equals("")){
+            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+        }
+        return novoCliente != null;
+    }
+    
 }

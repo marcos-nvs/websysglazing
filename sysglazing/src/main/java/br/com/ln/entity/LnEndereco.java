@@ -52,6 +52,9 @@ public class LnEndereco implements Serializable {
     @Column(name = "end_st_numero")
     private String endStNumero;
     @Basic(optional = false)
+    @Column(name = "end_st_complemento")
+    private String endStComplemento;
+    @Basic(optional = false)
     @Column(name = "end_st_bairro")
     private String endStBairro;
     @Basic(optional = false)
@@ -71,12 +74,13 @@ public class LnEndereco implements Serializable {
         this.endInCodigo = endInCodigo;
     }
 
-    public LnEndereco(Integer endInCodigo, Integer cliInCodigo, String endStTipo, String endStLogradouro, String endStNumero, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
+    public LnEndereco(Integer endInCodigo, Integer cliInCodigo, String endStTipo, String endStLogradouro, String endStNumero, String endStComplemento, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
         this.endInCodigo = endInCodigo;
         this.cliInCodigo = cliInCodigo;
         this.endStTipo = endStTipo;
         this.endStLogradouro = endStLogradouro;
         this.endStNumero = endStNumero;
+        this.endStComplemento = endStComplemento;
         this.endStBairro = endStBairro;
         this.endStCidade = endStCidade;
         this.endStEstado = endStEstado;
@@ -122,6 +126,15 @@ public class LnEndereco implements Serializable {
     public void setEndStNumero(String endStNumero) {
         this.endStNumero = endStNumero;
     }
+
+    public String getEndStComplemento() {
+        return endStComplemento;
+    }
+
+    public void setEndStComplemento(String endStComplemento) {
+        this.endStComplemento = endStComplemento;
+    }
+    
 
     public String getEndStBairro() {
         return endStBairro;
@@ -177,8 +190,9 @@ public class LnEndereco implements Serializable {
 
     @Override
     public String toString() {
-        return "LnEndereco{" + "endInCodigo=" + endInCodigo + ", cliInCodigo=" + cliInCodigo + ", endStTipo=" + endStTipo + ", endStLogradouro=" + endStLogradouro + ", endStNumero=" + endStNumero + ", endStBairro=" + endStBairro + ", endStCidade=" + endStCidade + ", endStEstado=" + endStEstado + ", endStCep=" + endStCep + '}';
+        return "LnEndereco{" + "endInCodigo=" + endInCodigo + ", cliInCodigo=" + cliInCodigo + ", endStTipo=" + endStTipo + ", endStLogradouro=" + endStLogradouro + ", endStNumero=" + endStNumero + ", endStComplemento=" + endStComplemento + ", endStBairro=" + endStBairro + ", endStCidade=" + endStCidade + ", endStEstado=" + endStEstado + ", endStCep=" + endStCep + '}';
     }
+
 
     
 }
