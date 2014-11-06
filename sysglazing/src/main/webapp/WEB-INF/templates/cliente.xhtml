@@ -19,7 +19,7 @@
         <p:panel id="idPanelFisica" style="border-color: transparent" visible="#{clienteView.bPessoaFisica}">
             <h:panelGrid id="idFisica" columns="4" style="margin-left: 7px;" >
                 <p:outputLabel value="CPF" />
-                <p:inputMask id="idFisicaCPF" value="#{clienteView.cpf}" mask="999.999.999-99" size="10"/>
+                <p:inputMask id="idFisicaCPF" value="#{clienteView.cpf}" mask="999.999.999-99" size="10" />
                 <p:outputLabel value="RG"/>
                 <p:inputText id="idFisciaRG" value="#{clienteView.rg}" maxlength="10" />
             </h:panelGrid>
@@ -42,7 +42,7 @@
                 <p:outputLabel  value="Razao Social"/>
                 <p:inputText id="idJuridicaNome" value="#{clienteView.nomeJuridica}" size="60" maxlength="60"/>
                 <p:outputLabel  value="e-mail"/>
-                <p:inputText id="idJuridicaEmail" value="#{clienteView.emailFisica}" size="55" maxlength="60"/>
+                <p:inputText id="idJuridicaEmail" value="#{clienteView.emailJuridica}" size="55" maxlength="60"/>
                 <p:outputLabel value="Contato"/>
                 <p:inputText id="idJuridicaContato" value="#{clienteView.contato}" size="60" maxlength="40"/>
             </h:panelGrid>
