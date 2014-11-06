@@ -7,6 +7,7 @@ package br.com.ln.views;
 
 import br.com.ln.comum.Correios;
 import br.com.ln.comum.EnderecoCep;
+import br.com.ln.comum.Historico;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
@@ -49,6 +50,7 @@ public class ClienteView implements Serializable {
     private String emailFisica;
     private String emailJuridica;
     private String contato;
+    private final Historico historico;
     
 
     public ClienteView() {
@@ -58,6 +60,7 @@ public class ClienteView implements Serializable {
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
+        historico = new Historico();
     }
 
     public List<LnCliente> getListCliente() {
@@ -404,18 +407,19 @@ public class ClienteView implements Serializable {
                 lsEndereco.setEndInCodigo(Postgress.getLnEnderecoNextId());
                 lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
                 System.out.println("endereco : " + lsEndereco.toString());
-//                Postgress.saveObject(lsEndereco);
+                Postgress.saveObject(lsEndereco);
             }
 
             for (LnTelefone lsTelefone : listTelefones) {
                 lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 lsTelefone.setTelInCodigo(Postgress.getLnTelefoneNextId());
                 System.out.println("Telefone :  " + lsTelefone.toString());
-//                Postgress.saveObject(lsTelefone);
+                Postgress.saveObject(lsTelefone);
             }
-//            Postgress.saveObject(lnCliente);
+            Postgress.saveObject(lnCliente);
             bTelaCadastro = false;
             listCliente.add(lnCliente);
+            historico.gravaHistorico("Inclusao do Cliente : " + lnCliente.getCliInCodigo() + " - "+ lnCliente.getCliStNome());
 
             mensagem = "Cliente gravado com sucesso!!!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));

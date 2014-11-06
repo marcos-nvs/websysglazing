@@ -134,7 +134,6 @@
         </f:facet>
     </p:panel>
 
-
     <p:panel id="idPanelCliente" style="border-color: transparent" visible="#{not clienteView.bTelaCadastro}">
         <p:dataTable id="idDtCliente" var="tbCliente" value="#{clienteView.listCliente}" selection="#{clienteView.lnCliente}"
                      selectionMode="single" rowKey="#{tbCliente.cliInCodigo}">
@@ -145,10 +144,10 @@
                 <p:outputLabel value="#{tbCliente.cliInCodigo}" />
             </p:column>
             <p:column headerText="CPF" width="20%">
-                <p:outputLabel value="#{tbCliente.cliStEmail}" />
+                <p:outputLabel value="#{tbCliente.cliStCpf}"/>
             </p:column>
             <p:column headerText="CNPJ" width="20%">
-                <p:outputLabel value="#{tbCliente.cliStEmail}" />
+                <p:outputLabel value="#{tbCliente.cliStCnpj}" />
             </p:column>
             <p:column headerText="#{msgs['node.name.client']}" width="30%">
                 <p:outputLabel value="#{tbCliente.cliStNome}"/>
