@@ -6,16 +6,12 @@
 package br.com.ln.comum;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Marcos Naves
  */
 
-@SessionScoped
-@ManagedBean(name="utilitario")
 public class Utilitarios implements Serializable{
 
     public static boolean calculaCPF(String cpfNum) {

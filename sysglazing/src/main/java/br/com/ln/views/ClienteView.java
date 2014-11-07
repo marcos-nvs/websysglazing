@@ -8,6 +8,7 @@ package br.com.ln.views;
 import br.com.ln.comum.Correios;
 import br.com.ln.comum.EnderecoCep;
 import br.com.ln.comum.Historico;
+import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
@@ -376,23 +377,28 @@ public class ClienteView implements Serializable {
         mensagem = "Por favor, preencher os seguintes campos: ";
         
         if (nomeFisica == null && nomeFisica.equals("")){
-            System.out.println("nome em branco");
             mensagem = mensagem + " "+ "Nome do Cliente em branco,";
             validado = false;
         }
         
         if (listEnderecos == null || listEnderecos.isEmpty()) {
-            System.out.println("lista de endereço vazia");
             mensagem = mensagem + " " + "Endereco do cliente em branco,";
             validado = false;
         }
         
         if (listTelefones == null || listTelefones.isEmpty()){
-            System.out.println("list ade telefone vazia");
             mensagem = mensagem + " " + "Telefone do cliente em branco";
             validado = false;
         }
-            
+        
+        if (cpf != null && !cpf.equals("")){
+            cpf = cpf.replaceAll("\\.", "");
+            cpf = cpf.replaceAll("-", "");
+            if (!Utilitarios.calculaCPF(cpf)) {
+                mensagem = mensagem + " " + "CPF invalido";
+                validado = false;
+            }
+        }
         return validado;
     }
 
@@ -433,8 +439,6 @@ public class ClienteView implements Serializable {
 
         if (bPessoaFisica) {
             System.out.println("cpf : " + cpf);
-            cpf = cpf.replaceAll("\\.", "");
-            cpf = cpf.replaceAll("-", "");
             System.out.println("cpf depois : " + cpf);
             lnCliente = new LnCliente(cpf, null, rg, null, nomeFisica, emailFisica, null);
         }
@@ -456,5 +460,4 @@ public class ClienteView implements Serializable {
         }
         return novoCliente != null;
     }
-    
 }

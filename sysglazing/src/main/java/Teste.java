@@ -1,4 +1,5 @@
 
+import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnMenu;
@@ -112,9 +113,16 @@ public class Teste {
 //        }
         
         
-        VarComuns.strDbName = "Public";
-        List<LnCliente> listCliente = Postgress.getListObject(LnCliente.class);
+//        VarComuns.strDbName = "Public";
+//        List<LnCliente> listCliente = Postgress.getListObject(LnCliente.class);
 //        List<LnMenu> listmenu = Postgress.getListObject(LnMenu.class);
 
+        if (Utilitarios.calculaCPF("12684146894")){
+            System.out.println("true");
+        } else{
+            System.out.println("false");
+        }
+            
+        
     }
 }
