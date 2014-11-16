@@ -20,8 +20,8 @@ public class Historico {
     }
     
     public void gravaHistorico(String descricao){
-        LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                Postgress.getDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
+        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                                                Postgress.grabDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
         Postgress.saveObject(lnHistorico);
     }
     

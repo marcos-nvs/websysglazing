@@ -55,9 +55,9 @@ public class ClienteView implements Serializable {
     
 
     public ClienteView() {
-        listCliente = Postgress.getListObject(LnCliente.class);
-        listEnderecos = Postgress.getListObject(LnEndereco.class);
-        listTelefones = Postgress.getListObject(LnTelefone.class);
+        listCliente = Postgress.grabListObject(LnCliente.class);
+        listEnderecos = Postgress.grabListObject(LnEndereco.class);
+        listTelefones = Postgress.grabListObject(LnTelefone.class);
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
@@ -233,7 +233,20 @@ public class ClienteView implements Serializable {
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             bTelaCadastro = true;
+            if (lnCliente.getCliStCpf() !=null && !lnCliente.getCliStCpf().equals("")){
+                cpf =  lnCliente.getCliStCpf();
+                rg = lnCliente.getCliStRg();
+                nomeFisica = lnCliente.getCliStNome();
+                emailFisica = lnCliente.getCliStEmail();
+            }
             
+            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().equals("")){
+                cnpj=lnCliente.getCliStCnpj();
+                ie=lnCliente.getCliStIe();
+                nomeJuridica=lnCliente.getCliStNome();
+                emailJuridica=lnCliente.getCliStEmail();
+                contato=lnCliente.getCliStContato();
+            }
             sTipoFuncao = "A";
         } else {
             mensagem = "Usuario nao tem permissao para alterar cliente";
@@ -263,10 +276,15 @@ public class ClienteView implements Serializable {
     }
 
     public void btCancelar() {
+        bTelaCadastro=false;
     }
 
     public void btIncluiEnd() {
         lnEndereco = new LnEndereco();
+    }
+    
+    public void btAlterarEnd(){
+        
     }
 
     public void btListaEndereco() {
@@ -406,11 +424,11 @@ public class ClienteView implements Serializable {
         defineCliente();
 
         if (!verificaCliente()) {
-            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
+            lnCliente.setCliInCodigo(Postgress.grabLnClienteNextId());
             System.out.println("Cliente : " + lnCliente.toString());
             for (LnEndereco lsEndereco : listEnderecos) {
                 lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsEndereco.setEndInCodigo(Postgress.getLnEnderecoNextId());
+                lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
                 lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
                 System.out.println("endereco : " + lsEndereco.toString());
                 Postgress.saveObject(lsEndereco);
@@ -418,7 +436,7 @@ public class ClienteView implements Serializable {
 
             for (LnTelefone lsTelefone : listTelefones) {
                 lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsTelefone.setTelInCodigo(Postgress.getLnTelefoneNextId());
+                lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
                 System.out.println("Telefone :  " + lsTelefone.toString());
                 Postgress.saveObject(lsTelefone);
             }
@@ -452,11 +470,11 @@ public class ClienteView implements Serializable {
         LnCliente novoCliente = null; 
         
         if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().equals("")){
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         } else if(lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().contentEquals("")) {
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         } else if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().equals("")){
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         }
         return novoCliente != null;
     }

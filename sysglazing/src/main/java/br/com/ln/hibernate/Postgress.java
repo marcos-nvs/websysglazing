@@ -41,7 +41,7 @@ public class Postgress implements Serializable{
      * @return 
      */
     
-    public static LnUsuario getUsuario(String usuStCodigo, Character usuChAtivo){
+    public static LnUsuario grabUsuario(String usuStCodigo, Character usuChAtivo){
         
         Session session = null;
         Transaction tx;
@@ -74,7 +74,7 @@ public class Postgress implements Serializable{
         return lnUsuario;
     }
     
-    public static LnUsuario getUsuario(String usuStCodigo){
+    public static LnUsuario grabUsuario(String usuStCodigo){
         
         Session session = null;
         Transaction tx;
@@ -111,7 +111,7 @@ public class Postgress implements Serializable{
      * @param strDbName
      * @return List Object
      */
-    public static List getListObject(Class clazz) {
+    public static List grabListObject(Class clazz) {
 
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -131,7 +131,7 @@ public class Postgress implements Serializable{
         return result;
     }
     
-    public static List<LnMenu> getMenu(Character menChAtivo){
+    public static List<LnMenu> grabMenu(Character menChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -150,7 +150,7 @@ public class Postgress implements Serializable{
         return listMenu;
     }
     
-    public static LnPerfil getPerfil(Integer perInCodigo, Character perChAtivo){
+    public static LnPerfil grabPerfil(Integer perInCodigo, Character perChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -175,7 +175,7 @@ public class Postgress implements Serializable{
         return lnPerfil;
     }
     
-    public static List<LnPerfil> getListPerfilAtivo(Character perChAtivo){
+    public static List<LnPerfil> grabListPerfilAtivo(Character perChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -215,7 +215,7 @@ public class Postgress implements Serializable{
         }
     }
 
-    public static Date getDateFromDB() {
+    public static Date grabDateFromDB() {
 
         Session session = null;
         Transaction tx = null;
@@ -287,7 +287,7 @@ public class Postgress implements Serializable{
 
     }
     
-    public static LnPerfilacesso getPerfilAcesso(Integer perInCodigo, Integer modInCodigo){
+    public static LnPerfilacesso grabPerfilAcesso(Integer perInCodigo, Integer modInCodigo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -312,7 +312,7 @@ public class Postgress implements Serializable{
         return lnPerfilAcesso;
     }
     
-    public static List<LnPerfilacesso> getPerfilAcessoperInCodigo(Integer perInCodigo){
+    public static List<LnPerfilacesso> grabPerfilAcessoperInCodigo(Integer perInCodigo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -336,7 +336,7 @@ public class Postgress implements Serializable{
         return listlnPerfilAcesso;
     }
     
-    public static List<LnModulo> getListModuloAtivo(Character modChAtivo){
+    public static List<LnModulo> grabListModuloAtivo(Character modChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -360,7 +360,7 @@ public class Postgress implements Serializable{
         return listlnModulo;
     }
 
-    public static LnPerfil getPerfilperStDesc(String perStDescricao){
+    public static LnPerfil grabPerfilperStDesc(String perStDescricao){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
         Transaction tx = session.beginTransaction();
@@ -384,27 +384,27 @@ public class Postgress implements Serializable{
         return lnPerfil;
     }
 
-    public static Integer getLnPeriflNextId() {
-        return new Integer(getIdByNextValueStringSQL("select nextval('seq_perfil');"));
+    public static Integer grabLnPeriflNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_perfil');"));
     }
 
-    public static Integer getLnHistoricoNextId() {
-        return new Integer(getIdByNextValueStringSQL("select nextval('seq_historico');"));
+    public static Integer grabLnHistoricoNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_historico');"));
     }
     
-    public static Integer getLnClienteNextId() {
-        return new Integer(getIdByNextValueStringSQL("select nextval('seq_cliente');"));
+    public static Integer grabLnClienteNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_cliente');"));
     }
 
-    public static Integer getLnEnderecoNextId() {
-        return new Integer(getIdByNextValueStringSQL("select nextval('seq_endereco');"));
+    public static Integer grabLnEnderecoNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_endereco');"));
     }
 
-    public static Integer getLnTelefoneNextId() {
-        return new Integer(getIdByNextValueStringSQL("select nextval('seq_telefone');"));
+    public static Integer grabLnTelefoneNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_telefone');"));
     }
 
-    public static String getIdByNextValueStringSQL(String strSql) {
+    public static String grabIdByNextValueStringSQL(String strSql) {
 
         Session session = null;
         String strResult = null;
@@ -429,7 +429,7 @@ public class Postgress implements Serializable{
 
     }
     
-    public static boolean getVerificaHistorico(String usuStCodigo){
+    public static boolean grabVerificaHistorico(String usuStCodigo){
         
         Session session = null;
         Transaction tx;
@@ -462,7 +462,7 @@ public class Postgress implements Serializable{
         return retorno;
     }
     
-    public static List<LnHistorico> getListHistorico(Integer modInCodigo){
+    public static List<LnHistorico> grabListHistorico(Integer modInCodigo){
         
         Session session = null;
         Transaction tx = null;
@@ -490,7 +490,7 @@ public class Postgress implements Serializable{
         return listHistorico;
     }
     
-    public static List<LnUsuario> getUsuarioPerfil(Integer perInCodigo){
+    public static List<LnUsuario> grabUsuarioPerfil(Integer perInCodigo){
         
         Session session = null;
         Transaction tx = null;
@@ -513,7 +513,7 @@ public class Postgress implements Serializable{
         return listUsuario;
     }
     
-    public static List<LnEndereco> getListEnderecoCliente(Integer cliInCodigo){
+    public static List<LnEndereco> grabListEnderecoCliente(Integer cliInCodigo){
         
         Session session = null;
         Transaction tx = null;
@@ -537,13 +537,13 @@ public class Postgress implements Serializable{
         return listEnderecos;
     }
     
-    public static LnCliente getClienteCpf(String cpf){
+    public static LnCliente grabClienteCpf(String cpf){
         return null;
     }
-    public static LnCliente getClienteCnpj(String cnpj){
+    public static LnCliente grabClienteCnpj(String cnpj){
         return null;
     }
-    public static LnCliente getClienteNome(String Nome){
+    public static LnCliente grabClienteNome(String Nome){
         return null;
     }
     

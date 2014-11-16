@@ -79,7 +79,8 @@
                                      process="idDtEndereco, :idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica" 
                                      update=":idFormDialog" 
                                      action="#{clienteView.btIncluiEnd}"/>
-                    <p:commandButton value="Alterar" />
+                    <p:commandButton value="Alterar" oncomplete="PF('endereco').show()"
+                                     process="@this" update="@this"/>
                     <p:commandButton value="Excluir" />
                 </f:facet>
             </p:dataTable>
@@ -131,6 +132,9 @@
             <p:commandButton id="idbtSalvar" value="Salvar" process="idPanelCadCliente,idPanelFisica, idPanelJuridica,idPanelEndereco,idgridTelefone"
                              update=" :idFormTop:growl, idPanelCadCliente, idPanelCliente"
                              action="#{clienteView.btGrava}"/>
+            <p:commandButton id="idbCancelar" value="Cancelar" process="idPanelCadCliente"
+                             update="idPanelCadCliente, idPanelCliente"
+                             action="#{clienteView.btCancelar}"/>
         </f:facet>
     </p:panel>
 
@@ -160,7 +164,9 @@
                 <p:commandButton value="#{msgs['node.include']}" process=":idFormCenter:idPanelCliente" 
                                  update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
                                  action="#{clienteView.btIncluir}" />
-                <p:commandButton value="#{msgs['template.change']}"/>
+                <p:commandButton value="#{msgs['template.change']}" process=":idFormCenter:idPanelCliente" 
+                                 update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
+                                 action="#{clienteView.btAlterar}"/>
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
                 <p:commandButton value="#{msgs['node.view']}"/>
                 <p:commandButton value="#{msgs['node.history']}"/>
