@@ -190,7 +190,6 @@ public class UsuarioView implements Serializable {
     }
 
     public void btExcluir() {
-        System.out.println("usuario : " + lnUsuario.getUsuStCodigo());
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnUsuario != null) {
                 if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {

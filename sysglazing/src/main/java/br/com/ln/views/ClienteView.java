@@ -12,11 +12,13 @@ import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.PostActivate;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,6 +35,7 @@ public class ClienteView implements Serializable {
     private List<LnCliente> listCliente;
     private List<LnEndereco> listEnderecos;
     private List<LnTelefone> listTelefones;
+    private List<LnHistorico> listHistorico;
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
@@ -247,6 +250,10 @@ public class ClienteView implements Serializable {
                 emailJuridica=lnCliente.getCliStEmail();
                 contato=lnCliente.getCliStContato();
             }
+            
+            listEnderecos = Postgress.grabListEnderecoCliente(lnCliente.getCliInCodigo());
+            listTelefones = Postgress.grabListTelefones(lnCliente.getCliInCodigo());
+            
             sTipoFuncao = "A";
         } else {
             mensagem = "Usuario nao tem permissao para alterar cliente";
@@ -255,6 +262,16 @@ public class ClienteView implements Serializable {
     }
 
     public void btExluir() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
+            if (lnCliente != null){
+               listHistorico = Postgress.grabListHistorico(4);
+               
+                if (listHistorico != null) {
+                    mensagem = "Cliente nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                }
+            }
+        }
     }
 
     public void btVisualiar() {

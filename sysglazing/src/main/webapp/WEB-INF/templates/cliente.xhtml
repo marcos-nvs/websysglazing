@@ -122,7 +122,7 @@
                         <p:commandButton id="btAlterarTelefone" value="Alterar" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone"
                                          update="idDtPanelTelefone, idDDD, idNroTelefone"
                                          action="#{clienteView.btIncluiTelefone()}" />
-                        <p:commandButton id="btExcluirTelefone" value="Excluir"/>
+                        <p:commandButton id="btExcluirTelefone" value="Excluir" />
                     </f:facet>
                 </h:panelGrid>
             </p:panel>
@@ -167,7 +167,15 @@
                 <p:commandButton value="#{msgs['template.change']}" process=":idFormCenter:idPanelCliente" 
                                  update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
                                  action="#{clienteView.btAlterar}"/>
-                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="@this" update="@this"
+                                 actionListener="#{clienteView.btExluir}">
+                    <p:confirm header="Confirmação" message="Confirma a exclusão deste Cliente?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
                 <p:commandButton value="#{msgs['node.view']}"/>
                 <p:commandButton value="#{msgs['node.history']}"/>
             </f:facet>
