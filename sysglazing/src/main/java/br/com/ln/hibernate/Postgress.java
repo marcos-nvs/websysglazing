@@ -570,6 +570,30 @@ public class Postgress implements Serializable{
         return listTelefones;
     }
     
+    public static List<LnCliente> grabListCliente(Character sTipo){
+        Session session = null;
+        Transaction tx = null;
+        List<LnCliente> listCliente = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCliente.findByCliChTipo");
+            query.setCharacter("cliChTipo", sTipo);
+            
+            listCliente = query.list();
+            tx.commit();
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listCliente;
+    }
+    
     /**
      *
      * @param clazz

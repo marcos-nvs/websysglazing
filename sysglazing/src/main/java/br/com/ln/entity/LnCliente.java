@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnCliente.findByCliStRg", query = "SELECT l FROM LnCliente l WHERE l.cliStRg = :cliStRg"),
     @NamedQuery(name = "LnCliente.findByCliStIe", query = "SELECT l FROM LnCliente l WHERE l.cliStIe = :cliStIe"),
     @NamedQuery(name = "LnCliente.findByCliStNome", query = "SELECT l FROM LnCliente l WHERE l.cliStNome = :cliStNome"),
-    @NamedQuery(name = "LnCliente.findByCliStEmail", query = "SELECT l FROM LnCliente l WHERE l.cliStEmail = :cliStEmail")})
+    @NamedQuery(name = "LnCliente.findByCliStEmail", query = "SELECT l FROM LnCliente l WHERE l.cliStEmail = :cliStEmail"),
+    @NamedQuery(name = "LnCliente.findByCliChTipo", query = "SELECT l FROM LnCliente l WHERE l.cliChTipo = :cliChTipo")})
 public class LnCliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

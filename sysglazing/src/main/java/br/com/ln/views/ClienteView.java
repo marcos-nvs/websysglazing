@@ -58,9 +58,9 @@ public class ClienteView implements Serializable {
     
 
     public ClienteView() {
-        listCliente = Postgress.grabListObject(LnCliente.class);
-        listEnderecos = Postgress.grabListObject(LnEndereco.class);
-        listTelefones = Postgress.grabListObject(LnTelefone.class);
+        listCliente = Postgress.grabListCliente('1');
+//        listEnderecos = Postgress.grabListObject(LnEndereco.class);
+//        listTelefones = Postgress.grabListObject(LnTelefone.class);
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
@@ -241,6 +241,8 @@ public class ClienteView implements Serializable {
                 rg = lnCliente.getCliStRg();
                 nomeFisica = lnCliente.getCliStNome();
                 emailFisica = lnCliente.getCliStEmail();
+                bPessoaFisica = true;
+                bPessoaJuridica = false;
             }
             
             if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().equals("")){
@@ -249,6 +251,8 @@ public class ClienteView implements Serializable {
                 nomeJuridica=lnCliente.getCliStNome();
                 emailJuridica=lnCliente.getCliStEmail();
                 contato=lnCliente.getCliStContato();
+                bPessoaJuridica = true;
+                bPessoaFisica = false;
             }
             
             listEnderecos = Postgress.grabListEnderecoCliente(lnCliente.getCliInCodigo());
@@ -264,13 +268,26 @@ public class ClienteView implements Serializable {
     public void btExluir() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
             if (lnCliente != null){
-               listHistorico = Postgress.grabListHistorico(4);
-               
-                if (listHistorico != null) {
-                    mensagem = "Cliente nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
-                }
+                //Verificar se o cliente pode ser excluido
+//               listHistorico = Postgress.grabListHistorico(4);
+//               
+//                if (listHistorico != null) {
+//                    mensagem = "Cliente nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
+//                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+//                }
+                Postgress.deleteObject(lnCliente);
+                historico.gravaHistorico("Exclusao do Cliente : " + lnCliente.getCliInCodigo() + " - " + lnCliente.getCliStNome());
+                mensagem = "Cliente excluido com sucesso.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                listCliente = Postgress.grabListCliente('1');
+                bTelaCadastro = false;
+            } else {
+                mensagem = "Escolha um cliente para ser excluido.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
             }
+        } else {
+            mensagem = "Usuario sem permissao de exclusao de Cliente.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
 
@@ -468,7 +485,16 @@ public class ClienteView implements Serializable {
             bTelaCadastro = false;
             listCliente.add(lnCliente);
             historico.gravaHistorico("Inclusao do Cliente : " + lnCliente.getCliInCodigo() + " - "+ lnCliente.getCliStNome());
-
+            cpf = "";
+            rg = "";
+            cnpj = "";
+            ie = "";
+            nomeFisica = "";
+            nomeJuridica = "";
+            emailFisica = "";
+            emailJuridica = "";
+            contato = "";
+            
             mensagem = "Cliente gravado com sucesso!!!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
@@ -478,7 +504,6 @@ public class ClienteView implements Serializable {
     }
 
     private void defineCliente() {
-
         if (bPessoaFisica) {
             lnCliente = new LnCliente(cpf, null, rg, null, nomeFisica, emailFisica, null, '1');
         }

@@ -167,7 +167,8 @@
                 <p:commandButton value="#{msgs['template.change']}" process=":idFormCenter:idPanelCliente" 
                                  update=":idFormCenter:idPanelCliente, :idFormCenter:idPanelCadCliente"
                                  action="#{clienteView.btAlterar}"/>
-                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="@this" update="@this"
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process=":idFormCenter:idPanelCliente" 
+                                 update=":idFormCenter:idPanelCliente, :idFormTop:growl"
                                  actionListener="#{clienteView.btExluir}">
                     <p:confirm header="Confirmação" message="Confirma a exclusão deste Cliente?" icon="ui-icon-alert" />
                 </p:commandButton>
