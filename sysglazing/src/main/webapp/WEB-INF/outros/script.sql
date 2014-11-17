@@ -288,6 +288,7 @@ CREATE TABLE ln_cliente
   cli_st_nome character varying(60) NOT NULL, -- Nome ou Razão social do cliente
   cli_st_email character varying(60),
   cli_st_contato character varying(40),
+  cli_ch_tipo character(1) NOT NULL, -- Tipo 1-Cliente 2-Fornecedor
   CONSTRAINT pk_cliente PRIMARY KEY (cli_in_codigo)
 )
 WITH (
@@ -303,6 +304,7 @@ COMMENT ON COLUMN ln_cliente.cli_st_cnpj IS 'CNPJ para Empresa';
 COMMENT ON COLUMN ln_cliente.cli_st_rg IS 'RG do cliente';
 COMMENT ON COLUMN ln_cliente.cli_st_ie IS 'Inscrição Estadual';
 COMMENT ON COLUMN ln_cliente.cli_st_nome IS 'Nome ou Razão social do cliente';
+COMMENT ON COLUMN ln_cliente.cli_ch_tipo IS 'Tipo 1-Cliente 2-Fornecedor';
 
 -- Sequence: seq_cliente
 

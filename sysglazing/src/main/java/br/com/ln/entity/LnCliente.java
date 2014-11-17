@@ -52,6 +52,8 @@ public class LnCliente implements Serializable {
     private String cliStEmail;
     @Column(name = "cli_st_contato")
     private String cliStContato;
+    @Column(name = "cli_ch_tipo")
+    private Character cliChTipo;
 
     public LnCliente() {
     }
@@ -71,7 +73,7 @@ public class LnCliente implements Serializable {
         this.cliStContato = cliStContato;
     }
 
-    public LnCliente(String cliStCpf, String cliStCnpj, String cliStRg, String cliStIe, String cliStNome, String cliStEmail, String cliStContato) {
+    public LnCliente(String cliStCpf, String cliStCnpj, String cliStRg, String cliStIe, String cliStNome, String cliStEmail, String cliStContato, Character cliChTipo) {
         this.cliStCpf = cliStCpf;
         this.cliStCnpj = cliStCnpj;
         this.cliStRg = cliStRg;
@@ -79,10 +81,9 @@ public class LnCliente implements Serializable {
         this.cliStNome = cliStNome;
         this.cliStEmail = cliStEmail;
         this.cliStContato = cliStContato;
+        this.cliChTipo = cliChTipo;
     }
-    
-    
-    
+
     public LnCliente(Integer cliInCodigo, String cliStNome) {
         this.cliInCodigo = cliInCodigo;
         this.cliStNome = cliStNome;
@@ -174,7 +175,7 @@ public class LnCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStCpf=" + cliStCpf + ", cliStCnpj=" + cliStCnpj + ", cliStRg=" + cliStRg + ", cliStIe=" + cliStIe + ", cliStNome=" + cliStNome + ", cliStEmail=" + cliStEmail + ", cliStContato=" + cliStContato + '}';
+        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStCpf=" + cliStCpf + ", cliStCnpj=" + cliStCnpj + ", cliStRg=" + cliStRg + ", cliStIe=" + cliStIe + ", cliStNome=" + cliStNome + ", cliStEmail=" + cliStEmail + ", cliStContato=" + cliStContato + ", cliChTipo=" + cliChTipo + '}';
     }
 
 }
