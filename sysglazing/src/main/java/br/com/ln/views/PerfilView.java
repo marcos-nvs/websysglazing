@@ -49,8 +49,8 @@ public class PerfilView implements Serializable {
     private final Historico historico;
 
     public PerfilView() {
-        listPerfil = Postgress.getListObject(LnPerfil.class);
-        listModulo = Postgress.getListModuloAtivo('S');
+        listPerfil = Postgress.grabListObject(LnPerfil.class);
+        listModulo = Postgress.grabListModuloAtivo('S');
         historico = new Historico();
     }
 
@@ -209,9 +209,9 @@ public class PerfilView implements Serializable {
     public void btExcluirPerfil() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnPerfil != null) {
-                List<LnUsuario> listLnUsuario = Postgress.getUsuarioPerfil(lnPerfil.getPerInCodigo());
+                List<LnUsuario> listLnUsuario = Postgress.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
                 System.out.println("ln : " + lnPerfil.getPerStDescricao() + " - listusuario : " + listLnUsuario.size());
-                List<LnPerfilacesso> listPerfilacessos = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+                List<LnPerfilacesso> listPerfilacessos = Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
                 if (listPerfilacessos != null) {
                     mensagem = "Perfil não pode ser excluido, existem itens de acesso cadastrado.!!!!!!!!";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -221,7 +221,7 @@ public class PerfilView implements Serializable {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
                     } else {
                         Postgress.deleteObject(lnPerfil);
-                        listPerfil = Postgress.getListObject(LnPerfil.class);
+                        listPerfil = Postgress.grabListObject(LnPerfil.class);
                         mensagem = "Perfil excluido com sucesso !!!!.";
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
                         historico.gravaHistorico("Exclusao do Perfil : " + lnPerfil.getPerStDescricao());
@@ -240,7 +240,7 @@ public class PerfilView implements Serializable {
     public void btVisualizar() {
         if (lnPerfil != null) {
             this.bVerAcesso = true;
-            listPerfilAcesso = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+            listPerfilAcesso = Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
         } else {
             mensagem = "Por favor, escolha um perfil para visualiar os acesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -273,7 +273,7 @@ public class PerfilView implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
                     historico.gravaHistorico("Alteracao do perfil : " + lnPerfil.getPerStDescricao());
                 }
-                listPerfil = Postgress.getListObject(LnPerfil.class);
+                listPerfil = Postgress.grabListObject(LnPerfil.class);
             }
         } else {
             mensagem = "Descricao do perfil esta vazio.";
@@ -283,13 +283,13 @@ public class PerfilView implements Serializable {
     
     private void novoPerfil(){
         
-        LnPerfil lnNovoPerfil = Postgress.getPerfilperStDesc(lnPerfil.getPerStDescricao());
+        LnPerfil lnNovoPerfil = Postgress.grabPerfilperStDesc(lnPerfil.getPerStDescricao());
         
         if (lnNovoPerfil != null) {
             mensagem = "Perfil ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         } else {
-            Integer id = Postgress.getLnPeriflNextId();
+            Integer id = Postgress.grabLnPeriflNextId();
             lnPerfil.setPerInCodigo(id);
             Postgress.saveObject(lnPerfil);
             this.sTipoFuncaoPerfil = "";
@@ -342,7 +342,7 @@ public class PerfilView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
             if (lnPerfilacesso != null) {
                 Postgress.deleteObject(lnPerfilacesso);
-                listPerfilAcesso = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+                listPerfilAcesso = Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
                 historico.gravaHistorico("Exclusao do acesso ao modulo :" + buscaDescModulo(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo()));
             } else {
                 mensagem = "Por favor, escolha um perfil de acesso.";
@@ -397,11 +397,11 @@ public class PerfilView implements Serializable {
             this.sTipoFuncaoAcesso = "";
             historico.gravaHistorico("Alteracao do acesso ao modulo :" + buscaDescModulo(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo()));
         }
-        listPerfilAcesso = Postgress.getPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+        listPerfilAcesso = Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
     }
     
     public void novoPerfilAcesso(){
-        LnPerfilacesso perfilNovo = Postgress.getPerfilAcesso(lnPerfil.getPerInCodigo(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
+        LnPerfilacesso perfilNovo = Postgress.grabPerfilAcesso(lnPerfil.getPerInCodigo(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
         
         if (perfilNovo != null){
             mensagem = "Modulo de acesso ja Cadastrado.";

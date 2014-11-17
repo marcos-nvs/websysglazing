@@ -42,8 +42,8 @@ public class UsuarioView implements Serializable {
     private final Historico historico;
 
     public UsuarioView() {
-        this.listUsuario = Postgress.getListObject(LnUsuario.class);
-        this.listPerfil = Postgress.getListPerfilAtivo('S');
+        this.listUsuario = Postgress.grabListObject(LnUsuario.class);
+        this.listPerfil = Postgress.grabListPerfilAtivo('S');
         historico = new Historico();
         lnUsuario = new LnUsuario();
     }
@@ -65,7 +65,7 @@ public class UsuarioView implements Serializable {
     }
 
     public List<LnPerfil> getListPerfil() {
-        listPerfil = Postgress.getListPerfilAtivo('S');
+        listPerfil = Postgress.grabListPerfilAtivo('S');
         return listPerfil;
     }
 
@@ -190,13 +190,12 @@ public class UsuarioView implements Serializable {
     }
 
     public void btExcluir() {
-        System.out.println("usuario : " + lnUsuario.getUsuStCodigo());
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnUsuario != null) {
-                if (Postgress.getVerificaHistorico(lnUsuario.getUsuStCodigo())) {
+                if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
                     Postgress.deleteObject(lnUsuario);
                     this.historico.gravaHistorico("Exclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
-                    listUsuario = Postgress.getListObject(LnUsuario.class);
+                    listUsuario = Postgress.grabListObject(LnUsuario.class);
                     mensagem = "Usuario excluido com sucesso!!!!.";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 } else {
@@ -242,7 +241,7 @@ public class UsuarioView implements Serializable {
                 this.historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             }
 
-            listUsuario = Postgress.getListObject(LnUsuario.class);
+            listUsuario = Postgress.grabListObject(LnUsuario.class);
             mensagem = "Usuario gravado com sucesso!!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
@@ -254,14 +253,14 @@ public class UsuarioView implements Serializable {
 
     private void novoUsuario() {
 
-        LnUsuario lnNovoUsuario = Postgress.getUsuario(lnUsuario.getUsuStCodigo());
+        LnUsuario lnNovoUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
 
         if (lnNovoUsuario != null) {
             mensagem = "Usuario ja Cadastrado.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
-            lnUsuario.setUsuDtCadastro(Postgress.getDateFromDB());
-            lnUsuario.setUsuDtExpiracao(Postgress.getDateFromDB());
+            lnUsuario.setUsuDtCadastro(Postgress.grabDateFromDB());
+            lnUsuario.setUsuDtExpiracao(Postgress.grabDateFromDB());
             Postgress.saveObject(lnUsuario);
             this.historico.gravaHistorico("Inclusao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
         }

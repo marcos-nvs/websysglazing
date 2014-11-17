@@ -12,11 +12,13 @@ import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.PostActivate;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,6 +35,7 @@ public class ClienteView implements Serializable {
     private List<LnCliente> listCliente;
     private List<LnEndereco> listEnderecos;
     private List<LnTelefone> listTelefones;
+    private List<LnHistorico> listHistorico;
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
@@ -55,9 +58,9 @@ public class ClienteView implements Serializable {
     
 
     public ClienteView() {
-        listCliente = Postgress.getListObject(LnCliente.class);
-        listEnderecos = Postgress.getListObject(LnEndereco.class);
-        listTelefones = Postgress.getListObject(LnTelefone.class);
+        listCliente = Postgress.grabListObject(LnCliente.class);
+        listEnderecos = Postgress.grabListObject(LnEndereco.class);
+        listTelefones = Postgress.grabListObject(LnTelefone.class);
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
@@ -233,6 +236,24 @@ public class ClienteView implements Serializable {
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             bTelaCadastro = true;
+            if (lnCliente.getCliStCpf() !=null && !lnCliente.getCliStCpf().equals("")){
+                cpf =  lnCliente.getCliStCpf();
+                rg = lnCliente.getCliStRg();
+                nomeFisica = lnCliente.getCliStNome();
+                emailFisica = lnCliente.getCliStEmail();
+            }
+            
+            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().equals("")){
+                cnpj=lnCliente.getCliStCnpj();
+                ie=lnCliente.getCliStIe();
+                nomeJuridica=lnCliente.getCliStNome();
+                emailJuridica=lnCliente.getCliStEmail();
+                contato=lnCliente.getCliStContato();
+            }
+            
+            listEnderecos = Postgress.grabListEnderecoCliente(lnCliente.getCliInCodigo());
+            listTelefones = Postgress.grabListTelefones(lnCliente.getCliInCodigo());
+            
             sTipoFuncao = "A";
         } else {
             mensagem = "Usuario nao tem permissao para alterar cliente";
@@ -241,6 +262,16 @@ public class ClienteView implements Serializable {
     }
 
     public void btExluir() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
+            if (lnCliente != null){
+               listHistorico = Postgress.grabListHistorico(4);
+               
+                if (listHistorico != null) {
+                    mensagem = "Cliente nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                }
+            }
+        }
     }
 
     public void btVisualiar() {
@@ -261,10 +292,15 @@ public class ClienteView implements Serializable {
     }
 
     public void btCancelar() {
+        bTelaCadastro=false;
     }
 
     public void btIncluiEnd() {
         lnEndereco = new LnEndereco();
+    }
+    
+    public void btAlterarEnd(){
+        
     }
 
     public void btListaEndereco() {
@@ -413,17 +449,19 @@ public class ClienteView implements Serializable {
         defineCliente();
 
         if (!verificaCliente()) {
-            lnCliente.setCliInCodigo(Postgress.getLnClienteNextId());
+            lnCliente.setCliInCodigo(Postgress.grabLnClienteNextId());
+            System.out.println("Cliente : " + lnCliente.toString());
             for (LnEndereco lsEndereco : listEnderecos) {
                 lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsEndereco.setEndInCodigo(Postgress.getLnEnderecoNextId());
+                lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
                 lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
                 Postgress.saveObject(lsEndereco);
             }
 
             for (LnTelefone lsTelefone : listTelefones) {
                 lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsTelefone.setTelInCodigo(Postgress.getLnTelefoneNextId());
+                lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
+                System.out.println("Telefone :  " + lsTelefone.toString());
                 Postgress.saveObject(lsTelefone);
             }
             Postgress.saveObject(lnCliente);
@@ -454,11 +492,11 @@ public class ClienteView implements Serializable {
         LnCliente novoCliente = null; 
         
         if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().equals("")){
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         } else if(lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().contentEquals("")) {
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         } else if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().equals("")){
-            novoCliente = Postgress.getClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         }
         return novoCliente != null;
     }

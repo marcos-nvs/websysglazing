@@ -29,7 +29,7 @@ public class HistoricoView implements Serializable{
 
     public List<LnHistorico> getListHistorico() {
         if (VarComuns.lnPerfilacesso != null) {
-            listHistorico = Postgress.getListHistorico(VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
+            listHistorico = Postgress.grabListHistorico(VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
         }
         return listHistorico;
     }

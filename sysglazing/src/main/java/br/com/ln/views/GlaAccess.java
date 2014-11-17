@@ -125,7 +125,7 @@ public class GlaAccess implements Serializable{
 
         if (VarComuns.strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
-                lnUsuario = Postgress.getUsuario(usuStCodigo, 'S');
+                lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
 
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
@@ -137,7 +137,7 @@ public class GlaAccess implements Serializable{
                         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
-                        LnHistorico lnHistorico = new LnHistorico(Postgress.getLnHistoricoNextId(), new Integer("0"), Postgress.getDateFromDB(), usuStCodigo, "Acesso ao Sistema");
+                        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuStCodigo, "Acesso ao Sistema");
                         Postgress.saveObject(lnHistorico);
                     }
                 } 
