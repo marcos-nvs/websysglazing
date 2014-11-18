@@ -54,6 +54,8 @@ public class ClienteView implements Serializable {
     private String emailFisica;
     private String emailJuridica;
     private String contato;
+    private String ddd;
+    private String telefone;
     private final Historico historico;
     
 
@@ -219,6 +221,22 @@ public class ClienteView implements Serializable {
     public void setContato(String contato) {
         this.contato = contato;
     }
+
+    public String getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(String ddd) {
+        this.ddd = ddd;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
     
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
@@ -319,6 +337,7 @@ public class ClienteView implements Serializable {
 
     public void btIncluiEnd() {
         lnEndereco = new LnEndereco();
+        lnTelefone = new LnTelefone();
     }
     
     public void btExcluiEnd(){
