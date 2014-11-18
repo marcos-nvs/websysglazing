@@ -235,30 +235,35 @@ public class ClienteView implements Serializable {
 
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
-            bTelaCadastro = true;
-            if (lnCliente.getCliStCpf() !=null && !lnCliente.getCliStCpf().equals("")){
-                cpf =  lnCliente.getCliStCpf();
-                rg = lnCliente.getCliStRg();
-                nomeFisica = lnCliente.getCliStNome();
-                emailFisica = lnCliente.getCliStEmail();
-                bPessoaFisica = true;
-                bPessoaJuridica = false;
+            if (lnCliente != null) {
+                bTelaCadastro = true;
+                if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().equals("")) {
+                    cpf = lnCliente.getCliStCpf();
+                    rg = lnCliente.getCliStRg();
+                    nomeFisica = lnCliente.getCliStNome();
+                    emailFisica = lnCliente.getCliStEmail();
+                    bPessoaFisica = true;
+                    bPessoaJuridica = false;
+                }
+
+                if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().equals("")) {
+                    cnpj = lnCliente.getCliStCnpj();
+                    ie = lnCliente.getCliStIe();
+                    nomeJuridica = lnCliente.getCliStNome();
+                    emailJuridica = lnCliente.getCliStEmail();
+                    contato = lnCliente.getCliStContato();
+                    bPessoaJuridica = true;
+                    bPessoaFisica = false;
+                }
+
+                listEnderecos = Postgress.grabListEnderecoCliente(lnCliente.getCliInCodigo());
+                listTelefones = Postgress.grabListTelefones(lnCliente.getCliInCodigo());
+
+                sTipoFuncao = "A";
+            } else {
+                mensagem = "Por favor, escolha um cliente.!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
             }
-            
-            if (lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().equals("")){
-                cnpj=lnCliente.getCliStCnpj();
-                ie=lnCliente.getCliStIe();
-                nomeJuridica=lnCliente.getCliStNome();
-                emailJuridica=lnCliente.getCliStEmail();
-                contato=lnCliente.getCliStContato();
-                bPessoaJuridica = true;
-                bPessoaFisica = false;
-            }
-            
-            listEnderecos = Postgress.grabListEnderecoCliente(lnCliente.getCliInCodigo());
-            listTelefones = Postgress.grabListTelefones(lnCliente.getCliInCodigo());
-            
-            sTipoFuncao = "A";
         } else {
             mensagem = "Usuario nao tem permissao para alterar cliente";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -316,12 +321,27 @@ public class ClienteView implements Serializable {
         lnEndereco = new LnEndereco();
     }
     
-    public void btAlterarEnd(){
-        
+    public void btExcluiEnd(){
+        if (lnEndereco != null) {
+            listEnderecos.remove(lnEndereco);
+            lnEndereco = new LnEndereco();
+        } else {
+            mensagem = "Escolha um endereco para ser excluido.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
-
+    
+    public void btFecharEnd(){
+        lnEndereco = new LnEndereco();
+    }
+    
     public void btListaEndereco() {
         if (lnEndereco != null && verificaEnderecoObrigatorio()) {
+            
+            if (sTipoFuncao.equals("A")){
+                listEnderecos.remove(lnEndereco);
+            }
+            
             listEnderecos.add(lnEndereco);
             lnEndereco = new LnEndereco();
         } else {
@@ -333,10 +353,26 @@ public class ClienteView implements Serializable {
         listTelefones.add(lnTelefone);
         lnTelefone = new LnTelefone();
     }
+    
+    public void btAlteraTelefone() {
+        System.out.println("telefone : " + lnTelefone.toString());
+        if (lnTelefone != null) {
+
+        } else {
+            mensagem = "Por favor, escolha um telefone";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
 
     public void trocaTipoPessoa() {
-        bPessoaFisica = sTipoPessoa.equals("1");
-        bPessoaJuridica = sTipoPessoa.equals("2");
+        if (sTipoFuncao.equals("I")) {
+            bPessoaFisica = sTipoPessoa.equals("1");
+            bPessoaJuridica = sTipoPessoa.equals("2");
+        } else {
+            mensagem = "Nao e possivel realizar esta alteracao";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+        
     }
 
     public String descTipoEndereco(String sTipoEndereco) {
