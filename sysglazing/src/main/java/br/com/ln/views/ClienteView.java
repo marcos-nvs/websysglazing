@@ -18,7 +18,6 @@ import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.PostActivate;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -32,6 +31,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "clienteView")
 public class ClienteView implements Serializable {
 
+    private final Historico historico;
     private List<LnCliente> listCliente;
     private List<LnEndereco> listEnderecos;
     private List<LnTelefone> listTelefones;
@@ -39,30 +39,42 @@ public class ClienteView implements Serializable {
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
+
+    private Boolean bPessoaFisica = true;
+    private Boolean bPessoaJuridica;
+    private Boolean bTelaCadastro = false;
+    
     private String sTipoPessoa = "1";
     private String sTipoFuncao;
-    private boolean bPessoaFisica = true;
-    private boolean bPessoaJuridica;
-    private Boolean bTelaCadastro = false;
     private String mensagem;
+
     private String cpf;
     private String rg;
+    private String nomeFisica;
+    private String emailFisica;
+
     private String cnpj;
     private String ie;
-    private String nomeFisica;
     private String nomeJuridica;
-    private String emailFisica;
     private String emailJuridica;
     private String contato;
+
+    private String tipoEndereco;
+    private String cep;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String estado;
+    
     private String ddd;
     private String telefone;
-    private final Historico historico;
-    
 
     public ClienteView() {
         listCliente = Postgress.grabListCliente('1');
-//        listEnderecos = Postgress.grabListObject(LnEndereco.class);
-//        listTelefones = Postgress.grabListObject(LnTelefone.class);
+        listEnderecos = new ArrayList<>();
+        listTelefones = new ArrayList<>();
         lnCliente = new LnCliente();
         lnEndereco = new LnEndereco();
         lnTelefone = new LnTelefone();
@@ -222,8 +234,72 @@ public class ClienteView implements Serializable {
         this.contato = contato;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getDdd() {
         return ddd;
+    }
+
+    public String getTipoEndereco() {
+        return tipoEndereco;
+    }
+
+    public void setTipoEndereco(String tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
     }
 
     public void setDdd(String ddd) {
