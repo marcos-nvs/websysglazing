@@ -41,7 +41,7 @@ public class ClienteView implements Serializable {
     private LnTelefone lnTelefone;
 
     private Boolean bPessoaFisica = true;
-    private Boolean bPessoaJuridica;
+    private Boolean bPessoaJuridica = false;
     private Boolean bTelaCadastro = false;
     
     private String sTipoPessoa = "1";
@@ -431,6 +431,8 @@ public class ClienteView implements Serializable {
     }
     
     public void btListaEndereco() {
+        lnEndereco.setEndStComplemento(complemento);
+        lnEndereco.setEndStNumero(numero);
         if (lnEndereco != null && verificaEnderecoObrigatorio()) {
             
             if (sTipoFuncao.equals("A")){
@@ -495,19 +497,18 @@ public class ClienteView implements Serializable {
     }
 
     public void btPesquisaCEP() {
-        System.out.println("Estou aqui");
-        if (lnEndereco.getEndStCep() != null) {
+        if (cep != null) {
             EnderecoCep enderecoCep = new EnderecoCep();
             Correios correio = new Correios();
-            System.out.println("Pesquisando CEP");
-            enderecoCep = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
+            enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
             correio.close();
             if (enderecoCep != null) {
                 System.out.println("encontrado");
-                lnEndereco.setEndStLogradouro(enderecoCep.getTipoDeLogradouro() +" "+enderecoCep.getLogradouro());
-                lnEndereco.setEndStBairro(enderecoCep.getBairro());
-                lnEndereco.setEndStCidade(enderecoCep.getCidade());
-                lnEndereco.setEndStEstado(enderecoCep.getEstado());
+                logradouro = enderecoCep.getTipoDeLogradouro() +" "+enderecoCep.getLogradouro();
+                bairro = enderecoCep.getBairro();
+                cidade = enderecoCep.getCidade();
+                estado = enderecoCep.getEstado();
+                lnEndereco = new LnEndereco(tipoEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep);
             }else{
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));

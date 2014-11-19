@@ -87,6 +87,19 @@ public class LnEndereco implements Serializable {
         this.endStCep = endStCep;
     }
 
+    public LnEndereco(String endStTipo, String endStLogradouro, String endStNumero, String endStComplemento, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
+        this.endStTipo = endStTipo;
+        this.endStLogradouro = endStLogradouro;
+        this.endStNumero = endStNumero;
+        this.endStComplemento = endStComplemento;
+        this.endStBairro = endStBairro;
+        this.endStCidade = endStCidade;
+        this.endStEstado = endStEstado;
+        this.endStCep = endStCep;
+    }
+    
+    
+
     public Integer getEndInCodigo() {
         return endInCodigo;
     }
