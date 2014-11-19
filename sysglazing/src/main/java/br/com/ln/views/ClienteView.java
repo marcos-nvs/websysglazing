@@ -419,12 +419,15 @@ public class ClienteView implements Serializable {
     }
 
     public void btPesquisaCEP() {
+        System.out.println("Estou aqui");
         if (lnEndereco.getEndStCep() != null) {
             EnderecoCep enderecoCep = new EnderecoCep();
             Correios correio = new Correios();
+            System.out.println("Pesquisando CEP");
             enderecoCep = correio.entregaEndereco(lnEndereco.getEndStCep().replaceAll("-", ""));
             correio.close();
             if (enderecoCep != null) {
+                System.out.println("encontrado");
                 lnEndereco.setEndStLogradouro(enderecoCep.getTipoDeLogradouro() +" "+enderecoCep.getLogradouro());
                 lnEndereco.setEndStBairro(enderecoCep.getBairro());
                 lnEndereco.setEndStCidade(enderecoCep.getCidade());
