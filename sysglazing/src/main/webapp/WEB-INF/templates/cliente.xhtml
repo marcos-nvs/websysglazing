@@ -47,17 +47,51 @@
                 <p:inputText id="idJuridicaContato" value="#{clienteView.contato}" size="60" maxlength="40"/>
             </h:panelGrid>
         </p:panel>
+        
+        <p:tabView>
+            <p:tab title="Endereços">
+                <h:panelGrid id="idPanelTipoEnd" columns="5" style="margin-left: 17px;">
+                    <p:outputLabel value="Tipo End."/>
+                    <p:selectOneMenu value="#{clienteView.tipoEndereco}">
+                        <f:selectItem itemLabel="Residencial" itemValue="1"/>
+                        <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                        <f:selectItem itemLabel="Entrega" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="CEP"/>
+                    <p:inputMask value="#{clienteView.cep}" mask="99999-999" size="8"/>
+                    <p:commandButton value="Pesquisar" update="idPanelEnd, idPanelEndCompl"
+                                     action="#{clienteView.btPesquisaCEP}"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEnd" columns="6" style="margin-left: 17px;">
+                    <p:outputLabel value="Endereco"/>
+                    <p:inputText value="#{clienteView.logradouro}" size="55" maxlength="60"/>
+                    <p:outputLabel value="Nro"/>
+                    <p:inputText value="#{clienteView.numero}" size="10" maxlength="6"/>
+                    <p:outputLabel value="Complemento"/>
+                    <p:inputText value="#{clienteView.complemento}"  size="35" maxlength="30"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEndCompl" columns="6" style="margin-left: 33px;">
+                    <p:outputLabel value="Bairro"/>
+                    <p:inputText value="#{clienteView.bairro}" size="30" maxlength="40" />
+                    <p:outputLabel value="Cidade"/>
+                    <p:inputText value="#{clienteView.cidade}" size="40" maxlength="50"/>
+                    <p:outputLabel value="Estado"/>
+                    <p:inputText value="#{clienteView.estado}" size="20" maxlength="2"/>
+                </h:panelGrid>
 
-        <p:panel id="idPanelEndereco" style="border: 0px;">
+            </p:tab>
+        </p:tabView>
+
+<!--        <p:panel id="idPanelEndereco" style="border: 0px;">
             <p:dataTable id="idDtEndereco" var="dtEndereco" value="#{clienteView.listEnderecos}" selection="#{clienteView.lnEndereco}"
-                         selectionMode="single" rowKey="#{dtEndereco.endInCodigo}">
+                         rowKey="#{dtEndereco.endInCodigo}" >
                 <f:facet name="header">
                     <p:outputLabel value="Endereco"/>
                 </f:facet>
                 <p:column headerText="Tipo End." width="8%">
                     <p:outputLabel value="#{clienteView.descTipoEndereco(dtEndereco.endStTipo)}"/>
                 </p:column>
-                <p:column headerText="Endereco" width="35%">
+                <p:column headerText="Endereco" width="30%">
                     <p:outputLabel value="#{dtEndereco.endStLogradouro}"/>
                 </p:column>
                 <p:column headerText="Nro" width="8%">
@@ -83,7 +117,7 @@
                     <p:commandButton value="Alterar" oncomplete="PF('endereco').show()"
                                      process="idDtEndereco,:idFormCenter:idPanelEndereco, :idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica"
                                      update=":idFormCenter:idDialogEndereco"/>
-                    <p:commandButton value="Excluir" process="idDtEndereco,:idFormCenter:idPanelEndereco"
+                    <p:commandButton icon="ui-icon-trash" process="idDtEndereco,:idFormCenter:idPanelEndereco"
                                      update="idDtEndereco, :idFormTop:growl" action="#{clienteView.btExcluiEnd()}">
                         <p:confirm header="Confirmação" message="Confirma a exclusao deste endereco?" icon="ui-icon-alert" />
                     </p:commandButton>
@@ -97,26 +131,28 @@
 
         <h:panelGrid id="idgridTelefone" columns="2">
             <p:panel id="idDtPanelTelefone" style="border: 0px;position: relative; width: 400px;" >
-                <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}" selection="#{clienteView.lnTelefone}"
-                             selectionMode="single" rowKey="#{dtTelefone.telInCodigo}">
+                <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}">
                     <f:facet name="header">
                         <p:outputLabel value="Telefone"/>
                     </f:facet>
-                    <p:column headerText="Tipo" width="100">
+                    <p:column headerText="Tipo" width="20%">
                         <p:outputLabel value="#{clienteView.descTipoTelefone(dtTelefone.telStTipo)}"/>
                     </p:column>
-                    <p:column headerText="DDD" width="50">
+                    <p:column headerText="DDD" width="10%">
                         <p:outputLabel value="#{dtTelefone.telStDdd}"/>
                     </p:column>
-                    <p:column headerText="Telefone" width="100">
+                    <p:column headerText="Telefone" width="30%">
                         <p:outputLabel value="#{dtTelefone.telStTelefone}"/>
+                    </p:column>
+                    <p:column width="15%">
+                        <p:commandButton id="btExcluirTelefone" icon="ui-icon-trash"/>
                     </p:column>
                 </p:dataTable>
             </p:panel>
             <p:panel id="idPanelTelefone" style="border-color: transparent">
                 <h:panelGrid columns="6" style="margin-left: 40px;">
                     <p:outputLabel value="Tipo"/>
-                    <p:selectOneMenu id="idTipoTelefone" value="#{clienteView.sTipoPessoa}">
+                    <p:selectOneMenu id="idTipoTelefone" value="#{clienteView.tipoTelefone}">
                         <f:selectItem itemLabel="Residencial" itemValue="1"/>
                         <f:selectItem itemLabel="Comercial" itemValue="2"/>
                         <f:selectItem itemLabel="Celular" itemValue="3"/>
@@ -132,7 +168,6 @@
                         <p:commandButton id="btAlterarTelefone" value="Alterar" process="idPanelTelefone"
                                          update="idDtPanelTelefone, :idFormTop:growl"
                                          action="#{clienteView.btAlteraTelefone}" />
-                        <p:commandButton id="btExcluirTelefone" value="Excluir" />
                     </f:facet>
                 </h:panelGrid>
             </p:panel>
@@ -145,7 +180,7 @@
             <p:commandButton id="idbCancelar" value="Cancelar" process="idPanelCadCliente"
                              update="idPanelCadCliente, idPanelCliente"
                              action="#{clienteView.btCancelar}"/>
-        </f:facet>
+        </f:facet>-->
     </p:panel>
 
     <p:panel id="idPanelCliente" style="border-color: transparent" visible="#{not clienteView.bTelaCadastro}">
@@ -193,7 +228,7 @@
         </p:dataTable>
     </p:panel>
 
-    <p:dialog id="idDialogEndereco" header="Inclusao de Endereco" widgetVar="endereco" showEffect="fade" hideEffect="fade" width="1000" height="100"
+<!--    <p:dialog id="idDialogEndereco" header="Inclusao de Endereco" widgetVar="endereco" showEffect="fade" hideEffect="fade" width="1000" height="100"
               style="background-color: #ffffff" closable="false" resizable="false">
         <h:panelGrid id="idPanelTipoEnd" columns="5" style="margin-left: 17px;">
             <p:outputLabel value="Tipo End."/>
@@ -230,5 +265,5 @@
             <p:commandButton value="Fechar" onclick="PF('endereco').hide()" process="@this" update="@this" 
                              action="#{clienteView.btFecharEnd}"/>
         </f:facet>
-    </p:dialog>
+    </p:dialog>-->
 </ui:composition> 

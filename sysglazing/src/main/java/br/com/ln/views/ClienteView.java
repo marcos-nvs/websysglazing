@@ -70,6 +70,7 @@ public class ClienteView implements Serializable {
     
     private String ddd;
     private String telefone;
+    private String tipoTelefone;
 
     public ClienteView() {
         listCliente = Postgress.grabListCliente('1');
@@ -294,6 +295,14 @@ public class ClienteView implements Serializable {
         return ddd;
     }
 
+    public String getTipoTelefone() {
+        return tipoTelefone;
+    }
+
+    public void setTipoTelefone(String tipoTelefone) {
+        this.tipoTelefone = tipoTelefone;
+    }
+    
     public String getTipoEndereco() {
         return tipoEndereco;
     }
@@ -447,6 +456,7 @@ public class ClienteView implements Serializable {
     }
 
     public void btIncluiTelefone() {
+        lnTelefone = new LnTelefone(tipoTelefone, ddd, telefone);
         listTelefones.add(lnTelefone);
         lnTelefone = new LnTelefone();
     }

@@ -63,6 +63,14 @@ public class LnTelefone implements Serializable {
         this.telStTelefone = telStTelefone;
     }
 
+    public LnTelefone(String telStTipo, String telStDdd, String telStTelefone) {
+        this.telStTipo = telStTipo;
+        this.telStDdd = telStDdd;
+        this.telStTelefone = telStTelefone;
+    }
+    
+    
+
     public Integer getTelInCodigo() {
         return telInCodigo;
     }
