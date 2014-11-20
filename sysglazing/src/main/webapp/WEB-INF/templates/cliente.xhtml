@@ -48,9 +48,9 @@
             </h:panelGrid>
         </p:panel>
         
-        <p:tabView>
-            <p:tab title="Endereços">
-                <h:panelGrid id="idPanelTipoEnd" columns="5" style="margin-left: 17px;">
+        <p:tabView value="Endereços">
+            <p:tab title="Residencial">
+                <h:panelGrid id="idPanelTipoEndR" columns="5" style="margin-left: 17px;">
                     <p:outputLabel value="Tipo End."/>
                     <p:selectOneMenu value="#{clienteView.tipoEndereco}">
                         <f:selectItem itemLabel="Residencial" itemValue="1"/>
@@ -59,10 +59,10 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="CEP"/>
                     <p:inputMask value="#{clienteView.cep}" mask="99999-999" size="8"/>
-                    <p:commandButton value="Pesquisar" update="idPanelEnd, idPanelEndCompl"
+                    <p:commandButton value="Pesquisar" update="idPanelEndR, idPanelEndComplR"
                                      action="#{clienteView.btPesquisaCEP}"/>
                 </h:panelGrid>
-                <h:panelGrid id="idPanelEnd" columns="6" style="margin-left: 17px;">
+                <h:panelGrid id="idPanelEndR" columns="6" style="margin-left: 17px;">
                     <p:outputLabel value="Endereco"/>
                     <p:inputText value="#{clienteView.logradouro}" size="55" maxlength="60"/>
                     <p:outputLabel value="Nro"/>
@@ -70,7 +70,7 @@
                     <p:outputLabel value="Complemento"/>
                     <p:inputText value="#{clienteView.complemento}"  size="35" maxlength="30"/>
                 </h:panelGrid>
-                <h:panelGrid id="idPanelEndCompl" columns="6" style="margin-left: 33px;">
+                <h:panelGrid id="idPanelEndComplR" columns="6" style="margin-left: 33px;">
                     <p:outputLabel value="Bairro"/>
                     <p:inputText value="#{clienteView.bairro}" size="30" maxlength="40" />
                     <p:outputLabel value="Cidade"/>
@@ -78,9 +78,94 @@
                     <p:outputLabel value="Estado"/>
                     <p:inputText value="#{clienteView.estado}" size="20" maxlength="2"/>
                 </h:panelGrid>
-
+            </p:tab>
+            <p:tab title="Comercial">
+                <h:panelGrid id="idPanelTipoEndC" columns="5" style="margin-left: 17px;">
+                    <p:outputLabel value="Tipo End."/>
+                    <p:selectOneMenu value="#{clienteView.tipoEndereco}">
+                        <f:selectItem itemLabel="Residencial" itemValue="1"/>
+                        <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                        <f:selectItem itemLabel="Entrega" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="CEP"/>
+                    <p:inputMask value="#{clienteView.cep}" mask="99999-999" size="8"/>
+                    <p:commandButton value="Pesquisar" update="idPanelEndC, idPanelEndComplC"
+                                     action="#{clienteView.btPesquisaCEP}"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEndC" columns="6" style="margin-left: 17px;">
+                    <p:outputLabel value="Endereco"/>
+                    <p:inputText value="#{clienteView.logradouro}" size="55" maxlength="60"/>
+                    <p:outputLabel value="Nro"/>
+                    <p:inputText value="#{clienteView.numero}" size="10" maxlength="6"/>
+                    <p:outputLabel value="Complemento"/>
+                    <p:inputText value="#{clienteView.complemento}"  size="35" maxlength="30"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEndComplC" columns="6" style="margin-left: 33px;">
+                    <p:outputLabel value="Bairro"/>
+                    <p:inputText value="#{clienteView.bairro}" size="30" maxlength="40" />
+                    <p:outputLabel value="Cidade"/>
+                    <p:inputText value="#{clienteView.cidade}" size="40" maxlength="50"/>
+                    <p:outputLabel value="Estado"/>
+                    <p:inputText value="#{clienteView.estado}" size="20" maxlength="2"/>
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="Entrega">
+                <h:panelGrid id="idPanelTipoEndE" columns="5" style="margin-left: 17px;">
+                    <p:outputLabel value="Tipo End."/>
+                    <p:selectOneMenu value="#{clienteView.tipoEndereco}">
+                        <f:selectItem itemLabel="Residencial" itemValue="1"/>
+                        <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                        <f:selectItem itemLabel="Entrega" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="CEP"/>
+                    <p:inputMask value="#{clienteView.cep}" mask="99999-999" size="8"/>
+                    <p:commandButton value="Pesquisar" update="idPanelEndE, idPanelEndComplE"
+                                     action="#{clienteView.btPesquisaCEP}"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEndE" columns="6" style="margin-left: 17px;">
+                    <p:outputLabel value="Endereco"/>
+                    <p:inputText value="#{clienteView.logradouro}" size="55" maxlength="60"/>
+                    <p:outputLabel value="Nro"/>
+                    <p:inputText value="#{clienteView.numero}" size="10" maxlength="6"/>
+                    <p:outputLabel value="Complemento"/>
+                    <p:inputText value="#{clienteView.complemento}"  size="35" maxlength="30"/>
+                </h:panelGrid>
+                <h:panelGrid id="idPanelEndComplE" columns="6" style="margin-left: 33px;">
+                    <p:outputLabel value="Bairro"/>
+                    <p:inputText value="#{clienteView.bairro}" size="30" maxlength="40" />
+                    <p:outputLabel value="Cidade"/>
+                    <p:inputText value="#{clienteView.cidade}" size="40" maxlength="50"/>
+                    <p:outputLabel value="Estado"/>
+                    <p:inputText value="#{clienteView.estado}" size="20" maxlength="2"/>
+                </h:panelGrid>
             </p:tab>
         </p:tabView>
+
+        <p:tabView>
+            <p:tab title="Telefone">
+                <h:panelGrid id="idPanelTelefone" columns="6" style="margin-left: 40px;">
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneMenu id="idTipoTelefone" value="#{clienteView.tipoTelefone}">
+                        <f:selectItem itemLabel="Residencial" itemValue="1"/>
+                        <f:selectItem itemLabel="Comercial" itemValue="2"/>
+                        <f:selectItem itemLabel="Celular" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="DDD"/>
+                    <p:inputText id="idDDD" value="#{clienteView.ddd}" size="4" maxlength="3"/>
+                    <p:outputLabel value="Telefone"/>
+                    <p:inputText id="idNroTelefone" value="#{clienteView.telefone}" size="20" maxlength="10" />
+                    <f:facet name="footer">
+                        <p:commandButton id="btIncluirTelefone" value="Incluir" process="idPanelTelefone"
+                                         update="idDDD, idNroTelefone"
+                                         action="#{clienteView.btIncluiTelefone}"/>
+                        <p:commandButton id="btAlterarTelefone" value="Alterar" process="idPanelTelefone"
+                                         update=":idFormTop:growl"
+                                         action="#{clienteView.btAlteraTelefone}" />
+                    </f:facet>
+                </h:panelGrid>                
+            </p:tab>
+        </p:tabView>
+            
 
 <!--        <p:panel id="idPanelEndereco" style="border: 0px;">
             <p:dataTable id="idDtEndereco" var="dtEndereco" value="#{clienteView.listEnderecos}" selection="#{clienteView.lnEndereco}"
