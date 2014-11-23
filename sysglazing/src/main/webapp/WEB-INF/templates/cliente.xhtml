@@ -12,7 +12,7 @@
                 <f:selectItem itemLabel="Pessoa Fisica" itemValue="1" />
                 <f:selectItem itemLabel="Pessoa Juridica" itemValue="2"/>
             </p:selectOneRadio>
-            <p:commandButton value="Trocar"  action="#{clienteView.trocaTipoPessoa}" process="idPanelCadCliente" 
+            <p:commandButton value="Trocar" icon="ui-icon-arrow-2-e-w"  action="#{clienteView.trocaTipoPessoa}" process="idPanelCadCliente" 
                              update=":idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica, :idFormTop:growl"/>
         </h:panelGrid>
 
@@ -76,15 +76,17 @@
                     <p:outputLabel value="#{dtEndereco.endStCep}"/>
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton value="Incluir" oncomplete="PF('endereco').show()" 
+                    <p:commandButton value="Incluir" icon="ui-icon-document" oncomplete="PF('endereco').show()" 
                                      process="idDtEndereco, :idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica" 
                                      update=":idFormCenter:idDialogEndereco" 
                                      action="#{clienteView.btIncluiEnd}"/>
-                    <p:commandButton value="Alterar" oncomplete="PF('endereco').show()"
+                    <p:commandButton value="Alterar" icon="ui-icon-pencil" oncomplete="PF('endereco').show()"
                                      process="idDtEndereco,:idFormCenter:idPanelEndereco, :idFormCenter:idPanelFisica, :idFormCenter:idPanelJuridica"
-                                     update=":idFormCenter:idDialogEndereco"/>
+                                     update=":idFormCenter:idDialogEndereco"
+                                     action="#{clienteView.btAtleraEnd}"/>
                     <p:commandButton value="Excluir" icon="ui-icon-trash" process="idDtEndereco,:idFormCenter:idPanelEndereco"
-                                     update="idDtEndereco, :idFormTop:growl" action="#{clienteView.btExcluiEnd()}">
+                                     update="idDtEndereco, :idFormTop:growl" 
+                                     action="#{clienteView.btExcluiEnd()}">
                         <p:confirm header="Confirmação" message="Confirma a exclusao deste endereco?" icon="ui-icon-alert" />
                     </p:commandButton>
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -97,7 +99,8 @@
 
         <h:panelGrid id="idgridTelefone" columns="2">
             <p:panel id="idDtPanelTelefone" style="border: 0px;position: relative; width: 400px;" >
-                <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}">
+                <p:dataTable id="idDtTelefone" var="dtTelefone" value="#{clienteView.listTelefones}" selection="#{clienteView.lnTelefone}"
+                             selectionMode="single" rowKey="#{dtTelefone.telStTelefone}">
                     <f:facet name="header">
                         <p:outputLabel value="Telefone"/>
                     </f:facet>
@@ -110,10 +113,21 @@
                     <p:column headerText="Telefone" width="30%">
                         <p:outputLabel value="#{dtTelefone.telStTelefone}"/>
                     </p:column>
-                    <p:column width="15%">
-                        <p:commandButton id="btExcluirTelefone" icon="ui-icon-trash"/>
-                    </p:column>
                 </p:dataTable>
+                <f:facet name="footer">
+                    <p:commandButton id="btAlterarTelefone" icon="ui-icon-pencil" value="Alterar" process="idPanelTelefone,idDtPanelTelefone"
+                                     update="idPanelTelefone, :idFormTop:growl, idTipoTelefone, idDDD, idNroTelefone"
+                                     action="#{clienteView.btAlteraTelefone}" />
+                    <p:commandButton id="btExcluirTelefone" icon="ui-icon-trash" value="Excluir" process="idDtPanelTelefone"
+                                     update="idDtPanelTelefone, :idFormTop:growl"
+                                     action="#{clienteView.btExluiTelefone}">
+                        <p:confirm header="Confirmação" message="Confirma a exclusao deste telefone?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </f:facet>
             </p:panel>
             <p:panel id="idPanelTelefone" style="border-color: transparent">
                 <h:panelGrid columns="6" style="margin-left: 40px;">
@@ -127,23 +141,21 @@
                     <p:inputText id="idDDD" value="#{clienteView.ddd}" size="4" maxlength="3"/>
                     <p:outputLabel value="Telefone"/>
                     <p:inputText id="idNroTelefone" value="#{clienteView.telefone}" size="20" maxlength="10" />
-                    <f:facet name="footer">
-                        <p:commandButton id="btIncluirTelefone" value="Incluir" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone,idFisicaNome"
-                                         update="idDtPanelTelefone, idDDD, idNroTelefone"
-                                         action="#{clienteView.btIncluiTelefone}"/>
-                        <p:commandButton id="btAlterarTelefone" value="Alterar" process="idPanelTelefone"
-                                         update="idDtPanelTelefone, :idFormTop:growl"
-                                         action="#{clienteView.btAlteraTelefone}" />
-                    </f:facet>
                 </h:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton id="btSalvarTelefone" icon="ui-icon-disk" value="Salvar" process="idPanelTelefone,idTipoTelefone, idDDD, idNroTelefone,idFisicaNome"
+                                     update="idDtPanelTelefone, idDDD, idNroTelefone"
+                                     action="#{clienteView.btIncluiTelefone}"/>
+                </f:facet>
             </p:panel>
 
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtSalvar" value="Salvar" process="idPanelCadCliente,idPanelFisica, idPanelJuridica,idPanelEndereco,idgridTelefone"
+            <p:commandButton id="idbtSalvar" icon="ui-icon-disk" value="Salvar" process="idPanelCadCliente,idPanelFisica, idPanelJuridica,idPanelEndereco,
+                             idgridTelefone"
                              update=" :idFormTop:growl, idPanelCadCliente, idPanelCliente"
                              action="#{clienteView.btGrava}"/>
-            <p:commandButton id="idbCancelar" value="Cancelar" process="idPanelCadCliente"
+            <p:commandButton id="idbCancelar" icon="ui-icon-cancel" value="Cancelar" process="idPanelCadCliente"
                              update="idPanelCadCliente, idPanelCliente"
                              action="#{clienteView.btCancelar}"/>
         </f:facet>
@@ -225,7 +237,7 @@
             <p:inputText value="#{clienteView.estado}" size="20" maxlength="2"/>
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton value="Incluir" process="idDialogEndereco, :idFormCenter:idPanelFisica, idPanelEnd" 
+            <p:commandButton value="Incluir" icon="ui-icon-document" process="idDialogEndereco, :idFormCenter:idPanelFisica, idPanelEnd" 
                              update=":idFormCenter:idPanelEndereco, idPanelEnd, idPanelEndCompl,idPanelTipoEnd, :idFormTop:growl"
                              action="#{clienteView.btListaEndereco}"/>
             <p:commandButton value="Fechar" onclick="PF('endereco').hide()" process="@this" update="@this" 

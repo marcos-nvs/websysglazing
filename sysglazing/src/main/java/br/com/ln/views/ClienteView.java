@@ -46,6 +46,8 @@ public class ClienteView implements Serializable {
     
     private String sTipoPessoa = "1";
     private String sTipoFuncao;
+    private String sTipoFuncaoEnd;
+    private String sTipoFuncaoTel = "I";
     private String mensagem;
 
     private String cpf;
@@ -386,13 +388,6 @@ public class ClienteView implements Serializable {
     public void btExluir() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
             if (lnCliente != null){
-                //Verificar se o cliente pode ser excluido
-//               listHistorico = Postgress.grabListHistorico(4);
-//               
-//                if (listHistorico != null) {
-//                    mensagem = "Cliente nao pode ser excluido por ter transacoes no sistema. Voce pode desativar.";
-//                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
-//                }
                 Postgress.deleteObject(lnCliente);
                 historico.gravaHistorico("Exclusao do Cliente : " + lnCliente.getCliInCodigo() + " - " + lnCliente.getCliStNome());
                 mensagem = "Cliente excluido com sucesso.";
@@ -431,14 +426,35 @@ public class ClienteView implements Serializable {
     }
 
     public void btIncluiEnd() {
-        lnEndereco = new LnEndereco();
-        lnTelefone = new LnTelefone();
+        tipoEndereco = "";
+        cep = "";
+        logradouro = "";
+        numero = "";
+        complemento = "";
+        bairro = "";
+        cidade = "";
+        estado = "";
+        sTipoFuncaoEnd = "I";
+    }
+
+    public void btAtleraEnd(){
+        sTipoFuncaoEnd = "A";
+        tipoEndereco = lnEndereco.getEndStTipo();
+        cep = lnEndereco.getEndStCep();
+        logradouro = lnEndereco.getEndStLogradouro();
+        numero = lnEndereco.getEndStNumero();
+        complemento = lnEndereco.getEndStComplemento();
+        bairro = lnEndereco.getEndStBairro();
+        cidade = lnEndereco.getEndStCidade();
+        estado = lnEndereco.getEndStEstado();
     }
     
     public void btExcluiEnd(){
         if (lnEndereco != null) {
             listEnderecos.remove(lnEndereco);
             lnEndereco = new LnEndereco();
+            mensagem = "Endereco excluido com sucesso!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
             mensagem = "Escolha um endereco para ser excluido.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -450,16 +466,24 @@ public class ClienteView implements Serializable {
     }
     
     public void btListaEndereco() {
-        lnEndereco.setEndStComplemento(complemento);
-        lnEndereco.setEndStNumero(numero);
+        lnEndereco = new LnEndereco(tipoEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep);
         if (lnEndereco != null && verificaEnderecoObrigatorio()) {
             
-            if (sTipoFuncao.equals("A")){
+            if (sTipoFuncaoEnd.equals("A")){
                 listEnderecos.remove(lnEndereco);
             }
             
             listEnderecos.add(lnEndereco);
             lnEndereco = new LnEndereco();
+            tipoEndereco = "";
+            cep = "";
+            logradouro = "";
+            numero = "";
+            complemento = "";
+            bairro = "";
+            cidade = "";
+            estado = "";
+                
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
@@ -467,16 +491,42 @@ public class ClienteView implements Serializable {
 
     public void btIncluiTelefone() {
         lnTelefone = new LnTelefone(tipoTelefone, ddd, telefone);
+        
+        if (sTipoFuncaoTel.equals("A")){
+            listTelefones.remove(lnTelefone);
+        }
+        
         listTelefones.add(lnTelefone);
         lnTelefone = new LnTelefone();
+        tipoTelefone="";
+        ddd="";
+        telefone="";
     }
     
     public void btAlteraTelefone() {
-        System.out.println("telefone : " + lnTelefone.toString());
+        sTipoFuncaoTel = "A";
         if (lnTelefone != null) {
-
+            tipoTelefone = lnTelefone.getTelStTipo();
+            ddd = lnTelefone.getTelStDdd();
+            telefone = lnTelefone.getTelStTelefone();
+            mensagem = "Telefone alterado com sucesso!!!";
+            sTipoFuncaoTel="I";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
             mensagem = "Por favor, escolha um telefone";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
+    
+    public void btExluiTelefone(){
+        System.out.println("Telefone : " + lnTelefone.toString());
+        if (lnTelefone != null){
+            listTelefones.remove(lnTelefone);
+            lnTelefone = new LnTelefone();
+            mensagem = "Telefone excluido com sucesso!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        } else {
+            mensagem = "Escolha um telefone para ser excluido.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
@@ -528,7 +578,6 @@ public class ClienteView implements Serializable {
                 bairro = enderecoCep.getBairro();
                 cidade = enderecoCep.getCidade();
                 estado = enderecoCep.getEstado();
-                lnEndereco = new LnEndereco(tipoEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep);
             }else{
                 mensagem = "Cep não localizado!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
