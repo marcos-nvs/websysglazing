@@ -206,7 +206,7 @@
                     <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
 
-                <p:commandButton value="#{msgs['node.view']}"/>
+                <p:commandButton value="#{msgs['node.view']}" oncomplete="PF('clienteVisualiza').show()"/>
                 <p:commandButton value="#{msgs['node.history']}"/>
             </f:facet>
         </p:dataTable>
@@ -249,5 +249,12 @@
             <p:commandButton value="Fechar" onclick="PF('endereco').hide()" process="@this" update="@this" 
                              action="#{clienteView.btFecharEnd}"/>
         </f:facet>
+    </p:dialog>
+    
+    <p:dialog id="idDialogViewCliente" header="Cliente" widgetVar="clienteVisualiza" showEffect="fade" hideEffect="fade"  width="1000" height="100"
+              style="background-color: #ffffff" closable="false" resizable="false">
+        <h:panelGrid id="idDtClienteView" columns="5" style="margin-left: 17px;">
+            
+        </h:panelGrid>
     </p:dialog>
 </ui:composition> 

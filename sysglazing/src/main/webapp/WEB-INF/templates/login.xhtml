@@ -16,7 +16,8 @@
                     <p:password id="idPassword" required="true" value="#{glazingView.usuStSenha}"/>
                     <f:facet name="footer">
                         <p:commandButton id="idBtLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
-                                         partialSubmit="false" process="@this, idInUsuario, idPassword, idGridLogado" action ="#{glazingView.realizaLogin}"
+                                         partialSubmit="false" process="@this, idInUsuario, idPassword, idGridLogado"
+                                         action ="#{glazingView.realizaLogin}"
                                          update="@this, idInUsuario, idPassword, idGridLogado"/>
                         <p:commandButton value="Trocar Senha"/>
                     </f:facet>
