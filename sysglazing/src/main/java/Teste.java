@@ -11,6 +11,7 @@ import br.com.ln.hibernate.SessionFactoryDbName;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
+import javafx.scene.control.ProgressBar;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -117,12 +118,17 @@ public class Teste {
 //        List<LnCliente> listCliente = Postgress.getListObject(LnCliente.class);
 //        List<LnMenu> listmenu = Postgress.getListObject(LnMenu.class);
 
-        if (Utilitarios.calculaCPF("12684146894")){
-            System.out.println("true");
-        } else{
-            System.out.println("false");
+//        if (Utilitarios.calculaCPF("12684146894")){
+//            System.out.println("true");
+//        } else{
+//            System.out.println("false");
+//        }
+
+        List<LnCliente> listCliente = Postgress.grabClientePorNome("Marcos Naves", '1');
+        
+        for (LnCliente listCliente1 : listCliente) {
+            System.out.println("Cliente : " + listCliente1.getCliStNome());
         }
-            
         
     }
 }

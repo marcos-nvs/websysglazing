@@ -619,8 +619,6 @@ public class Postgress implements Serializable{
             } 
         }
         return listCliente;
-        
-        
     }
     
     /**
