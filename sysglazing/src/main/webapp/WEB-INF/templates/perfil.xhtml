@@ -14,10 +14,11 @@
             <p:outputLabel value="#{msgs['node.change.password']}"/>
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfil" 
+            <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfil" icon="ui-icon-disk"
                              update="idPanelPerfil,:idFormCenter:idDtPerfil, :idFormTop:growl"
                              action="#{perfilView.btSalvarPerfil}"/>
-            <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfil" update="idPanelPerfil,:idFormCenter:idDtPerfil"
+            <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfil" icon="ui-icon-cancel"
+                             update="idPanelPerfil,:idFormCenter:idDtPerfil"
                              action="#{perfilView.btCancelarPerfil}"/>
         </f:facet>
     </p:panel>
@@ -40,10 +41,10 @@
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelPerfilAcessoEdit"
-                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
+                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso" icon="ui-icon-disk"
                              action="#{perfilView.btSalvarAcesso}"/>
             <p:commandButton value="#{msgs['node.cancel']}" process="idPanelPerfilAcessoEdit" 
-                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso"
+                             update="idPanelPerfilAcessoEdit,:idFormCenter:idPanelPerfilAcesso" icon="ui-icon-cancel"
                              action="#{perfilView.btCancelarAcesso}"/>
         </f:facet>
     </p:panel>
@@ -66,11 +67,14 @@
                 <p:outputLabel value="#{codPerfil.perChAlteraSenha}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
+                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfil" icon="ui-icon-document"
+                                 update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
                                  action="#{perfilView.btIncluirPerfil}"/>
-                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfil" update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
+                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfil" icon="ui-icon-pencil"
+                                 update=":idFormCenter:idPanelPerfil, :idFormTop:growl"
                                  action="#{perfilView.btAlterarPerfil}"/>
-                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfil" update=":idFormTop:growl, idDtPerfil"
+                <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfil" 
+                                 update=":idFormTop:growl, idDtPerfil" icon="ui-icon-trash"
                                  actionListener="#{perfilView.btExcluirPerfil}">
                     <p:confirm header="Confirmação" message="Confirma a exclusão deste perfil?" icon="ui-icon-alert" />
                 </p:commandButton>
@@ -78,10 +82,10 @@
                     <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
-                <p:commandButton value="Visualizar" process="idDtPerfil, :idFormCenter:idPanelPerfilTable" 
+                <p:commandButton value="Visualizar" process="idDtPerfil, :idFormCenter:idPanelPerfilTable" icon="ui-icon-info"
                                  update =":idFormCenter:idPanelPerfilAcesso, :idFormTop:growl, :idFormCenter:idPanelPerfilTable"
                                  action="#{perfilView.btVisualizar}"/>
-                <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog"
+                <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog" icon="ui-icon-notice"
                                  onclick="PF('historico').show()"/>
             </f:facet>
         </p:dataTable>
@@ -110,14 +114,14 @@
                 <p:outputLabel value="#{codPerfilAcesso.pacChPesquisar}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" 
+                <p:commandButton value="#{msgs['node.include']}" process="idDtPerfilAcesso" icon="ui-icon-document"
                                  update=":idFormCenter:idPanelPerfilAcessoEdit,:idFormTop:growl"
                                  action="#{perfilView.btIncluirAcesso}"/>
-                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfilAcesso" 
+                <p:commandButton value="#{msgs['template.change']}" process="idDtPerfilAcesso" icon="ui-icon-pencil"
                                  update=":idFormCenter:idPanelPerfilAcessoEdit, :idFormTop:growl"
                                  action="#{perfilView.btAlterarAcesso}"/>
                 <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtPerfilAcesso" 
-                                 update=":idFormTop:growl, idDtPerfilAcesso"
+                                 update=":idFormTop:growl, idDtPerfilAcesso" icon="ui-icon-trash"
                                  action="#{perfilView.btExcluirAcesso}">
                     <p:confirm header="Confirmação" message="Confirma a exclusão deste acesso?" icon="ui-icon-alert" />
                 </p:commandButton>
@@ -127,7 +131,7 @@
                 </p:confirmDialog>
                 <p:commandButton value="#{msgs['page.panelPopup.closeText']}" process=":idFormCenter:idPanelPerfilAcesso" 
                                  update=":idFormCenter:idPanelPerfilAcesso, :idFormCenter:idPanelPerfilTable, :idFormCenter:idPanelPerfil,
-                                         :idFormCenter:idPanelPerfilAcessoEdit"
+                                         :idFormCenter:idPanelPerfilAcessoEdit" icon="ui-icon-close"
                                  action="#{perfilView.btFecharAcesso}"/>
             </f:facet>
         </p:dataTable>

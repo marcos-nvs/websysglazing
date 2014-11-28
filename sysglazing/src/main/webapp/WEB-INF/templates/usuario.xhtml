@@ -34,9 +34,11 @@
                 </p:selectOneMenu>
             </h:panelGrid>
             <f:facet name="footer">
-                <p:commandButton id="idBtGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" process="idPanelCadUsuario" 
+                <p:commandButton id="idBtGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}"
+                                 process="idPanelCadUsuario" icon="ui-icon-disk"
                                  update="idPanelCadUsuario, :idFormCenter:idDtUsuario, :idFormTop:growl" action="#{usuarioView.btGravar}"/>
-                <p:commandButton id="idBtCancelar" value="#{msgs['node.cancel']}" process="idPanelCadUsuario" update="idPanelCadUsuario"
+                <p:commandButton id="idBtCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-cancel"
+                                 process="idPanelCadUsuario" update="idPanelCadUsuario"
                                  action="#{usuarioView.btCancelar}"/>
             </f:facet>
         </h:panelGrid>
@@ -85,11 +87,13 @@
             <p:outputLabel value="#{codUsuario.usuDtCadastro}"/>
         </p:column>
         <f:facet name="footer">
-            <p:commandButton value="#{msgs['node.include']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+            <p:commandButton value="#{msgs['node.include']}" icon="ui-icon-document" process="idDtUsuario" 
+                             update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
                              action="#{usuarioView.btIncluir}"/>
-            <p:commandButton value="#{msgs['template.change']}" process="idDtUsuario" update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
+            <p:commandButton value="#{msgs['template.change']}" icon="ui-icon-pencil" process="idDtUsuario" 
+                             update=":idFormCenter:idPanelCadUsuario, :idFormTop:growl"
                              action="#{usuarioView.btAlterar}"/>
-            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash" process="idDtUsuario" update="idDtUsuario, :idFormTop:growl"
                              actionListener="#{usuarioView.btExcluir}">
                 <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert" />
             </p:commandButton>
@@ -97,10 +101,10 @@
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-            <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" 
+            <p:commandButton value="#{msgs['node.change.password']}" process="idDtUsuario" icon="ui-icon-gear"
                              update="idDtUsuario,:idFormTop:growl, :idFormCenter:idPanelSenha"
                              action="#{usuarioView.btAltSenha}"/>
-            <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog"
+            <p:commandButton value="#{msgs['node.history']}" update=":idFormDialog:idHistoricoDialog" icon="ui-icon-notice"
                              onclick="PF('historico').show()"/>
         </f:facet>
     </p:dataTable>
