@@ -168,9 +168,10 @@
             <f:facet name="header">
                 <p:outputLabel value="#{msgs['node.client.registre']}" style="margin-left: 430px;"/>
                 <p:outputLabel value="Procura por nome : " style="margin-left: 200px;"/>
-                <p:inputText id="idClienteFilter" size="30"/>
-                <p:commandButton icon="ui-icon-search" action="#{clienteView.btPesquisaNomeCliente}"
-                                 process="idClienteFilter" update="idDtCliente"/>
+                <p:inputText value="#{clienteView.nomeFilter}" id="idClienteFilter" size="30"/>
+                <p:commandButton icon="ui-icon-search" process="idClienteFilter, idDtCliente" 
+                                 update="idDtCliente, :idFormTop:growl"
+                                 action="#{clienteView.btPesquisaNomeCliente}"/>
             </f:facet>
             <p:column headerText="#{msgs['node.code.client']}" width="10%">
                 <p:outputLabel value="#{tbCliente.cliInCodigo}" />

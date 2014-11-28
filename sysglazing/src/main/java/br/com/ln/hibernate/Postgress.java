@@ -606,10 +606,11 @@ public class Postgress implements Serializable{
             tx = session.beginTransaction();
             Criteria criteria = session.createCriteria(LnCliente.class);
             criteria.add(Restrictions.eq("cliChTipo", tipoCliente));
-
-            if (nomeCliente != null){
+            
+            if (nomeCliente != null && !nomeCliente.equals("")){
                 criteria.add(Restrictions.eq("cliStNome", nomeCliente));
-            }
+            } 
+            
             listCliente = criteria.list();
             tx.commit();
             

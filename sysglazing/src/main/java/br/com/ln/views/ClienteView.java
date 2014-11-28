@@ -741,7 +741,18 @@ public class ClienteView implements Serializable {
         return novoCliente != null;
     }
     
-    public List<LnCliente> btPesquisaNomeCliente(){
-        return listCliente = Postgress.grabClientePorNome(nomeFilter, '1');
+    public void btPesquisaNomeCliente(){
+        
+        if (nomeFilter.equals("")){
+            nomeFilter = null;
+        }
+        
+        listCliente = Postgress.grabClientePorNome(nomeFilter, '1');
+        
+        
+        if (listCliente != null && listCliente.isEmpty()){
+            mensagem = "Cliente nao encontrado!!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 }
