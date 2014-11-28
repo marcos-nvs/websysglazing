@@ -73,6 +73,8 @@ public class ClienteView implements Serializable {
     private String ddd;
     private String telefone;
     private String tipoTelefone;
+    
+    private String nomeFilter;
 
 //    static {
 //        String host = "proxy-sp.dasa.net";
@@ -102,6 +104,7 @@ public class ClienteView implements Serializable {
         this.listCliente = listCliente;
     }
 
+    
     public LnCliente getLnCliente() {
         return lnCliente;
     }
@@ -333,6 +336,14 @@ public class ClienteView implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getNomeFilter() {
+        return nomeFilter;
+    }
+
+    public void setNomeFilter(String nomeFilter) {
+        this.nomeFilter = nomeFilter;
     }
     
     public void btIncluir() {
@@ -728,5 +739,9 @@ public class ClienteView implements Serializable {
             novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         }
         return novoCliente != null;
+    }
+    
+    public List<LnCliente> btPesquisaNomeCliente(){
+        return listCliente = Postgress.grabClientePorNome(nomeFilter, '1');
     }
 }

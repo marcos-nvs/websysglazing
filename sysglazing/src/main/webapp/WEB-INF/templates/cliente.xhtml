@@ -163,9 +163,14 @@
 
     <p:panel id="idPanelCliente" style="border-color: transparent" visible="#{not clienteView.bTelaCadastro}">
         <p:dataTable id="idDtCliente" var="tbCliente" value="#{clienteView.listCliente}" selection="#{clienteView.lnCliente}"
-                     selectionMode="single" rowKey="#{tbCliente.cliInCodigo}">
+                     selectionMode="single" rowKey="#{tbCliente.cliInCodigo}" rows="30" paginator="true"
+                     filteredValue="#{clienteView.listCliente}" emptyMessage="Cliente nao encontrado">
             <f:facet name="header">
-                <p:outputLabel value="#{msgs['node.client.registre']}"/>
+                <p:outputLabel value="#{msgs['node.client.registre']}" style="margin-left: 430px;"/>
+                <p:outputLabel value="Procura por nome : " style="margin-left: 200px;"/>
+                <p:inputText id="idClienteFilter" size="30"/>
+                <p:commandButton icon="ui-icon-search" action="#{clienteView.btPesquisaNomeCliente}"
+                                 process="idClienteFilter" update="idDtCliente"/>
             </f:facet>
             <p:column headerText="#{msgs['node.code.client']}" width="10%">
                 <p:outputLabel value="#{tbCliente.cliInCodigo}" />

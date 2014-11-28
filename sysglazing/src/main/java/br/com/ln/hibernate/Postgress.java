@@ -25,6 +25,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Restrictions;
 
 
 /**
@@ -592,6 +593,34 @@ public class Postgress implements Serializable{
         }
         
         return listCliente;
+    }
+    
+    public static List<LnCliente> grabClientePorNome(String nomeCliente, Character tipoCliente){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnCliente> listCliente = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Criteria criteria = session.createCriteria(LnCliente.class);
+            criteria.add(Restrictions.eq("cliChTipo", tipoCliente));
+
+            if (nomeCliente != null){
+                criteria.add(Restrictions.eq("cliStNome", nomeCliente));
+            }
+            listCliente = criteria.list();
+            tx.commit();
+            
+        }finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            } 
+        }
+        return listCliente;
+        
+        
     }
     
     /**
