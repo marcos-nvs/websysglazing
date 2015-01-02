@@ -7,6 +7,7 @@
 package br.com.ln.glazing;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnMenu;
@@ -95,7 +96,8 @@ public class LnMenuModel implements Serializable {
 
     private void menuPerfil() {
         if (lnUsuario != null) {
-            lnPerfil = Postgress.grabPerfil(lnUsuario.getPerInCodigo(),'S');
+            lnPerfil = EjbMap.grabPerfil(lnUsuario.getPerInCodigo());
+
             VarComuns.lnPerfil = lnPerfil;
             
             List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());

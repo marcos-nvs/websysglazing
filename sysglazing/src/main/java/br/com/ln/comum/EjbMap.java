@@ -5,6 +5,7 @@
  */
 package br.com.ln.comum;
 
+import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -20,20 +21,17 @@ import javax.ejb.Singleton;
 @Singleton
 public class EjbMap implements Serializable{
     
-    private static Map<String, LnUsuario> mapUsuario = new HashMap<>(50);
+    private static Map<String, LnUsuario> mapUsuario = new HashMap<>(100);
+    private static Map<Integer, LnPerfil> mapPerfil = new HashMap<>(30);
     
     
     public synchronized static LnUsuario grabUsuario(String usuStCodigo){
-        
         LnUsuario lnUsuario = null;
-        System.out.println("qtde usuario : " + mapUsuario.size());
         
         if (usuStCodigo != null){
             if (mapUsuario.containsKey(usuStCodigo)){
-                System.out.println("usuario encontrado");
-                return mapUsuario.get(lnUsuario);
+                return mapUsuario.get(usuStCodigo);
             } else {
-                System.out.println("usuario nao encontrado");
                 lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
                 
                 if (lnUsuario != null){
@@ -43,5 +41,24 @@ public class EjbMap implements Serializable{
             }
         }
         return lnUsuario;
+    }
+    
+    public synchronized static LnPerfil grabPerfil(Integer perInCodigo){
+        LnPerfil lnPerfil = null;
+        
+        if(perInCodigo != null){
+            if(mapPerfil.containsKey(perInCodigo)){
+                return mapPerfil.get(perInCodigo);
+            } else {
+                lnPerfil = Postgress.grabPerfil(perInCodigo, 'S');
+                
+                if(lnPerfil !=null){
+                    mapPerfil.put(perInCodigo, lnPerfil);
+                    return lnPerfil;
+                }
+            }
+        }
+        
+        return lnPerfil;
     }
 }

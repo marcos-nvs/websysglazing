@@ -127,9 +127,8 @@ public class GlaAccess implements Serializable{
 
         if (VarComuns.strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
-//                lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
                 lnUsuario = EjbMap.grabUsuario(usuStCodigo);
-
+                
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
                         lnUsuario = null;
