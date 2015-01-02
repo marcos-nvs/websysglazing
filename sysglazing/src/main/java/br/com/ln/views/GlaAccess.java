@@ -7,6 +7,7 @@
 package br.com.ln.views;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnHistorico;
@@ -15,6 +16,7 @@ import br.com.ln.glazing.LnMenuModel;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -29,7 +31,7 @@ import org.primefaces.model.menu.MenuModel;
 @SessionScoped
 @ManagedBean(name = "glazingView")
 public class GlaAccess implements Serializable{
-    
+
     private String usuStCodigo;
     private String usuStSenha;
     private String mensagem;
@@ -125,7 +127,8 @@ public class GlaAccess implements Serializable{
 
         if (VarComuns.strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
-                lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
+//                lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
+                lnUsuario = EjbMap.grabUsuario(usuStCodigo);
 
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
