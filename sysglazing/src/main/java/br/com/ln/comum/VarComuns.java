@@ -6,14 +6,11 @@
 
 package br.com.ln.comum;
 
-import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.faces.bean.SessionScoped;
