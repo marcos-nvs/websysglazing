@@ -540,13 +540,86 @@ public class Postgress implements Serializable{
     }
     
     public static LnCliente grabClienteCpf(String cpf){
-        return null;
+        
+        Session session = null;
+        Transaction tx = null;
+        LnCliente lnCliente = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCliente.findByCliStCpf");
+            query.setString("cliStCpf", cpf);
+            List l = query.list();
+            tx.commit();
+            
+            if (l != null && !l.isEmpty()){
+                lnCliente = (LnCliente) l.get(0);
+            }
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnCliente;
     }
+    
     public static LnCliente grabClienteCnpj(String cnpj){
-        return null;
+        
+        Session session = null;
+        Transaction tx = null;
+        LnCliente lnCliente = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCliente.findByCliStCnpj");
+            query.setString("cliStCnpj", cnpj);
+            List l = query.list();
+            tx.commit();;
+            
+            if(l != null && !l.isEmpty()){
+                lnCliente = (LnCliente) l.get(0);
+            }
+            
+        }finally{
+            if(session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnCliente;
     }
-    public static LnCliente grabClienteNome(String Nome){
-        return null;
+    public static LnCliente grabClienteNome(String nome){
+
+        Session session = null;
+        Transaction tx = null;
+        LnCliente lnCliente = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCliente.findByCliStNome");
+            query.setString("cliStNome", nome);
+            List l = query.list();
+            tx.commit();;
+            
+            if(l != null && !l.isEmpty()){
+                lnCliente = (LnCliente) l.get(0);
+            }
+            
+        }finally{
+            if(session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnCliente;
     }
     
     public static List<LnTelefone> grabListTelefones(Integer cliInCodigo){

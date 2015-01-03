@@ -734,9 +734,9 @@ public class ClienteView implements Serializable {
         if (lnCliente.getCliStCpf() != null && !lnCliente.getCliStCpf().equals("")){
             novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
         } else if(lnCliente.getCliStCnpj() != null && !lnCliente.getCliStCnpj().contentEquals("")) {
-            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteCnpj(lnCliente.getCliStCnpj());
         } else if (lnCliente.getCliStNome() != null && !lnCliente.getCliStNome().equals("")){
-            novoCliente = Postgress.grabClienteCpf(lnCliente.getCliStCpf());
+            novoCliente = Postgress.grabClienteNome(lnCliente.getCliStNome());
         }
         return novoCliente != null;
     }

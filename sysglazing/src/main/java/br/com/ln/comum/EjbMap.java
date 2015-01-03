@@ -24,11 +24,11 @@ import javax.ejb.Singleton;
 @Singleton
 public class EjbMap implements Serializable{
     
-    private static Map<String, LnUsuario> mapUsuario = new HashMap<>(100);
-    private static Map<String, LnPerfil> mapPerfil = new HashMap<>(30);
-    private static Map<String, List<LnPerfilacesso>> mapListPerfilAcesso = new HashMap<>(200);
-    private static Map<String, List<LnMenu>> mapMenu = new HashMap<>(100);
-    private static Map<String, LnPerfilacesso> mapPerfilAcesso = new HashMap<>(100);
+    private static final Map<String, LnUsuario> mapUsuario = new HashMap<>(100);
+    private static final Map<String, LnPerfil> mapPerfil = new HashMap<>(30);
+    private static final Map<String, List<LnPerfilacesso>> mapListPerfilAcesso = new HashMap<>(200);
+    private static final Map<String, List<LnMenu>> mapMenu = new HashMap<>(100);
+    private static final Map<String, LnPerfilacesso> mapPerfilAcesso = new HashMap<>(100);
     
     
     public synchronized static LnUsuario grabUsuario(String usuStCodigo, String strDbName){
