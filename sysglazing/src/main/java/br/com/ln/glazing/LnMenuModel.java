@@ -56,7 +56,7 @@ public class LnMenuModel implements Serializable {
     private void montaMenu(){
         menuPerfil();
         
-        List<LnMenu> listMenu = Postgress.grabMenu('S');
+        List<LnMenu> listMenu = EjbMap.grabMenu(VarComuns.strDbName);
 
         model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
@@ -96,11 +96,11 @@ public class LnMenuModel implements Serializable {
 
     private void menuPerfil() {
         if (lnUsuario != null) {
-            lnPerfil = EjbMap.grabPerfil(lnUsuario.getPerInCodigo());
+            lnPerfil = EjbMap.grabPerfil(lnUsuario.getPerInCodigo(),VarComuns.strDbName);
 
             VarComuns.lnPerfil = lnPerfil;
             
-            List<LnPerfilacesso> lnPerfilacesso = (List<LnPerfilacesso>) Postgress.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
+            List<LnPerfilacesso> lnPerfilacesso = EjbMap.grabListPerfilAcesso(lnPerfil.getPerInCodigo(), strDbName);
 
             for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {
                 String Key = Integer.toString(perfilAcesso.getLnPerfilacessoPK().getModInCodigo());
@@ -126,15 +126,17 @@ public class LnMenuModel implements Serializable {
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
-                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
+//                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
-                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+//                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
                 case "Cliente":
                     beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
-                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
                     break;
             }
         }

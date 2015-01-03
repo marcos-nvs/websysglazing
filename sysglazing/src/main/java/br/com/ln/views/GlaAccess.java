@@ -11,11 +11,14 @@ import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnHistorico;
+import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.glazing.LnMenuModel;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -82,6 +85,14 @@ public class GlaAccess implements Serializable{
     public void setModel(MenuModel model) {
         this.model = model;
     }
+    
+    @PostConstruct
+    private void grabMapMenu(){
+        System.out.println("inicio");
+        EjbMap.incluiMenu();
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -127,7 +138,7 @@ public class GlaAccess implements Serializable{
 
         if (VarComuns.strDbName != null) {
             if (usuStCodigo != null && usuStSenha != null) {
-                lnUsuario = EjbMap.grabUsuario(usuStCodigo);
+                lnUsuario = EjbMap.grabUsuario(usuStCodigo, VarComuns.strDbName);
                 
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(usuStSenha)) {
