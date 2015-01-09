@@ -93,7 +93,7 @@ COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usua
 
 insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
                                  "usu_dt_cadastro", "per_in_codigo" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448!@#$','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1)
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1)
 
 
 -- Table: ln_menu
