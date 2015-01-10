@@ -426,7 +426,24 @@ public class ClienteView implements Serializable {
         if (verificaDadoObrigatorio()) {
             if (sTipoFuncao.equals("I")) {
                 novoCliente();
+            } else {
+                Postgress.saveOrUpdateObject(lnCliente);
+                gravaEndereco();
+                gravaTelefone();
+                bTelaCadastro = false;
+                historico.gravaHistorico("Alteracao do Cliente : " + lnCliente.getCliInCodigo() + " - "+ lnCliente.getCliStNome());
+                cpf = "";
+                rg = "";
+                cnpj = "";
+                ie = "";
+                nomeFisica = "";
+                nomeJuridica = "";
+                emailFisica = "";
+                emailJuridica = "";
+                contato = "";
             }
+            mensagem = "Cliente gravado com sucesso!!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente", mensagem));
         }
@@ -682,20 +699,9 @@ public class ClienteView implements Serializable {
 
         if (!verificaCliente()) {
             lnCliente.setCliInCodigo(Postgress.grabLnClienteNextId());
-            System.out.println("Cliente : " + lnCliente.toString());
-            for (LnEndereco lsEndereco : listEnderecos) {
-                lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
-                lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
-                Postgress.saveObject(lsEndereco);
-            }
+            gravaEndereco();
+            gravaTelefone();
 
-            for (LnTelefone lsTelefone : listTelefones) {
-                lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
-                System.out.println("Telefone :  " + lsTelefone.toString());
-                Postgress.saveObject(lsTelefone);
-            }
             Postgress.saveObject(lnCliente);
             bTelaCadastro = false;
             listCliente.add(lnCliente);
@@ -710,12 +716,39 @@ public class ClienteView implements Serializable {
             emailJuridica = "";
             contato = "";
             
-            mensagem = "Cliente gravado com sucesso!!!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
             mensagem = "Cliente ja existe no sistema!!!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
+    }
+    
+    private void gravaEndereco() {
+        if (sTipoFuncao.equals('I')) {
+            for (LnEndereco lsEndereco : listEnderecos) {
+                lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
+                lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
+                lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
+                Postgress.saveObject(lsEndereco);
+            }
+        } else {
+            for (LnEndereco lsEndereco : listEnderecos) {
+                Postgress.saveOrUpdateObject(lsEndereco);
+            }
+        }
+    }
+
+    private void gravaTelefone(){
+        if (sTipoFuncao.equals('I')) {
+            for (LnTelefone lsTelefone : listTelefones) {
+                lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
+                lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
+                Postgress.saveObject(lsTelefone);
+            }
+        } else{
+            for (LnTelefone lsTelefone : listTelefones) {
+                Postgress.saveOrUpdateObject(lsTelefone);
+            }
+        }        
     }
 
     private void defineCliente() {
