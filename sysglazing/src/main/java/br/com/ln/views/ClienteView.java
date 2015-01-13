@@ -353,6 +353,8 @@ public class ClienteView implements Serializable {
             listTelefones = new ArrayList<>();
             bTelaCadastro = true;
             sTipoFuncao = "I";
+            sTipoFuncaoEnd = "I";
+            sTipoFuncaoTel = "I";
         } else {
             mensagem = "Usuario nao tem permissao para incluir cliente";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -386,6 +388,8 @@ public class ClienteView implements Serializable {
                 listTelefones = Postgress.grabListTelefones(lnCliente.getCliInCodigo());
 
                 sTipoFuncao = "A";
+                sTipoFuncaoEnd = "A";
+                sTipoFuncaoTel = "A";
             } else {
                 mensagem = "Por favor, escolha um cliente.!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -400,6 +404,8 @@ public class ClienteView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
             if (lnCliente != null){
                 Postgress.deleteObject(lnCliente);
+                excluiEndereco();
+                excluiTelefone();
                 historico.gravaHistorico("Exclusao do Cliente : " + lnCliente.getCliInCodigo() + " - " + lnCliente.getCliStNome());
                 mensagem = "Cliente excluido com sucesso.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -425,6 +431,7 @@ public class ClienteView implements Serializable {
     public void btGrava() {
         if (verificaDadoObrigatorio()) {
             if (sTipoFuncao.equals("I")) {
+                System.out.println("novo cliente");
                 novoCliente();
             } else {
                 Postgress.saveOrUpdateObject(lnCliente);
@@ -481,6 +488,7 @@ public class ClienteView implements Serializable {
         if (lnEndereco != null) {
             listEnderecos.remove(lnEndereco);
             lnEndereco = new LnEndereco();
+            Postgress.deleteObject(lnEndereco);
             mensagem = "Endereco excluido com sucesso!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
@@ -551,6 +559,7 @@ public class ClienteView implements Serializable {
         if (lnTelefone != null){
             listTelefones.remove(lnTelefone);
             lnTelefone = new LnTelefone();
+            Postgress.deleteObject(lnTelefone);
             mensagem = "Telefone excluido com sucesso!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
@@ -699,10 +708,9 @@ public class ClienteView implements Serializable {
 
         if (!verificaCliente()) {
             lnCliente.setCliInCodigo(Postgress.grabLnClienteNextId());
+            Postgress.saveObject(lnCliente);
             gravaEndereco();
             gravaTelefone();
-
-            Postgress.saveObject(lnCliente);
             bTelaCadastro = false;
             listCliente.add(lnCliente);
             historico.gravaHistorico("Inclusao do Cliente : " + lnCliente.getCliInCodigo() + " - "+ lnCliente.getCliStNome());
@@ -723,7 +731,8 @@ public class ClienteView implements Serializable {
     }
     
     private void gravaEndereco() {
-        if (sTipoFuncao.equals('I')) {
+        System.out.println("tipo : " + sTipoFuncao);
+        if (sTipoFuncaoEnd.equals("I")) {
             for (LnEndereco lsEndereco : listEnderecos) {
                 lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
@@ -732,13 +741,14 @@ public class ClienteView implements Serializable {
             }
         } else {
             for (LnEndereco lsEndereco : listEnderecos) {
+                lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 Postgress.saveOrUpdateObject(lsEndereco);
             }
         }
     }
 
     private void gravaTelefone(){
-        if (sTipoFuncao.equals('I')) {
+        if (sTipoFuncaoTel.equals("I")) {
             for (LnTelefone lsTelefone : listTelefones) {
                 lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
@@ -746,6 +756,7 @@ public class ClienteView implements Serializable {
             }
         } else{
             for (LnTelefone lsTelefone : listTelefones) {
+                lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 Postgress.saveOrUpdateObject(lsTelefone);
             }
         }        
@@ -774,7 +785,7 @@ public class ClienteView implements Serializable {
         return novoCliente != null;
     }
     
-    public void btPesquisaNomeCliente(){
+    private void btPesquisaNomeCliente(){
         
         if (nomeFilter.equals("")){
             nomeFilter = null;
@@ -786,6 +797,18 @@ public class ClienteView implements Serializable {
         if (listCliente != null && listCliente.isEmpty()){
             mensagem = "Cliente nao encontrado!!!!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
+    
+    private void excluiEndereco(){
+            for (LnEndereco lsEndereco : listEnderecos) {
+            Postgress.deleteObject(lsEndereco);
+        }
+    }
+
+    private void excluiTelefone(){
+        for (LnTelefone lsTelefone : listTelefones) {
+            Postgress.deleteObject(lsTelefone);
         }
     }
 }
