@@ -31,6 +31,7 @@ public class SessionFactoryDbName implements Serializable{
             return mapSessionFactory.get(strDbName);
         } else{
             SessionFactory sessionFactory = buildSessionFactoryByDbName(strDbName);
+            mapSessionFactory.put(strDbName, sessionFactory);
             return sessionFactory;
         }
     }
