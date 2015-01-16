@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -66,6 +67,9 @@ public class LnEndereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "end_st_cep")
     private String endStCep;
+    
+    @Transient
+    private boolean bNovo;
 
     public LnEndereco() {
     }
@@ -97,6 +101,20 @@ public class LnEndereco implements Serializable {
         this.endStEstado = endStEstado;
         this.endStCep = endStCep;
     }
+
+    public LnEndereco(String endStTipo, String endStLogradouro, String endStNumero, String endStComplemento, String endStBairro, String endStCidade, String endStEstado, String endStCep, boolean bNovo) {
+        this.endStTipo = endStTipo;
+        this.endStLogradouro = endStLogradouro;
+        this.endStNumero = endStNumero;
+        this.endStComplemento = endStComplemento;
+        this.endStBairro = endStBairro;
+        this.endStCidade = endStCidade;
+        this.endStEstado = endStEstado;
+        this.endStCep = endStCep;
+        this.bNovo = bNovo;
+    }
+    
+    
     
     
 
@@ -181,6 +199,14 @@ public class LnEndereco implements Serializable {
         this.endStCep = endStCep;
     }
 
+    public boolean isbNovo() {
+        return bNovo;
+    }
+
+    public void setbNovo(boolean bNovo) {
+        this.bNovo = bNovo;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

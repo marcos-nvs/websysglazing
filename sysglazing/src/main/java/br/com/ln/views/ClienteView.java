@@ -431,7 +431,6 @@ public class ClienteView implements Serializable {
     public void btGrava() {
         if (verificaDadoObrigatorio()) {
             if (sTipoFuncao.equals("I")) {
-                System.out.println("novo cliente");
                 novoCliente();
             } else {
                 Postgress.saveOrUpdateObject(lnCliente);
@@ -487,8 +486,8 @@ public class ClienteView implements Serializable {
     public void btExcluiEnd(){
         if (lnEndereco != null) {
             listEnderecos.remove(lnEndereco);
-            lnEndereco = new LnEndereco();
             Postgress.deleteObject(lnEndereco);
+            excluiEndereco();
             mensagem = "Endereco excluido com sucesso!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
@@ -502,7 +501,7 @@ public class ClienteView implements Serializable {
     }
     
     public void btListaEndereco() {
-        lnEndereco = new LnEndereco(tipoEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep);
+        lnEndereco = new LnEndereco(tipoEndereco, logradouro, numero, complemento, bairro, cidade, estado, cep, true);
         if (lnEndereco != null && verificaEnderecoObrigatorio()) {
             
             if (sTipoFuncaoEnd.equals("A")){
@@ -526,7 +525,7 @@ public class ClienteView implements Serializable {
     }
 
     public void btIncluiTelefone() {
-        lnTelefone = new LnTelefone(tipoTelefone, ddd, telefone);
+        lnTelefone = new LnTelefone(tipoTelefone, ddd, telefone, true);
         
         if (sTipoFuncaoTel.equals("A")){
             listTelefones.remove(lnTelefone);
@@ -555,11 +554,11 @@ public class ClienteView implements Serializable {
     }
     
     public void btExluiTelefone(){
-        System.out.println("Telefone : " + lnTelefone.toString());
         if (lnTelefone != null){
             listTelefones.remove(lnTelefone);
             lnTelefone = new LnTelefone();
             Postgress.deleteObject(lnTelefone);
+            excluiTelefone();
             mensagem = "Telefone excluido com sucesso!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         } else {
@@ -610,7 +609,6 @@ public class ClienteView implements Serializable {
             enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
             correio.close();
             if (enderecoCep != null) {
-                System.out.println("encontrado");
                 logradouro = enderecoCep.getTipoDeLogradouro() +" "+enderecoCep.getLogradouro();
                 bairro = enderecoCep.getBairro();
                 cidade = enderecoCep.getCidade();
@@ -731,13 +729,14 @@ public class ClienteView implements Serializable {
     }
     
     private void gravaEndereco() {
-        System.out.println("tipo : " + sTipoFuncao);
         if (sTipoFuncaoEnd.equals("I")) {
             for (LnEndereco lsEndereco : listEnderecos) {
-                lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
-                lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
-                Postgress.saveObject(lsEndereco);
+                if (lsEndereco.isbNovo()) {
+                    lsEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
+                    lsEndereco.setEndInCodigo(Postgress.grabLnEnderecoNextId());
+                    lsEndereco.setEndStCep(lsEndereco.getEndStCep().replaceAll("-", ""));
+                    Postgress.saveObject(lsEndereco);
+                }
             }
         } else {
             for (LnEndereco lsEndereco : listEnderecos) {
@@ -750,9 +749,11 @@ public class ClienteView implements Serializable {
     private void gravaTelefone(){
         if (sTipoFuncaoTel.equals("I")) {
             for (LnTelefone lsTelefone : listTelefones) {
-                lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
-                lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
-                Postgress.saveObject(lsTelefone);
+                if (lsTelefone.isbNovo()) {
+                    lsTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
+                    lsTelefone.setTelInCodigo(Postgress.grabLnTelefoneNextId());
+                    Postgress.saveObject(lsTelefone);
+                }
             }
         } else{
             for (LnTelefone lsTelefone : listTelefones) {
@@ -800,8 +801,8 @@ public class ClienteView implements Serializable {
         }
     }
     
-    private void excluiEndereco(){
-            for (LnEndereco lsEndereco : listEnderecos) {
+    private void excluiEndereco() {
+        for (LnEndereco lsEndereco : listEnderecos) {
             Postgress.deleteObject(lsEndereco);
         }
     }

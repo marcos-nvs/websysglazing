@@ -85,7 +85,6 @@ public class GlaAccess implements Serializable{
     
     @PostConstruct
     private void grabMapMenu(){
-        System.out.println("inicio");
         EjbMap.incluiMenu();
     }
     

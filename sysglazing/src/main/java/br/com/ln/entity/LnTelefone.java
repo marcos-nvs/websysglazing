@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,6 +48,9 @@ public class LnTelefone implements Serializable {
     @Basic(optional = false)
     @Column(name = "tel_st_telefone")
     private String telStTelefone;
+    
+    @Transient
+    private boolean bNovo;
 
     public LnTelefone() {
     }
@@ -68,9 +72,14 @@ public class LnTelefone implements Serializable {
         this.telStDdd = telStDdd;
         this.telStTelefone = telStTelefone;
     }
-    
-    
 
+    public LnTelefone(String telStTipo, String telStDdd, String telStTelefone, boolean bNovo) {
+        this.telStTipo = telStTipo;
+        this.telStDdd = telStDdd;
+        this.telStTelefone = telStTelefone;
+        this.bNovo = bNovo;
+    }
+    
     public Integer getTelInCodigo() {
         return telInCodigo;
     }
@@ -111,6 +120,14 @@ public class LnTelefone implements Serializable {
         this.telStTelefone = telStTelefone;
     }
 
+    public boolean isbNovo() {
+        return bNovo;
+    }
+
+    public void setbNovo(boolean bNovo) {
+        this.bNovo = bNovo;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

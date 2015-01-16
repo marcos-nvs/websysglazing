@@ -31,14 +31,12 @@ public class Correios {
         String sJson = webResoure.path(cep)
                 .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                 .get(String.class);
-        System.out.println("retorno : " +sJson);
         return sJson;
     }
 
     public EnderecoCep entregaEndereco(String cep) {
         EnderecoCep endereco = null;
         String sEnd = getConsultaEnderecoByCep(cep);
-        System.out.println("RETORNO : " + sEnd);
         Gson gson = new Gson();
         endereco = gson.fromJson(sEnd, EnderecoCep.class);
         close();
