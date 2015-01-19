@@ -37,7 +37,7 @@ public class Postgress implements Serializable{
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
     /**
-     * Pesquisa de usuario e senha para validaÃ§Ã£o.
+     * Pesquisa de usuario e senha para validacao.
      * @param usuStCodigo
      * @param strDbName
      * @return 
