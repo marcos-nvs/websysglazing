@@ -50,6 +50,11 @@ public class EjbMap implements Serializable{
         return lnUsuario;
     }
     
+    public synchronized static void updateUsuario(LnUsuario lnUsuario, String strDbName){
+        String code = lnUsuario.getUsuStCodigo()+strDbName;
+        mapUsuario.put(code, lnUsuario);
+    }
+    
     public synchronized static LnPerfil grabPerfil(Integer perInCodigo,String strDbName){
         LnPerfil lnPerfil = null;
         String code = perInCodigo.toString()+strDbName;
@@ -68,6 +73,11 @@ public class EjbMap implements Serializable{
         }
         
         return lnPerfil;
+    }
+    
+    public synchronized static void updatePerfil(LnPerfil lnPerfil, String strDbName){
+        String code = lnPerfil.getPerInCodigo().toString()+strDbName;
+        mapPerfil.put(code, lnPerfil);
     }
     
     public synchronized static List<LnPerfilacesso> grabListPerfilAcesso(Integer perInCodigo, String strDbName){
@@ -89,6 +99,11 @@ public class EjbMap implements Serializable{
         }
         
         return listPerfilAcesso;
+    }
+    
+    public synchronized static void updateListPerfilAcesso(List<LnPerfilacesso> listPerfilAcesso, String strDbName){
+        String code = listPerfilAcesso.get(0).getLnPerfilacessoPK().getPerInCodigo().toString()+strDbName;
+        mapListPerfilAcesso.put(code, listPerfilAcesso);
     }
     
     public static void incluiMenu() {

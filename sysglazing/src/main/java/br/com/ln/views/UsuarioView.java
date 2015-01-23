@@ -5,6 +5,7 @@
  */
 package br.com.ln.views;
 
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
@@ -238,6 +239,8 @@ public class UsuarioView implements Serializable {
                 novoUsuario();
             } else {
                 Postgress.saveOrUpdateObject(lnUsuario);
+                EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                VarComuns.lnUsusario = lnUsuario;
                 this.historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             }
 
@@ -284,8 +287,10 @@ public class UsuarioView implements Serializable {
 
         if (novaSenha.equals(repeteSenha)) {
             this.bPerSenha = false;
+            lnUsuario.setUsuStSenha(novaSenha);
+            EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
             Postgress.saveOrUpdateObject(lnUsuario);
-            historico.gravaHistorico("Alteracao do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
+            historico.gravaHistorico("Alteracao da senha do usuario : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             mensagem = "Senha alterada com sucesso.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         } else {
