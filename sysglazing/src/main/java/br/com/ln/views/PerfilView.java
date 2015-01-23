@@ -320,7 +320,6 @@ public class PerfilView implements Serializable {
     public void btAlterarAcesso() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnPerfilacesso != null) {
-                System.out.println("pk : " + lnPerfilacesso.toString());
                 this.bEditAcesso = true;
                 this.sTipoFuncaoAcesso = "A";
                 this.modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
