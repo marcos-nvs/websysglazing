@@ -3,8 +3,9 @@
 <hibernate-configuration>
   <session-factory>
       
-    <property name="hibernate.connection.datasource">jdbc/Postgress</property>
+    <property name="hibernate.connection.datasource">jdbc/Sysglazing</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.default_schema">public</property>
       
 <!--    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
