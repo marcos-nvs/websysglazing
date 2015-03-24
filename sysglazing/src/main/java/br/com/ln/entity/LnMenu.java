@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnMenu.findByMenInCodigo", query = "SELECT l FROM LnMenu l WHERE l.menInCodigo = :menInCodigo"),
     @NamedQuery(name = "LnMenu.findByMenStDescricao", query = "SELECT l FROM LnMenu l WHERE l.menStDescricao = :menStDescricao"),
     @NamedQuery(name = "LnMenu.findByMenChAtivo", query = "SELECT l FROM LnMenu l WHERE l.menChAtivo = :menChAtivo")})
+
 public class LnMenu implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
