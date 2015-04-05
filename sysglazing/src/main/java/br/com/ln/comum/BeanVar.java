@@ -9,7 +9,6 @@ package br.com.ln.comum;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.util.Locale;
 
 /**
  * Definição de váriavies para visualização no modo web.
@@ -43,6 +42,6 @@ public class BeanVar implements Serializable{
     public void setNovaTela(String novaTela) {
         this.novaTela = novaTela;
     }
-    
+
 }
     
